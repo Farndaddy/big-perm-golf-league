@@ -791,7 +791,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <div id="gross2025" style="display:none">
         <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
         <tbody id="hg2025-body"></tbody>
-        <tfoot><tr><td colspan="6" style="font-size:.7rem;color:var(--gray);text-align:center;padding:.6rem">Season avg gross — per-round detail populates automatically via Google Sheets pipeline</td></tr></tfoot>
+        <tfoot><tr><td>Season Avg</td><td>87.3</td><td class="sc-best">81.0</td><td>84.2</td><td>86.6</td><td class="sc-worst">87.7</td></tr></tfoot>
         </table>
       </div>
     </div>
@@ -821,9 +821,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         </table>
       </div>
       <div id="gross2024" style="display:none">
-        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
         <tbody id="hg2024-body"></tbody>
-        <tfoot><tr><td colspan="6" style="font-size:.7rem;color:var(--gray);text-align:center;padding:.6rem">Season avg gross — per-round detail populates automatically via Google Sheets pipeline</td></tr></tfoot>
+        <tfoot><tr><td>Season Avg</td><td class="sc-worst">96.1</td><td class="sc-best">83.7</td><td>93.9</td><td>91.3</td><td>86.4</td></tr></tfoot>
         </table>
       </div>
     </div>
@@ -1532,6 +1532,50 @@ const gross2024Holes=[
 ];
 const par=[4,4,4,4,4,3,5,4,3,3,4,4,4,4,4,5,3,4];
 
+
+// Per-round GROSS history — 2025
+const d2025gross=[
+  {d:'Apr 27',v:[92,null,null,null,null]},
+  {d:'May 04',v:[98,null,96,91,92]},
+  {d:'May 18',v:[96,null,93,89,null]},
+  {d:'May 25',v:[null,88,94,null,null]},
+  {d:'Jun 01',v:[104,null,null,null,null]},
+  {d:'Jun 08',v:[null,null,88,92,null]},
+  {d:'Jun 15',v:[87,null,96,89,null]},
+  {d:'Jun 22',v:[98,91,91,88,null]},
+  {d:'Jun 29',v:[null,84,93,88,null]},
+  {d:'Jul 06',v:[97,null,89,null,null]},
+  {d:'Jul 13',v:[null,82,84,90,82]},
+  {d:'Jul 20',v:[null,85,88,null,84]},
+  {d:'Jul 27',v:[88,89,97,null,89]},
+  {d:'Aug 03',v:[90,null,null,84,90]},
+  {d:'Aug 17',v:[89,null,89,90,89]},
+  {d:'Aug 24',v:[94,null,104,89,87]},
+  {d:'Aug 31',v:[94,74,92,null,null]},
+  {d:'Sep 07',v:[89,null,null,87,89]},
+];
+// Per-round GROSS history — 2024
+const d2024gross=[
+  {d:'Apr 28',v:[96,86,103,95,null]},
+  {d:'May 05',v:[100,null,null,88,null]},
+  {d:'May 12',v:[null,81,null,null,null]},
+  {d:'May 19',v:[93,null,null,93,90]},
+  {d:'May 26',v:[null,84,91,null,null]},
+  {d:'Jun 02',v:[94,null,97,null,83]},
+  {d:'Jun 09',v:[95,null,106,null,93]},
+  {d:'Jun 16',v:[99,null,100,94,null]},
+  {d:'Jun 23',v:[94,81,null,95,85]},
+  {d:'Jun 30',v:[101,86,null,90,83]},
+  {d:'Jul 07',v:[103,null,86,null,null]},
+  {d:'Jul 21',v:[null,80,94,89,86]},
+  {d:'Jul 28',v:[90,null,null,null,87]},
+  {d:'Aug 04',v:[97,null,89,null,82]},
+  {d:'Aug 11',v:[null,87,87,null,null]},
+  {d:'Aug 18',v:[93,null,null,null,84]},
+  {d:'Aug 25',v:[null,88,91,90,86]},
+  {d:'Sep 01',v:[97,null,91,null,92]},
+  {d:'Sep 08',v:[94,null,null,87,null]},
+];
 let talks=[];
 // Player brand colors
 const PC={Farnia:'#f0c040',Owens:'#4a9eff',Felter:'#ff7733',Carter:'#5bc96e',Lorenz:'#e04060'};
@@ -1855,8 +1899,8 @@ function renderGrossSummary(holeData,tbodyId){
   });
   tr.innerHTML=html;tb.appendChild(tr);
 }
-renderGrossSummary(gross2025Holes,'hg2025-body');
-renderGrossSummary(gross2024Holes,'hg2024-body');
+renderScoreTable(d2025gross,'hg2025-body');
+renderScoreTable(d2024gross,'hg2024-body');
 renderScheduleGrid(d2026,'sched2026-body',2026);
 renderScheduleGrid(d2025,'sched2025-body',2025);
 renderTalkWall();
