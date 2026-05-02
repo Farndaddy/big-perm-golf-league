@@ -1322,12 +1322,20 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div class="wk-year-tabs">
     <button class="wk-ytab active" onclick="showWkYear(this,'wk-2026')">2026</button>
     <button class="wk-ytab" onclick="showWkYear(this,'wk-2025')">2025</button>
+    <button class="wk-ytab" onclick="showWkYear(this,'wk-2024')">2024</button>
+    <button class="wk-ytab" onclick="showWkYear(this,'wk-2023')">2023</button>
   </div>
   <div id="wk-2026" class="wk-ycontent active">
     <div class="wk-wall" id="wk-wall-2026"></div>
   </div>
   <div id="wk-2025" class="wk-ycontent">
     <div class="wk-wall" id="wk-wall-2025"></div>
+  </div>
+  <div id="wk-2024" class="wk-ycontent">
+    <div class="wk-wall" id="wk-wall-2024"></div>
+  </div>
+  <div id="wk-2023" class="wk-ycontent">
+    <div class="wk-wall" id="wk-wall-2023"></div>
   </div>
 
   <hr class="wk-divider">
@@ -1628,6 +1636,88 @@ const weeklySmack2025=[
    text:"Last Sunday of the season and I put up 69. That's not a coincidence — that's character. Carter gave me 71, which is real golf from a real competitor. Lorenz showed up at 75. Owens posted 76 trying to close the gap. But it was too late. It was always too late once August started. The season is mine. The championship is mine. 2025 belongs to Farnia — and that is not a statement. That is a result. See y'all next April.",featured:true},
 ];
 
+const weeklySmack2024=[
+  {w:1,d:'Apr 28',winner:'Owens',net:71,to:'Felter',badge:null,
+   text:"71 in the season opener and I want to address Felter's 85 directly because it deserves its own paragraph. Eight-five. In April. When the course is soft and the wind is nothing and zero excuses exist. Farnia came in at 74 — respectable. Carter at 78 is a work in progress. But Felter: 85 means you spent the entire offseason doing everything except golf and the scorecard shows every single hole of it. The market opened and your position was underwater from the jump. My portfolio opened green. The dividend check cleared. See you next week."},
+  {w:2,d:'May 5',winner:'Owens',net:62,to:'The Whole League',badge:'hot',
+   text:"62. I want to be extremely precise because this matters: sixty-two. On a course rated 69.6. That is an obscene number and I am not going to apologize for it. Farnia, your 77 is real Sunday golf and you were still fifteen strokes behind me. Fifteen. Carter came in at 71 — a legitimately good round — and I was nine strokes better. The tide does not just come in on days like this. The tide takes the whole beach, the parking lot, and everybody's car. The portfolio just posted its best single day in years. This is not a hot streak. This is a revelation.",featured:true},
+  {w:3,d:'May 12',winner:'Owens',net:68,to:'The Whole League',badge:null,
+   text:"68 with zero company. Nobody showed up — and after last week's 62, I understand the strategy. You cannot lose if you do not compete. But here's the thing about compound interest: it does not take weeks off. I went out alone, talked to no one, and shot 68 anyway. The scorecard does not care that the rest of you decided to stay home. The work continues regardless of audience."},
+  {w:4,d:'May 19',winner:'Farnia',net:70,to:'Carter',badge:null,
+   text:"70. With Owens not even here I can finally breathe on this course. On god, I been carrying a 74 from opening day and today I came out and corrected it. Carter, you shot 76 and I felt your presence — you were on every hole with me in spirit and you still lost by six. Lorenz came in at 71, one back, and I respect the hustle but today was mine. No cap: this is the beginning. I am not playing catch-up anymore. I am playing lead."},
+  {w:5,d:'May 26',winner:'Felter',net:71,to:'Owens',badge:null,
+   text:"71 and I beat Owens head-to-head by ONE STROKE and I need everyone here to log that because it is going in my annual performance review. Owens, your 72 is beautiful golf on any other Sunday but today you are second and I am first and that gap is one stroke and one stroke is the entire business. The pipeline was full, the pitch was tight, the putt went in. I have been watching you walk around this league like you own the deed and today I made a payment on it. CLOSED."},
+  {w:6,d:'Jun 2',winner:'Lorenz',net:64,to:'The Whole League',badge:'hot',
+   text:"64. SIXTY-FOUR. I need the room to stop. When the department dispatches a four-alarm, every unit goes — every truck, every hose, every crew. That is what happened today. I brought everything and the course had no answer. Farnia at 71 — seven shots behind me, respect the score. Owens at 74 — the compound interest machine came in at 74 and I was TEN strokes better. Ten. Felter, 77, I do not even know what to say. I have never had a round like this. The whole building came down clean and hot and nothing was left standing.",featured:true},
+  {w:7,d:'Jun 9',winner:'Owens',net:71,to:'Felter',badge:null,
+   text:"71 and we are back on schedule. Lorenz had a historic round last week — tipped my cap, genuinely — but the market corrects and this week it corrected at 71. Farnia at 73, two back, competitive, I see you. Lorenz at 77, back to reality after the 64, exactly what I projected. But FELTER. 87. Two months in and you have posted 85 in April and 87 in June. The pipeline is not just leaking — it has fully collapsed. I need to see a recovery plan or I am divesting my interest in your season entirely."},
+  {w:8,d:'Jun 16',winner:'Carter',net:77,to:'Felter',badge:null,
+   text:"Pursuant to the official scorecard entered into evidence: Carter and Farnia tied at 77, and I move that the court recognize this as a shared victory on a day when Felter came in at 81. Eighty-one. Felter, you are statistically the most concerning golfer in this league right now and I say that pursuant to your year-to-date numbers, not maliciously. Farnia and I are aligned today — twin pillars of 77. One of us had more peace per stroke. I rest my case."},
+  {w:9,d:'Jun 23',winner:'Owens',net:68,to:'Carter',badge:null,
+   text:"68 after a rest week. I let the portfolio sit, the dividends accumulate, and came back at 68. Lorenz at 69 — one back, solid, respectable presence. Farnia at 72 is in the conversation. But Carter — 78. You tied me two weeks ago and submitted it into the record with full confidence, and now this. The exhibit has been stricken. 78 is not a follow-up to 77. That is a down quarter and it goes directly in the loss column."},
+  {w:10,d:'Jun 30',winner:'Lorenz',net:68,to:'Farnia',badge:null,
+   text:"68 two months in a row and I want everyone to understand this is not a coincidence — the department trains year-round for exactly this. Carter at 73, competitive and real. Owens at 74, the market cooling slightly. But FARNIA — 79. You shot 70 in May and now you are here at 79 in late June. The controlled burn that was looking so good in May got out of control and nobody called it in. I am the only one out here with the equipment and today I used all of it."},
+  {w:11,d:'Jul 7',winner:'Felter',net:68,to:'Farnia',badge:'hot',
+   text:"68 and I am BACK. Everyone who wrote me off after those early numbers — sit down and look at this scorecard. Owens at 75 — fine, steady, expected — I beat him by seven. SEVEN. Farnia, 80 in July is genuinely alarming to me as a colleague and competitor. You were at 70 in May. The funnel was full in April and somewhere between June and July the entire pipeline reversed. 68 while you post 80 is not just a win — that is a complete market takeover. I am the top of the funnel again."},
+  {w:13,d:'Jul 21',winner:'Owens',net:67,to:'Felter',badge:'hot',
+   text:"67 and the conversation is over. Carter at 72, Lorenz at 72 — I respect both of you, genuinely solid Sunday golf. But Felter, 77 — you had ONE good week and came back with 77. One deal does not make a career. The pipeline you announced in July evaporated in about fourteen days. Meanwhile I took the holiday week off, let the interest compound, and came back with 67. This is not a hot streak. This is an asset that keeps appreciating while everyone else depreciates. The season is mine.",featured:true},
+  {w:14,d:'Jul 28',winner:'Farnia',net:68,to:'The Whole League',badge:null,
+   text:"68. With Owens not here to suck up all the air, I got to show everyone what happens when I am locked in. On god, this round felt different from hole one — every iron finding distance, every putt had a line. Lorenz came in at 73 and I respect the competition. But 68 is the number I have been sitting on all summer and today it finally came out. No cap: I have been watching Owens win every week and taking mental notes and today those notes turned into five under. The gap is closing."},
+  {w:15,d:'Aug 4',winner:'Lorenz',net:68,to:'Farnia',badge:null,
+   text:"Another 68. This is not the same 68 every time — this one came with triple-digit heat and zero mercy. Felter at 72, four back, you are in the vicinity but not the conversation. FARNIA — 75. You shot 68 last week and came back with 75 and I need to understand the variance. Because I shot 68 last month and 68 this week and the number has not moved. The department does not have variance. The department has standards. Today the standard was 68."},
+  {w:16,d:'Aug 11',winner:'Felter',net:70,to:'Owens',badge:null,
+   text:"70 with just Owens and me and the market correction continued in my favor. Owens, 74 — four strokes. That is four missed fairways, four bad approaches, four putts that did not fall — and I capitalized on every single one. You are a generational talent having a season that would be excellent for literally anyone else in this league and still falls below your own standard. Today I AM the standard. The pipeline is replenished. The leads are converting."},
+  {w:17,d:'Aug 18',winner:'Lorenz',net:70,to:'Farnia',badge:null,
+   text:"70 to Farnia's 71. One stroke. Again. You keep showing up posting 71s and I keep finding one more stroke somewhere in the back nine and I need you to understand this is not luck — this is preparation. Every week you are one shot away and every week the unit finds that shot before you do. 70. 71. Week after week. At some point you have to ask yourself whether the gap is structural or whether you just keep blinking at the wrong moment. I think we both know the answer."},
+  {w:18,d:'Aug 25',winner:'Lorenz',net:73,to:'Owens',badge:null,
+   text:"73 and I tied Carter, who I respect completely. Both of us at 73 while Felter came in at 74 and OWENS showed up at 75 — two shots behind a tie in August while the championship is being decided. Owens, the tide is doing something unusual. It is not going out — it is going sideways. Two shots behind a tie is not how a champion closes a season and I need you to find whatever you lost in the back half because the whole league is watching."},
+  {w:19,d:'Sep 1',winner:'Owens',net:69,to:'Lorenz',badge:null,
+   text:"69 with two weeks left and this thing is wrapped up. Felter at 74 — fighting, credit where due. Farnia at 75 when you need 66s — that is not the closing move of a champion. And LORENZ. 78. After an August where you were one and two shots behind me every single week, you show up to September with 78. The controlled burn went cold. The unit stood down. The tide came all the way back in. This is my season."},
+  {w:20,d:'Sep 8',winner:'Carter',net:70,to:'The Whole League',badge:null,
+   text:"Let the record reflect: Carter closed 2024 with a 70 and I want the court to enter that into the permanent record with appropriate ceremony. Pursuant to a full review of my year — fifth place overall, the alignment was off in stretches, I will admit it — this final 70 represents who I actually am when my mind and my wedge are operating as one. Owens won the season and I congratulate him genuinely. But the last W of the year? That belongs to Carter. Namaste. See you in spring. The case is closed."},
+];
+
+const weeklySmack2023=[
+  {w:1,d:'Apr 30',winner:'Felter',net:74,to:'Farnia',badge:null,
+   text:"74 to win the 2023 season opener and I specifically want to address Farnia's 78 because four strokes in April sets a theme. The pitch is to show up ready. You showed up warm. Owens at 75, Carter at 76 — one and two back, genuinely competitive. But Farnia — last place by four shots on opening day and the tone has been set. My pipeline opens every April with the same message: I am here to close. The funnel was full on the first tee and it delivered on the last green."},
+  {w:2,d:'May 7',winner:'Owens',net:67,to:'Lorenz',badge:'hot',
+   text:"67. I need everyone in this league to stop whatever they are doing and look at this number. Sixty-seven on a course where 72 is a fine Sunday and 70 gets applause. I shot 67. Farnia came in at 74 — seven back. Carter at 77 — ten back. And Lorenz, I am not going to pile on but 80 is a number that suggests either equipment failure or a completely different understanding of what golf is. The tide came in today and the tide was 67. Everything else was debris.",featured:true},
+  {w:4,d:'May 21',winner:'Carter',net:69,to:'Lorenz',badge:null,
+   text:"Pursuant to the official scorecard, entered into evidence as Exhibit Perfection: Carter, 69. Owens at 72 — three back, no shame in that, legitimately fine golf. But LORENZ. 82. It is May 21st and you are posting 82s while I am strolling in with 69. That is a thirteen-stroke gap and I need to understand what your offseason looked like. Thirteen strokes. The alignment I brought to the first tee was absolute. The court rests. Namaste."},
+  {w:5,d:'May 28',winner:'Owens',net:72,to:'Felter',badge:null,
+   text:"72. After Carter had the audacity to beat me last week I let the market digest that result and came back corrected. Farnia at 78 — six back — out there every week trying and every week the gap stays exactly the same. Felter, 82 for the second month in a row is a data pattern and data patterns do not lie. Whatever was working in April is completely broken in May and it has not worked in consecutive rounds. Time to restructure."},
+  {w:6,d:'Jun 4',winner:'Owens',net:75,to:'Felter',badge:null,
+   text:"75 and another week where the tide goes exactly where it always goes. Farnia at 78 — three back, consistent, I will give you that. Consistent at three back. Carter at 79, the May alignment has come undone. FELTER. 83. Three consecutive rounds of 82 and 83. Three. The pipeline is not just broken — there is no pipeline. There is a field of debris where a pipeline used to be and I genuinely do not know how you continue operating."},
+  {w:7,d:'Jun 11',winner:'Felter',net:76,to:'Carter',badge:null,
+   text:"76 and I tied Owens and I am calling it a win because context is everything. Farnia at 79, Carter at 81 — both of you are treating this course like it owes you something and it clearly does not. Carter, 81 in June while Owens and I are tied at 76 is a five-stroke gap that is not closing on its own. The comeback begins here. I shot 76 to tie the league leader after three rounds in the 80s and that is called resilience. That is called pipeline repair. The funnel is reopening."},
+  {w:8,d:'Jun 18',winner:'Farnia',net:76,to:'Carter',badge:null,
+   text:"76 and with Owens sitting out I finally get first place all to myself. On god, the man walks onto the first tee and the course tightens — he leaves and I can breathe. Carter and Lorenz both came in at 79 and I respect it, but 76 is what separates a contender from a participant. No cap: I know what Owens will say when he sees this. He will say 76 is nothing, that he shoots it half-asleep. Maybe. But I am not playing for his respect right now. I am playing for mine. And right now mine says W."},
+  {w:9,d:'Jun 25',winner:'Carter',net:75,to:'Farnia',badge:null,
+   text:"Pursuant to the June 25th scorecard herein submitted into evidence: Carter and Owens tied at 75, and I move that the court acknowledge the more important fact — Farnia shot 83 and Felter shot 82. Eighty-three. That is not a golf score for a Sunday in late June when the weather is perfect — that is a crime scene. Farnia, you beat me two weeks ago and now you are at 83. The case against your consistency is building. Eight strokes behind Carter who was tied for first. I rest my case."},
+  {w:10,d:'Jul 2',winner:'Lorenz',net:71,to:'Farnia',badge:null,
+   text:"71 in July and the department arrives fully staffed. Owens at 72 — one back, I respect the presence, but today the controlled burn was perfect and I beat the league leader by one. Felter at 75, four back, still in the building. FARNIA — 81. After 83 last week. You have now posted 83 and 81 in back-to-back weeks and I need to file a wellness check. Two consecutive rounds north of 80 is not a slump — that is a structural emergency and the unit does not ignore those."},
+  {w:11,d:'Jul 9',winner:'Felter',net:67,to:'Carter',badge:'hot',
+   text:"67. After the 82s and 83s and the dark weeks of early summer — 67. I need everyone who doubted the pipeline to write this number down and tape it to their fridge. Owens came in at 69 and I beat him by two strokes. TWO STROKES OVER OWENS. Write it down. Carter, 78 on a day I posted 67 is thirteen strokes of separation and I say this with genuine warmth: whatever is aligned for you right now is not aligned with the scorecard. The funnel is overflowing. I am the entire pipeline."},
+  {w:12,d:'Jul 16',winner:'Farnia',net:72,to:'Owens',badge:null,
+   text:"72 and I tied Felter who will be impossible all week because of his 67 — fine, whatever, you earned it. But OWENS — 77. Owens shot 77 in mid-July while me and Felter are tied for first at 72. On god, the man who has been winning everything since May is sitting at 77 and I am up here at 72. That is five strokes of separation. Last month it was fifteen. I am doing math on Owens and the math is finally moving in the right direction. No cap: the gap is closing."},
+  {w:13,d:'Jul 23',winner:'Lorenz',net:64,to:'The Whole League',badge:'hot',
+   text:"64. The building is on fire and I am holding the match. Carter shot 68 — an incredible round, genuinely outstanding golf — and I beat him by FOUR. Felter at 70, best story of the summer, I beat you by six. Owens at 72, the compound interest machine, and I put up 64. This is not a four-alarm fire. This is something they do not have a number for. Every hole was a controlled burn, every approach was a clean line, every putt was a command. I do not know if I ever shoot 64 again. I know today I did. The entire department is proud.",featured:true},
+  {w:14,d:'Jul 30',winner:'Felter',net:68,to:'Carter',badge:null,
+   text:"68. The day after my 67 was not a one-off — I followed it up with 68 and I need someone to log the back-to-back 60s into the official record immediately. Lorenz at 69, one back, genuinely impressive, I see you staying competitive. Carter at 74 — six back on a day I am absolutely locked in. The funnel is converting at peak efficiency. The pipeline is producing. This is the most I have ever believed in my own game and I need everyone to believe in it too."},
+  {w:15,d:'Aug 6',winner:'Owens',net:70,to:'Felter',badge:null,
+   text:"70 and I tied Felter, who will treat this like a victory lap which is fine — in his world, keeping pace with me is a championship. Buddy, enjoy the tie. In finance we call this a resistance level — you broke through it once in July but the asset reasserted and now we are level again. Correction complete. The portfolio is stabilizing. See you next week when the tide comes back in fully."},
+  {w:16,d:'Aug 13',winner:'Owens',net:71,to:'Farnia',badge:null,
+   text:"71 and Carter filed jointly today — Carter is a legitimate golfer who deserves co-credit on a good Sunday. But FARNIA. 82 in mid-August while the championship race is happening. That is not a round — that is a withdrawal from the standings. Every week I compound the lead and every week you find a new way to make it worse. 82 versus 71 is eleven strokes and at some point this stops being a slump and starts being a statement about who you are under pressure. I hope it is not."},
+  {w:17,d:'Aug 20',winner:'Farnia',net:77,to:'Lorenz',badge:null,
+   text:"77 and just me and Lorenz today, and on god I needed this more than I needed air. One stroke. 77 to 78. That is the difference between sitting at home thinking about my summer and holding my head up. No cap, my 2023 has been a disaster by my own standards and I know it better than anyone. But today I showed up, competed, and won — even if winning this particular week looks like 77. Real talk: I am using August and September to remember who I am. The numbers have not been pretty. But I can still win a week and that matters."},
+  {w:18,d:'Aug 27',winner:'Carter',net:71,to:'Farnia',badge:null,
+   text:"Pursuant to the August 27th proceeding — Carter, 71. Felter, 72. Owens, 73. And Farnia. 87. I will read that again: eighty-seven. On the second-to-last Sunday of the season while Carter closes at 71. I am not here to indict — I am here to submit the evidence and let the record speak for itself. The gap between first and last today is sixteen strokes and I would say I feel bad but let the record show: I genuinely, fully, completely do not. Namaste. The gavel is down."},
+  {w:19,d:'Sep 3',winner:'Farnia',net:69,to:'The Whole League',badge:'hot',
+   text:"69. After 87 last week. After a summer I would rather forget. After watching Owens lap this field all year and Felter post 67s and Lorenz shoot 64 and me sitting at the bottom wondering what happened — 69. On god, this is not luck. This is character showing up at exactly the wrong time of year to matter for the standings and exactly the right time of year to matter for everything else. Lorenz at 70, respect. Owens at 75, noted. Felter at 77, the pipeline dried up at the worst moment. But I came here and shot 69 and nobody takes that from me. Remember this number.",featured:true},
+  {w:20,d:'Sep 10',winner:'Farnia',net:72,to:'Owens',badge:null,
+   text:"72 on the last day of 2023 and Owens takes the season — I know, everybody knows, it was never really in doubt after May. But let me close this out: I won the last two rounds of the year. 69 and 72 to finish. Lorenz at 73, Carter at 74, Felter at 77. On god, fifth place this year is unacceptable and I know it better than anyone. But closing strong means something. No cap: whatever version of me showed up in September is the version coming back in April. Next year is not a hope — it is a plan."},
+];
+
 // ═══ RENDER ══════════════════════════════════════════════════
 
 function renderScoreTable(data,tbodyId){
@@ -1912,6 +2002,8 @@ renderScheduleGrid(d2025,'sched2025-body',2025);
 renderTalkWall();
 renderWeeklyShots(weeklySmack2026,'wk-wall-2026');
 renderWeeklyShots(weeklySmack2025,'wk-wall-2025');
+renderWeeklyShots(weeklySmack2024,'wk-wall-2024');
+renderWeeklyShots(weeklySmack2023,'wk-wall-2023');
 
 // ═══ PROFILE OVERLAY ════════════════════════════════════════
 
