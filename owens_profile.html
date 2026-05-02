@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owens — Big Perm Golf League</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0a0f0a;--bg2:#0f160f;--card:#141e14;--card2:#1a261a;
+  --border:#243024;--gold:#f0c040;--white:#e8f0e8;--gray:#5a7a5a;
+  --pc:#4a9eff;--pc-glow:rgba(74,158,255,.35);--pc-dim:rgba(74,158,255,.12);
+  --green:#27ae60;--red:#e74c3c;--orange:#e67e22;
+  /* score colors */
+  --eagle:#0d3320;--eagle-t:#3dffa0;
+  --birdie:#155a2e;--birdie-t:#5bc96e;
+  --par-c:#1a261a;--par-t:#8ab08a;
+  --bogey:#3d2800;--bogey-t:#f0c040;
+  --double:#3d1500;--double-t:#e67e22;
+  --triple:#3d0000;--triple-t:#ff5555;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;overflow-x:hidden}
+
+/* BACK */
+.back-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.6rem 2rem;display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray)}
+.back-bar a{color:var(--gray);text-decoration:none;transition:color .15s}
+.back-bar a:hover{color:var(--white)}
+
+/* HERO */
+.hero{position:relative;background:linear-gradient(135deg,#050a0f 0%,#0a1520 40%,var(--bg) 100%);overflow:hidden;padding:4rem 2rem 3rem}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(74,158,255,.12) 0%,transparent 65%)}
+.hero-inner{max-width:1100px;margin:0 auto;display:flex;gap:2.5rem;align-items:flex-end;position:relative}
+.hero-photo-wrap{flex-shrink:0;position:relative}
+.hero-photo{width:180px;height:220px;object-fit:cover;object-position:top;border-radius:12px;border:3px solid var(--pc);box-shadow:0 0 40px var(--pc-glow),0 0 80px rgba(74,158,255,.1)}
+.hero-photo-fallback{width:180px;height:220px;border-radius:12px;border:3px solid var(--pc);background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--pc);box-shadow:0 0 40px var(--pc-glow)}
+.hero-hc-badge{position:absolute;bottom:-10px;right:-10px;background:var(--pc);color:#fff;font-weight:800;font-size:.75rem;padding:.35rem .6rem;border-radius:8px;letter-spacing:.5px;box-shadow:0 0 15px var(--pc-glow)}
+.hero-info{flex:1}
+.hero-league-tag{font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--pc);margin-bottom:.5rem}
+.hero-name{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:1;letter-spacing:4px;color:var(--white)}
+.hero-full{font-size:.85rem;color:var(--gray);letter-spacing:1px;margin-top:.25rem;margin-bottom:1.5rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem}
+.pill{padding:.3rem .8rem;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.pill-champ{background:linear-gradient(135deg,#b8860b,#f0c040);color:#000}
+.pill-runner{background:var(--card2);border:1px solid var(--border);color:var(--gray)}
+.pill-record{background:linear-gradient(135deg,#1a3a1a,#27ae60);color:#fff}
+.pill-birdies{background:var(--card2);border:1px solid rgba(74,158,255,.3);color:var(--pc)}
+.hero-stats{display:flex;gap:1.75rem;flex-wrap:wrap}
+.hs{text-align:left}
+.hs-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--white);line-height:1;letter-spacing:2px}
+.hs-val.accent{color:var(--pc)}.hs-val.gold{color:var(--gold)}.hs-val.grn{color:var(--green)}
+.hs-label{font-size:.62rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:.2rem}
+
+/* HERO BOTTOM BAR */
+.hero-bottom{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.hero-bottom-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.hero-bottom-inner::-webkit-scrollbar{display:none}
+.hb-stat{flex:1;min-width:120px;padding:1rem 1.25rem;border-right:1px solid var(--border);text-align:center}
+.hb-stat:last-child{border-right:none}
+.hb-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--white);letter-spacing:1px}
+.hb-label{font-size:.6rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:2rem 2rem 4rem}
+.section{margin-bottom:3.5rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:4px;color:var(--white);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* YEAR TABS */
+.year-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.ytab{padding:.4rem 1rem;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--gray);transition:all .2s}
+.ytab.active{background:var(--pc);border-color:var(--pc);color:#fff}
+.ytab:hover:not(.active){border-color:var(--pc);color:var(--white)}
+.year-panel{display:none}.year-panel.active{display:block}
+
+/* SEASON SUMMARY CARDS */
+.season-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:2rem}
+.s-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center}
+.s-card-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white);letter-spacing:2px}
+.s-card-val.blue{color:var(--pc)}.s-card-val.gold{color:var(--gold)}.s-card-val.green{color:var(--green)}
+.s-card-label{font-size:.62rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:.2rem}
+
+/* TRADITIONAL SCORECARD */
+.sc-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+.sc-table{border-collapse:collapse;font-size:.72rem;white-space:nowrap;width:100%}
+.sc-table th,.sc-table td{padding:.45rem .4rem;text-align:center;border-right:1px solid var(--border)}
+.sc-table th:last-child,.sc-table td:last-child{border-right:none}
+/* header rows */
+.sc-table thead tr.row-section th{background:var(--bg2);color:var(--pc);font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.3rem .4rem}
+.sc-table thead tr.row-holes th{background:var(--card2);color:var(--gray);font-size:.65rem;font-weight:700}
+.sc-table thead tr.row-par td{background:var(--bg2);color:var(--gray);font-size:.7rem;font-weight:600}
+.sc-table thead tr.row-hcidx td{background:var(--bg2);color:#3a5a3a;font-size:.6rem}
+/* label columns */
+.sc-date{text-align:left;padding-left:.75rem;font-weight:700;color:var(--white);min-width:68px;background:var(--card2)!important;position:sticky;left:0;z-index:2;box-shadow:4px 0 8px -2px rgba(0,0,0,.55)}
+.sc-table thead .sc-date{color:var(--gray);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+/* separator between front/back */
+.sc-sep{background:var(--bg2)!important;border-right:2px solid var(--border)!important;border-left:2px solid var(--border)!important;color:var(--gray);font-weight:700;font-size:.7rem}
+/* totals */
+.sc-tot{background:var(--card2)!important;font-weight:800;color:var(--white);min-width:36px}
+.sc-hc{background:var(--card2)!important;color:var(--pc);font-weight:700}
+.sc-net{background:var(--card2)!important;font-weight:800;min-width:36px}
+/* net colors defined below with tbody-specific rules */
+/* data rows */
+.sc-table tbody tr{border-bottom:1px solid var(--border)}
+.sc-table tbody tr:last-child{border-bottom:none}
+.sc-table tbody tr:hover td{background:rgba(74,158,255,.04)}
+.sc-table tbody tr:hover td.sc-date{background:var(--card2)!important}
+/* score cell — traditional golf markings */
+.sc{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;font-weight:700;font-size:.72rem;line-height:1}
+.sc-par{color:#7a9a7a}
+/* birdie: single circle — dimmed ~35% */
+.sc-birdie{color:#3b8348;border-radius:50%;border:1.5px solid #3b8348}
+/* eagle: double circle — dimmed ~35% */
+.sc-eagle{color:#28a668;border-radius:50%;border:1.5px solid #28a668;outline:1.5px solid rgba(40,166,104,.35);outline-offset:2.5px}
+/* bogey: single square — dimmed ~35% */
+.sc-bogey{color:#9c7d2a;border:1.5px solid #9c7d2a;border-radius:1px}
+/* double bogey: double square — dimmed ~35% */
+.sc-double{color:#965216;border:1.5px solid #965216;outline:1.5px solid rgba(150,82,22,.35);outline-offset:2.5px;border-radius:1px}
+/* triple+: heavy filled — dimmed ~35% */
+.sc-triple{color:#a63737;border:2px solid #a63737;background:rgba(166,55,55,.15);font-weight:900;border-radius:1px}
+/* empty round */
+.sc-empty{color:#3a5a3a}
+/* reversed-out subtotal/total columns in data rows */
+/* OUT / IN — same width, 20% dialed back */
+.sc-table tbody td.sc-sep{background:rgba(216,236,216,.8)!important;color:#0a1a0a!important;font-weight:800;font-size:.75rem;width:40px;min-width:40px;border-left:1px solid #a8c8a8;border-right:1px solid #a8c8a8}
+/* GRS — same color as OUT/IN, full opacity, same width */
+.sc-table tbody td.sc-tot{background:#d8ecd8!important;color:#0a1a0a!important;font-weight:800;width:40px;min-width:40px}
+/* HC — no colored box, blends into board */
+.sc-table tbody td.sc-hc{background:transparent!important;color:var(--pc)!important;font-weight:700}
+/* NET — distinct warm gold tint, high opacity, pops from the others */
+.sc-table tbody td.sc-net{background:#fff8e0!important;font-weight:800;width:40px;min-width:40px}
+/* net color classes — darkened for warm background */
+.sc-net-good{color:#0d7a30!important}
+.sc-net-ok{color:#7a5e10!important}
+.sc-net-bad{color:#8a1515!important}
+.sc-net-rec{color:#0d5a28!important}
+/* legend */
+.sc-legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1rem;align-items:center;font-size:.65rem;color:var(--gray)}
+.sc-legend-item{display:flex;align-items:center;gap:.4rem}
+.sc-legend-item .sc{pointer-events:none}
+/* scorecard swipe hint — mobile only */
+.sc-swipe-hint{display:none;text-align:center;font-size:.58rem;color:var(--gray);padding:.45rem 0;letter-spacing:.75px;opacity:.7}
+/* scorecard swipe hint — mobile only */
+.hm-tog{padding:.28rem .8rem;border-radius:16px;font-size:.65rem;font-weight:700;cursor:pointer;color:var(--gray);transition:all .2s;letter-spacing:.5px;white-space:nowrap}
+.hm-tog.hm-tog-active{background:var(--pc);color:#fff}
+/* heatmap cell parts — class-driven so media queries work */
+.hm-cell{text-align:center}
+.hm-hole-num{font-size:.6rem;font-weight:600;color:var(--gray);margin-bottom:3px}
+.hm-val{border-radius:6px;padding:.55rem .2rem;font-size:.85rem;font-weight:800}
+.hm-diff{font-size:.58rem;color:var(--gray);margin-top:3px}
+
+/* CHARTS */
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.chart-wrap canvas{max-height:260px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+
+/* CAREER RECORDS */
+.records-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
+.rec-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.4rem;display:flex;align-items:center;gap:1rem}
+.rec-icon{font-size:1.75rem;flex-shrink:0}
+.rec-val{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:1px}
+.rec-val.gold{color:var(--gold)}.rec-val.blue{color:var(--pc)}.rec-val.green{color:var(--green)}
+.rec-label{font-size:.62rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray)}
+.rec-sub{font-size:.65rem;color:var(--gray);margin-top:.1rem}
+
+/* FOOTER */
+.footer{text-align:center;padding:2rem;color:var(--gray);font-size:.7rem;border-top:1px solid var(--border)}
+
+/* ── RESPONSIVE ─────────────────────────────── */
+
+/* Tablet / large phone (≤ 700px) */
+@media(max-width:700px){
+  /* Layout */
+  .main{padding:1.5rem .9rem 3rem}
+  .back-bar{padding:.6rem .9rem}
+  .hero{padding:2.25rem .9rem 2rem}
+
+  /* Hero */
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:1.25rem}
+  .hero-photo,.hero-photo-fallback{width:130px;height:160px}
+  .hero-name{font-size:3rem;letter-spacing:3px}
+  .hero-full{font-size:.78rem}
+  .hero-league-tag{font-size:.65rem}
+  .pill{font-size:.62rem;padding:.22rem .65rem}
+  /* Hero stats — 3-column grid so 5 stats don't overflow */
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem 1rem}
+  .hs-val{font-size:1.7rem}
+  .hs-label{font-size:.56rem}
+
+  /* Hero bottom bar */
+  .hb-stat{padding:.7rem .9rem;min-width:100px}
+  .hb-val{font-size:1.3rem}
+  .hb-label{font-size:.55rem;letter-spacing:1px}
+
+  /* Season summary cards */
+  .season-grid{grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-bottom:1.5rem}
+  .s-card{padding:.9rem .6rem}
+  .s-card-val{font-size:1.6rem}
+  .s-card-label{font-size:.54rem;letter-spacing:1px}
+
+  /* Scorecard — shrink cells, hide HC, show swipe hint */
+  .sc-table{font-size:.63rem}
+  .sc-table th,.sc-table td{padding:.35rem .22rem}
+  .sc-date{min-width:54px;padding-left:.5rem;font-size:.6rem}
+  .sc{width:20px;height:20px;font-size:.63rem}
+  .sc-hc{display:none!important}
+  .sc-swipe-hint{display:block}
+
+  /* Charts */
+  .chart-grid{grid-template-columns:1fr}
+  .chart-wrap canvas{max-height:220px}
+
+  /* Heatmap toggle row */
+  #heatmap-front,#heatmap-back{gap:4px}
+  .hm-val{font-size:.78rem;padding:.45rem .1rem}
+  .hm-hole-num{font-size:.55rem}
+  .hm-diff{font-size:.52rem}
+
+  /* Career records */
+  .records-grid{grid-template-columns:1fr 1fr}
+  .rec-card{padding:1rem}
+  .rec-icon{font-size:1.4rem}
+  .rec-val{font-size:1.5rem}
+  .rec-sub{font-size:.6rem}
+
+  .score-dist{display:none}
+}
+
+/* Small phone (≤ 480px) */
+@media(max-width:480px){
+  .hero-name{font-size:2.6rem}
+  .hero-photo,.hero-photo-fallback{width:110px;height:140px}
+  .hero-hc-badge{font-size:.68rem;padding:.28rem .5rem}
+  .hero-stats{grid-template-columns:repeat(3,1fr);gap:.5rem .75rem}
+  .hs-val{font-size:1.45rem}
+
+  /* Season grid — single row of 3 is too cramped at 375px, go 2+1 */
+  .season-grid{grid-template-columns:1fr 1fr}
+  /* 3rd card spans full width */
+  .season-grid .s-card:nth-child(3){grid-column:1/-1}
+  .s-card-val{font-size:1.4rem}
+
+  /* Heatmap cells — tighter at 375px (9 cols = ~36px each) */
+  #heatmap-front,#heatmap-back{gap:3px}
+  .hm-val{font-size:.7rem;padding:.38rem .05rem;border-radius:4px}
+  .hm-hole-num{font-size:.5rem;margin-bottom:2px}
+  .hm-diff{font-size:.46rem;margin-top:2px}
+
+  /* Scorecard — extra tight */
+  .sc-table{font-size:.58rem}
+  .sc-table th,.sc-table td{padding:.28rem .18rem}
+  .sc-date{min-width:48px;font-size:.56rem}
+  .sc{width:18px;height:18px;font-size:.58rem}
+
+  /* Records — stack single column */
+  .records-grid{grid-template-columns:1fr 1fr}
+  .rec-card{gap:.75rem}
+
+  .section-title{font-size:1.35rem;letter-spacing:3px}
+  .year-tabs{gap:.35rem}
+  .ytab{font-size:.68rem;padding:.32rem .8rem}
+}
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="index.html" onclick="if(window.parent!==window){window.parent.closeProfile();return false;}">← Back to League</a>
+  <span style="color:var(--border)">·</span>
+  <span>Player Profile</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap">
+      <img class="hero-photo" src="Owens.png" alt="Owens" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="hero-photo-fallback" style="display:none">O</div>
+      <div class="hero-hc-badge">HC 12</div>
+    </div>
+    <div class="hero-info">
+      <div class="hero-league-tag">Big Perm Golf League · Member Since 2023</div>
+      <div class="hero-name">OWENS</div>
+      <div class="hero-full">Glenview Golf Club · Plays Every Sunday</div>
+      <div class="hero-pills">
+        <span class="pill pill-birdies">🐦 Most Birdies '25</span>
+        <span class="pill pill-record">⚡ League Record 62</span>
+        <span class="pill pill-runner">🥈 2025 Runner-Up</span>
+        <span class="pill pill-champ">🏆 2024 Champion</span>
+        <span class="pill pill-champ">🏆 2023 Champion</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><div class="hs-val accent">70.5</div><div class="hs-label">Career Avg</div></div>
+        <div class="hs"><div class="hs-val gold">62</div><div class="hs-label">Career Low</div></div>
+        <div class="hs"><div class="hs-val">42</div><div class="hs-label">Rounds</div></div>
+        <div class="hs"><div class="hs-val grn">0.75</div><div class="hs-label">Birdies/Rnd</div></div>
+        <div class="hs"><div class="hs-val" style="color:var(--gold)">$1,450</div><div class="hs-label">Career Earnings</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="hero-bottom">
+  <div class="hero-bottom-inner">
+    <div class="hb-stat"><div class="hb-val">2026</div><div class="hb-label">In Progress · 77 net</div></div>
+    <div class="hb-stat"><div class="hb-val">2025</div><div class="hb-label">🥈 Runner-Up · 69.9 avg · REC 62</div></div>
+    <div class="hb-stat"><div class="hb-val">2024</div><div class="hb-label">🏆 Champion · 70.8 avg</div></div>
+    <div class="hb-stat"><div class="hb-val">2023</div><div class="hb-label">🏆 Champion · 71.3 avg</div></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SEASON STATS -->
+  <section class="section">
+    <div class="section-title">Season Scorecards</div>
+    <div class="year-tabs">
+      <div class="ytab active" onclick="showYear('2026',this)">2026</div>
+      <div class="ytab" onclick="showYear('2025',this)">2025</div>
+      <div class="ytab" onclick="showYear('2024',this)">2024</div>
+      <div class="ytab" onclick="showYear('2023',this)">2023</div>
+    </div>
+
+    <!-- 2026 -->
+    <div class="year-panel active" id="year-2026">
+      <div class="season-grid">
+        <div class="s-card"><div class="s-card-val blue">77</div><div class="s-card-label">Current Net Avg</div></div>
+        <div class="s-card"><div class="s-card-val">1</div><div class="s-card-label">Rounds Played</div></div>
+        <div class="s-card"><div class="s-card-val gold">TBD</div><div class="s-card-label">Season Position</div></div>
+      </div>
+      <div id="sc-2026"></div>
+    </div>
+    <!-- 2025 -->
+    <div class="year-panel" id="year-2025">
+      <div class="season-grid">
+        <div class="s-card"><div class="s-card-val blue">69.9</div><div class="s-card-label">Top-8 Avg</div></div>
+        <div class="s-card"><div class="s-card-val">12</div><div class="s-card-label">Rounds Played</div></div>
+        <div class="s-card"><div class="s-card-val green">62</div><div class="s-card-label">Season Low 🏅</div></div>
+      </div>
+      <div id="sc-2025"></div>
+    </div>
+    <!-- 2024 -->
+    <div class="year-panel" id="year-2024">
+      <div class="season-grid">
+        <div class="s-card"><div class="s-card-val blue">70.8</div><div class="s-card-label">Season Avg</div></div>
+        <div class="s-card"><div class="s-card-val">13</div><div class="s-card-label">Rounds Played</div></div>
+        <div class="s-card"><div class="s-card-val gold">🏆</div><div class="s-card-label">Champion · $600</div></div>
+      </div>
+      <div id="sc-2024"></div>
+    </div>
+    <!-- 2023 -->
+    <div class="year-panel" id="year-2023">
+      <div class="season-grid">
+        <div class="s-card"><div class="s-card-val blue">71.3</div><div class="s-card-label">Season Avg</div></div>
+        <div class="s-card"><div class="s-card-val">15</div><div class="s-card-label">Rounds Played</div></div>
+        <div class="s-card"><div class="s-card-val gold">🏆</div><div class="s-card-label">Champion · $600</div></div>
+      </div>
+      <div id="sc-2023"></div>
+    </div>
+  </section>
+
+  <!-- CHARTS ROW -->
+  <section class="section">
+    <div class="section-title">Score Progression</div>
+    <div class="chart-wrap">
+      <canvas id="scoreChart"></canvas>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Handicap Progression</div>
+    <div class="chart-wrap">
+      <canvas id="hcChart"></canvas>
+    </div>
+  </section>
+
+  <!-- HOLE HEATMAP -->
+  <section class="section">
+    <div class="section-title">Hole Performance</div>
+    <div class="chart-wrap">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+        <div id="hm-yr-tabs" style="display:flex;gap:.5rem">
+          <div class="ytab active" onclick="showHeatmap('2025',this)" style="font-size:.65rem;padding:.25rem .6rem">2025</div>
+          <div class="ytab" onclick="showHeatmap('2024',this)" style="font-size:.65rem;padding:.25rem .6rem">2024</div>
+        </div>
+        <div style="display:flex;gap:.2rem;background:var(--bg2);border-radius:20px;padding:.2rem;border:1px solid var(--border)">
+          <div class="hm-tog hm-tog-active" onclick="toggleHeatmapMode('gross',this)">Gross</div>
+          <div class="hm-tog" onclick="toggleHeatmapMode('net',this)">Net</div>
+        </div>
+      </div>
+      <div id="hm-sub" style="font-size:.7rem;color:var(--gray);margin-bottom:.75rem">2025 — avg gross score per hole vs par</div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pc);margin-bottom:.4rem">Front 9</div>
+      <div id="heatmap-front" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin-bottom:1rem"></div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pc);margin-bottom:.4rem">Back 9</div>
+      <div id="heatmap-back" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px"></div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.75rem">
+        <span style="display:flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--gray)"><span style="width:10px;height:10px;border-radius:2px;background:var(--birdie);display:inline-block"></span>Birdie avg</span>
+        <span style="display:flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--gray)"><span style="width:10px;height:10px;border-radius:2px;background:var(--par-c);border:1px solid var(--border);display:inline-block"></span>At par</span>
+        <span style="display:flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--gray)"><span style="width:10px;height:10px;border-radius:2px;background:var(--bogey);display:inline-block"></span>+0.5–1</span>
+        <span style="display:flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--gray)"><span style="width:10px;height:10px;border-radius:2px;background:var(--double);display:inline-block"></span>+1–1.5</span>
+        <span style="display:flex;align-items:center;gap:.3rem;font-size:.6rem;color:var(--gray)"><span style="width:10px;height:10px;border-radius:2px;background:var(--triple);display:inline-block"></span>+1.5+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREER RECORDS -->
+  <section class="section">
+    <div class="section-title">Career Records</div>
+    <div class="records-grid">
+      <div class="rec-card"><div class="rec-icon">🏅</div><div><div class="rec-val green">62</div><div class="rec-label">League Record</div><div class="rec-sub">Aug 31, 2025</div></div></div>
+      <div class="rec-card"><div class="rec-icon">🏆</div><div><div class="rec-val gold">2x</div><div class="rec-label">League Champion</div><div class="rec-sub">2024 &amp; 2023 titles</div></div></div>
+      <div class="rec-card"><div class="rec-icon">🐦</div><div><div class="rec-val blue">0.75</div><div class="rec-label">Birdies/Round '25</div><div class="rec-sub">Most in the league</div></div></div>
+      <div class="rec-card"><div class="rec-icon">📉</div><div><div class="rec-val">69.9</div><div class="rec-label">Best Season Avg</div><div class="rec-sub">2025 Top-8 average</div></div></div>
+      <div class="rec-card"><div class="rec-icon">⛳</div><div><div class="rec-val blue">42</div><div class="rec-label">Rounds Played</div><div class="rec-sub">2023 – 2026</div></div></div>
+      <div class="rec-card"><div class="rec-icon">🎯</div><div><div class="rec-val gold">H16</div><div class="rec-label">Best Hole</div><div class="rec-sub">Sub-par avg (par 5)</div></div></div>
+    </div>
+  </section>
+
+  <!-- CAREER TREND -->
+  <section class="section">
+    <div class="section-title">Season Average Trend</div>
+    <div class="chart-wrap">
+      <canvas id="careerChart"></canvas>
+    </div>
+  </section>
+
+</div>
+<div class="footer">Big Perm Golf League · Glenview Golf Club · Data from league spreadsheets</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+const PAR=[4,4,4,4,4,3,5,4,3,3,4,4,4,4,4,5,3,4];
+const HOLE_HC=[11,7,9,3,5,17,1,13,15,16,2,10,12,6,14,4,18,8];
+
+const allRounds={
+  2026:[
+    {d:'Apr 26',gross:89,hc:12,net:77,
+     holes:[5,5,6,5,5,4,6,4,4,4,5,5,5,5,5,7,4,5],
+     b:0,p:1,bo:14,dbl:2,t:0}
+  ],
+  2025:[
+    {d:'May 25',gross:88,hc:14,net:74,holes:[5,5,6,5,6,3,6,4,3,3,5,5,5,6,5,6,4,6],b:0,p:4,bo:10,dbl:4,t:0},
+    {d:'Jun 1', gross:83,hc:14,net:69,holes:[4,5,5,6,5,4,4,4,3,4,5,4,6,6,6,4,3,5],b:2,p:5,bo:7,dbl:4,t:0},
+    {d:'Jun 8', gross:86,hc:13,net:73,holes:[5,5,5,5,4,6,6,4,4,5,5,4,7,6,4,4,3,4],b:1,p:6,bo:7,dbl:2,t:2},
+    {d:'Jun 22',gross:91,hc:13,net:78,holes:[5,5,5,5,4,4,8,5,4,4,7,4,5,6,4,6,4,6],b:0,p:3,bo:11,dbl:2,t:2},
+    {d:'Jun 29',gross:84,hc:14,net:70,holes:[6,5,5,5,5,4,5,5,5,3,4,4,6,5,5,5,4,3],b:1,p:5,bo:9,dbl:3,t:0},
+    {d:'Jul 6', gross:95,hc:13,net:82,holes:[6,4,5,6,4,6,7,4,4,4,5,5,7,5,6,5,5,7],b:0,p:4,bo:6,dbl:5,t:3},
+    {d:'Jul 13',gross:82,hc:13,net:69,holes:[4,5,5,4,5,4,5,4,4,4,5,6,4,5,5,5,4,4],b:0,p:7,bo:10,dbl:1,t:0},
+    {d:'Jul 20',gross:85,hc:12,net:73,holes:[5,6,6,6,7,4,5,4,4,3,3,4,5,5,5,6,3,4],b:1,p:6,bo:7,dbl:3,t:1},
+    {d:'Jul 27',gross:89,hc:12,net:77,holes:[6,5,5,5,5,3,7,5,4,3,5,5,5,5,5,6,3,7],b:0,p:3,bo:12,dbl:2,t:1},
+    {d:'Aug 3', gross:81,hc:12,net:69,holes:[4,4,5,7,6,4,6,3,3,3,4,5,4,4,6,4,3,6],b:2,p:8,bo:4,dbl:3,t:1},
+    {d:'Aug 31',gross:74,hc:12,net:62,holes:[3,3,4,4,5,4,5,4,3,3,5,6,4,5,4,5,3,4],b:2,p:11,bo:4,dbl:1,t:0,record:true},
+    {d:'Sep 7', gross:86,hc:10,net:76,holes:[4,5,5,5,5,5,5,5,5,4,5,6,5,5,4,5,4,4],b:0,p:5,bo:10,dbl:3,t:0}
+  ],
+  2024:[
+    {d:'Apr 28',gross:86,hc:15,net:71,holes:[5,5,5,5,5,5,6,3,3,5,6,7,4,5,5,5,3,4],b:1,p:5,bo:8,dbl:3,t:0},
+    {d:'May 5', gross:77,hc:15,net:62,holes:[4,4,5,5,5,3,6,3,4,3,5,5,4,4,4,6,3,4],b:1,p:9,bo:8,dbl:0,t:0},
+    {d:'May 12',gross:81,hc:13,net:68,holes:[4,5,5,5,5,3,6,3,4,4,5,6,4,4,5,6,3,4],b:1,p:6,bo:10,dbl:1,t:0},
+    {d:'May 26',gross:84,hc:12,net:72,holes:[4,5,5,5,6,5,7,4,2,5,5,4,4,5,5,6,3,4],b:1,p:6,bo:7,dbl:4,t:0},
+    {d:'Jun 2', gross:87,hc:13,net:74,holes:[4,4,4,5,6,4,7,5,4,3,5,5,5,5,7,7,3,4],b:0,p:6,bo:8,dbl:3,t:0},
+    {d:'Jun 9', gross:84,hc:13,net:71,holes:[5,5,7,6,5,3,5,5,5,4,5,4,4,5,4,5,3,4],b:0,p:8,bo:7,dbl:2,t:0},
+    {d:'Jun 23',gross:81,hc:13,net:68,holes:[3,6,6,6,4,5,6,3,3,4,4,5,4,4,5,5,3,5],b:2,p:7,bo:5,dbl:4,t:0},
+    {d:'Jun 30',gross:86,hc:12,net:74,holes:[5,4,4,5,4,4,6,6,6,4,6,3,5,4,5,7,3,5],b:1,p:5,bo:8,dbl:3,t:0},
+    {d:'Jul 7', gross:87,hc:12,net:75,holes:[5,4,6,6,4,4,5,5,5,3,5,5,6,5,4,6,4,5],b:0,p:5,bo:9,dbl:4,t:0},
+    {d:'Jul 21',gross:80,hc:13,net:67,holes:[4,4,3,5,5,3,5,4,4,4,6,7,5,4,4,5,3,5],b:1,p:9,bo:6,dbl:1,t:0},
+    {d:'Aug 11',gross:87,hc:13,net:74,holes:[6,5,6,4,4,4,6,4,5,4,7,4,4,5,7,5,3,4],b:0,p:8,bo:5,dbl:3,t:0},
+    {d:'Aug 25',gross:88,hc:13,net:75,holes:[6,5,5,4,4,4,6,5,4,3,5,5,6,5,6,7,3,5],b:0,p:4,bo:10,dbl:4,t:0},
+    {d:'Sep 1', gross:82,hc:13,net:69,holes:[4,4,5,4,6,3,5,5,4,6,5,5,4,5,4,5,4,4],b:0,p:9,bo:7,dbl:1,t:0}
+  ],
+  2023:[
+    {d:'Apr 30',gross:89,hc:14,net:75,holes:[6,5,7,6,5,4,5,5,3,4,5,6,4,5,6,6,3,4],b:0,p:5,bo:8,dbl:4,t:1},
+    {d:'May 7', gross:81,hc:14,net:67,holes:[5,6,5,4,5,4,7,5,3,4,4,4,4,4,4,5,3,5],b:0,p:9,bo:7,dbl:2,t:0},
+    {d:'May 21',gross:85,hc:13,net:72,holes:[5,5,5,5,5,4,6,5,4,6,4,4,4,5,4,5,4,5],b:0,p:4,bo:12,dbl:1,t:0},
+    {d:'May 28',gross:86,hc:14,net:72,holes:[4,6,5,6,7,3,5,4,4,4,6,4,5,5,6,4,4,4],b:1,p:6,bo:6,dbl:5,t:0},
+    {d:'Jun 4', gross:88,hc:13,net:75,holes:[5,6,7,5,5,2,6,4,4,5,5,5,4,5,4,7,4,5],b:1,p:5,bo:8,dbl:2,t:1},
+    {d:'Jun 11',gross:89,hc:13,net:76,holes:[6,5,5,5,6,3,6,5,3,4,4,5,6,5,5,6,4,6],b:0,p:6,bo:8,dbl:4,t:0},
+    {d:'Jun 25',gross:90,hc:15,net:75,holes:[5,5,5,5,6,3,8,4,4,4,6,5,5,5,6,5,4,5],b:0,p:4,bo:10,dbl:3,t:1},
+    {d:'Jul 2', gross:87,hc:15,net:72,holes:[5,5,4,7,5,4,7,5,4,4,5,5,5,4,5,5,4,4],b:0,p:7,bo:8,dbl:2,t:1},
+    {d:'Jul 9', gross:84,hc:15,net:69,holes:[4,5,5,5,5,4,5,5,4,5,4,6,4,5,5,6,2,5],b:1,p:5,bo:10,dbl:1,t:0},
+    {d:'Jul 16',gross:91,hc:14,net:77,holes:[5,5,6,5,7,4,6,7,4,3,6,6,5,4,5,4,5,4],b:1,p:4,bo:9,dbl:3,t:1},
+    {d:'Jul 23',gross:86,hc:14,net:72,holes:[4,5,5,5,4,3,7,5,4,5,5,5,5,5,6,5,4,4],b:0,p:6,bo:9,dbl:2,t:1},
+    {d:'Aug 6', gross:85,hc:15,net:70,holes:[6,4,5,5,5,4,5,5,4,4,6,6,5,5,4,5,3,4],b:0,p:6,bo:10,dbl:2,t:0},
+    {d:'Aug 13',gross:85,hc:14,net:71,holes:null,b:0,p:0,bo:0,dbl:0,t:0},
+    {d:'Aug 27',gross:87,hc:14,net:73,holes:null,b:0,p:0,bo:0,dbl:0,t:0},
+    {d:'Sep 3', gross:90,hc:15,net:75,holes:null,b:0,p:0,bo:0,dbl:0,t:0}
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// TRADITIONAL SCORECARD RENDERER
+// ═══════════════════════════════════════════════
+function markClass(score,par){
+  const d=score-par;
+  if(d<=-2) return 'sc-eagle';
+  if(d===-1) return 'sc-birdie';
+  if(d===0)  return 'sc-par';
+  if(d===1)  return 'sc-bogey';
+  if(d===2)  return 'sc-double';
+  return 'sc-triple';
+}
+
+function netClass(net,year){
+  if(!net) return '';
+  // Season lows roughly: 2025→69 avg, 2024→70 avg, 2023→71 avg
+  if(net<=67) return 'sc-net-good';
+  if(net>=78) return 'sc-net-bad';
+  return 'sc-net-ok';
+}
+
+function renderScorecardTable(year){
+  const el=document.getElementById('sc-'+year);
+  if(!el) return;
+  const rounds=allRounds[year]||[];
+  const f9p=PAR.slice(0,9).reduce((a,v)=>a+v,0);
+  const b9p=PAR.slice(9).reduce((a,v)=>a+v,0);
+
+  let html=`<div class="sc-wrap"><table class="sc-table">
+  <thead>
+    <tr class="row-section">
+      <th class="sc-date"></th>
+      <th colspan="9">FRONT 9</th>
+      <th class="sc-sep">OUT</th>
+      <th colspan="9">BACK 9</th>
+      <th class="sc-sep">IN</th>
+      <th class="sc-tot">GRS</th>
+      <th class="sc-hc">HC</th>
+      <th class="sc-net">NET</th>
+    </tr>
+    <tr class="row-holes">
+      <th class="sc-date">Hole</th>
+      ${[1,2,3,4,5,6,7,8,9].map(n=>`<th>${n}</th>`).join('')}
+      <th class="sc-sep"></th>
+      ${[10,11,12,13,14,15,16,17,18].map(n=>`<th>${n}</th>`).join('')}
+      <th class="sc-sep"></th>
+      <th class="sc-tot"></th>
+      <th class="sc-hc"></th>
+      <th class="sc-net"></th>
+    </tr>
+    <tr class="row-par">
+      <td class="sc-date" style="color:var(--gray);font-size:.65rem">Par</td>
+      ${PAR.slice(0,9).map(p=>`<td>${p}</td>`).join('')}
+      <td class="sc-sep">${f9p}</td>
+      ${PAR.slice(9).map(p=>`<td>${p}</td>`).join('')}
+      <td class="sc-sep">${b9p}</td>
+      <td class="sc-tot">70</td>
+      <td class="sc-hc"></td>
+      <td class="sc-net"></td>
+    </tr>
+    <tr class="row-hcidx">
+      <td class="sc-date" style="color:#3a5a3a;font-size:.58rem">Hdcp</td>
+      ${HOLE_HC.slice(0,9).map(h=>`<td>${h}</td>`).join('')}
+      <td class="sc-sep"></td>
+      ${HOLE_HC.slice(9).map(h=>`<td>${h}</td>`).join('')}
+      <td class="sc-sep"></td>
+      <td class="sc-tot"></td>
+      <td class="sc-hc"></td>
+      <td class="sc-net"></td>
+    </tr>
+  </thead>
+  <tbody>`;
+
+  rounds.forEach(r=>{
+    const hasHoles=r.holes&&r.holes.length===18;
+    const f9=hasHoles?r.holes.slice(0,9).reduce((a,v)=>a+v,0):'—';
+    const b9=hasHoles?r.holes.slice(9).reduce((a,v)=>a+v,0):'—';
+    const nc=r.record?'sc-net-rec':netClass(r.net,year);
+    const recBadge=r.record?`<span style="display:block;font-size:.44rem;background:var(--gold);color:#000;padding:.07rem .22rem;border-radius:2px;font-weight:800;letter-spacing:.4px;line-height:1.3;margin-top:.15rem">REC</span>`:'';
+
+    html+=`<tr>
+      <td class="sc-date">${r.d}</td>`;
+
+    // Front 9
+    for(let i=0;i<9;i++){
+      if(hasHoles){
+        const cls=markClass(r.holes[i],PAR[i]);
+        html+=`<td><span class="sc ${cls}">${r.holes[i]}</span></td>`;
+      } else {
+        html+=`<td><span class="sc sc-empty">—</span></td>`;
+      }
+    }
+    html+=`<td class="sc-sep">${f9}</td>`;
+
+    // Back 9
+    for(let i=9;i<18;i++){
+      if(hasHoles){
+        const cls=markClass(r.holes[i],PAR[i]);
+        html+=`<td><span class="sc ${cls}">${r.holes[i]}</span></td>`;
+      } else {
+        html+=`<td><span class="sc sc-empty">—</span></td>`;
+      }
+    }
+    html+=`<td class="sc-sep">${b9}</td>
+      <td class="sc-tot">${r.gross}</td>
+      <td class="sc-hc">${r.hc||'—'}</td>
+      <td class="sc-net ${nc}" style="vertical-align:middle;text-align:center;line-height:1.1"><span>${r.net||'—'}</span>${recBadge}</td>
+    </tr>`;
+  });
+
+  html+=`</tbody></table></div>
+  <div class="sc-legend">
+    <span class="sc-legend-item"><span class="sc sc-eagle" style="pointer-events:none">3</span> Eagle</span>
+    <span class="sc-legend-item"><span class="sc sc-birdie" style="pointer-events:none">3</span> Birdie</span>
+    <span class="sc-legend-item"><span class="sc sc-par" style="pointer-events:none">4</span> Par</span>
+    <span class="sc-legend-item"><span class="sc sc-bogey" style="pointer-events:none">5</span> Bogey</span>
+    <span class="sc-legend-item"><span class="sc sc-double" style="pointer-events:none">6</span> Double</span>
+    <span class="sc-legend-item"><span class="sc sc-triple" style="pointer-events:none">7</span> Triple+</span>
+  </div>
+  <div class="sc-swipe-hint">← swipe to see all 18 holes →</div>`;
+
+  el.innerHTML=html;
+}
+
+// YEAR TABS
+function showYear(yr,el){
+  document.querySelectorAll('.year-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ytab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('year-'+yr).classList.add('active');
+  el.classList.add('active');
+}
+
+// Render all scorecard tables
+[2026,2025,2024,2023].forEach(y=>renderScorecardTable(y));
+
+// ═══════════════════════════════════════════════
+// SCORE PROGRESSION CHART
+// ═══════════════════════════════════════════════
+(function(){
+  const all=[
+    ...allRounds[2023].map(r=>({label:'23 '+r.d,net:r.net,gross:r.gross,yr:2023})),
+    ...allRounds[2024].map(r=>({label:'24 '+r.d,net:r.net,gross:r.gross,yr:2024})),
+    ...allRounds[2025].map(r=>({label:'25 '+r.d,net:r.net,gross:r.gross,yr:2025})),
+    ...allRounds[2026].map(r=>({label:'26 '+r.d,net:r.net,gross:r.gross,yr:2026}))
+  ];
+  const ctx=document.getElementById('scoreChart').getContext('2d');
+  new Chart(ctx,{type:'line',data:{
+    labels:all.map(r=>r.label),
+    datasets:[
+      {label:'Net Score',data:all.map(r=>r.net),borderColor:'#4a9eff',backgroundColor:'rgba(74,158,255,.06)',
+       pointBackgroundColor:all.map(r=>r.net<=66?'#27ae60':r.net>=78?'#e74c3c':'#4a9eff'),
+       pointRadius:4,borderWidth:2,tension:.3,fill:true},
+      {label:'Gross Score',data:all.map(r=>r.gross),borderColor:'rgba(240,192,64,.5)',backgroundColor:'transparent',
+       pointBackgroundColor:'rgba(240,192,64,.6)',pointRadius:3,borderWidth:1.5,tension:.3,fill:false,borderDash:[4,4]}
+    ]
+  },options:{responsive:true,plugins:{
+    legend:{labels:{color:'#5a7a5a',font:{size:11}}},
+    tooltip:{backgroundColor:'rgba(14,20,14,.95)',borderColor:'rgba(74,158,255,.3)',borderWidth:1,titleColor:'#4a9eff',bodyColor:'#e8f0e8'}
+  },scales:{
+    x:{ticks:{color:'#3a5a3a',font:{size:9},maxRotation:45},grid:{color:'rgba(36,48,36,.4)'}},
+    y:{min:58,max:98,ticks:{color:'#3a5a3a',font:{size:10},stepSize:5},grid:{color:'rgba(36,48,36,.4)'}}
+  }}});
+})();
+
+// ═══════════════════════════════════════════════
+// HANDICAP CHART
+// ═══════════════════════════════════════════════
+(function(){
+  const all=[
+    ...allRounds[2023].filter(r=>r.hc).map(r=>({label:'23 '+r.d,hc:r.hc})),
+    ...allRounds[2024].filter(r=>r.hc).map(r=>({label:'24 '+r.d,hc:r.hc})),
+    ...allRounds[2025].filter(r=>r.hc).map(r=>({label:'25 '+r.d,hc:r.hc})),
+    ...allRounds[2026].filter(r=>r.hc).map(r=>({label:'26 '+r.d,hc:r.hc}))
+  ];
+  const ctx=document.getElementById('hcChart').getContext('2d');
+  new Chart(ctx,{type:'line',data:{
+    labels:all.map(r=>r.label),
+    datasets:[{
+      label:'Handicap',data:all.map(r=>r.hc),
+      borderColor:'#f0c040',backgroundColor:'rgba(240,192,64,.06)',
+      pointBackgroundColor:'#f0c040',pointRadius:5,borderWidth:2.5,tension:.25,fill:true,
+      pointHoverRadius:7
+    }]
+  },options:{responsive:true,plugins:{
+    legend:{labels:{color:'#5a7a5a',font:{size:11}}},
+    tooltip:{backgroundColor:'rgba(14,20,14,.95)',borderColor:'rgba(240,192,64,.3)',borderWidth:1,titleColor:'#f0c040',bodyColor:'#e8f0e8',
+      callbacks:{label:ctx=>`HC: ${ctx.parsed.y}`}}
+  },scales:{
+    x:{ticks:{color:'#3a5a3a',font:{size:9},maxRotation:45},grid:{color:'rgba(36,48,36,.4)'}},
+    y:{min:8,max:17,reverse:false,ticks:{color:'#3a5a3a',font:{size:10},stepSize:1},grid:{color:'rgba(36,48,36,.4)'},
+       title:{display:true,text:'Handicap',color:'#5a7a5a',font:{size:10}}}
+  }}});
+})();
+
+// ═══════════════════════════════════════════════
+// HEATMAP
+// ═══════════════════════════════════════════════
+let hmYear='2025', hmMode='gross';
+
+function computeHoleAvgs(yr, mode){
+  const rounds=(allRounds[yr]||[]).filter(r=>r.holes&&r.holes.length===18);
+  if(!rounds.length) return PAR.map(p=>p);
+  const totals=new Array(18).fill(0);
+  rounds.forEach(r=>{
+    for(let i=0;i<18;i++){
+      // In net mode subtract 1 stroke on holes where HOLE_HC[i] <= player's HC that round
+      const stroke=(mode==='net'&&HOLE_HC[i]<=r.hc)?1:0;
+      totals[i]+=r.holes[i]-stroke;
+    }
+  });
+  return totals.map(t=>t/rounds.length);
+}
+function heatColor(diff){
+  if(diff<=-0.5) return 'var(--eagle)';
+  if(diff<0)     return 'var(--birdie)';
+  if(diff<0.4)   return 'var(--par-c)';
+  if(diff<0.8)   return 'var(--bogey)';
+  if(diff<1.3)   return 'var(--double)';
+  return 'var(--triple)';
+}
+function heatTextColor(diff){
+  if(diff<=-0.5) return 'var(--eagle-t)';
+  if(diff<0)     return 'var(--birdie-t)';
+  if(diff<0.4)   return 'var(--par-t)';
+  if(diff<0.8)   return 'var(--bogey-t)';
+  if(diff<1.3)   return 'var(--double-t)';
+  return 'var(--triple-t)';
+}
+function buildHeatmapCell(i, avgs){
+  const diff=avgs[i]-PAR[i];
+  const bg=heatColor(diff);const txt=heatTextColor(diff);
+  const sign=diff>=0?'+':'';
+  const cell=document.createElement('div');
+  cell.className='hm-cell';
+  cell.innerHTML=`<div class="hm-hole-num">${i+1}</div>
+  <div class="hm-val" style="background:${bg};color:${txt}">${avgs[i].toFixed(1)}</div>
+  <div class="hm-diff">${sign}${diff.toFixed(1)}</div>`;
+  return cell;
+}
+function buildHeatmap(yr, mode){
+  if(yr)   hmYear=yr;
+  if(mode) hmMode=mode;
+  const front=document.getElementById('heatmap-front');
+  const back=document.getElementById('heatmap-back');
+  front.innerHTML='';back.innerHTML='';
+  const avgs=computeHoleAvgs(hmYear,hmMode);
+  for(let i=0;i<9;i++)  front.appendChild(buildHeatmapCell(i,avgs));
+  for(let i=9;i<18;i++) back.appendChild(buildHeatmapCell(i,avgs));
+  document.getElementById('hm-sub').textContent=
+    `${hmYear} — avg ${hmMode} per hole vs par`;
+}
+function showHeatmap(yr,el){
+  document.querySelectorAll('#hm-yr-tabs .ytab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  buildHeatmap(yr, null);
+}
+function toggleHeatmapMode(mode,el){
+  document.querySelectorAll('.hm-tog').forEach(t=>t.classList.remove('hm-tog-active'));
+  el.classList.add('hm-tog-active');
+  buildHeatmap(null, mode);
+}
+buildHeatmap('2025','gross');
+
+// ═══════════════════════════════════════════════
+// CAREER TREND CHART
+// ═══════════════════════════════════════════════
+(function(){
+  const ctx=document.getElementById('careerChart').getContext('2d');
+  new Chart(ctx,{type:'bar',data:{
+    labels:['2023 🏆','2024 🏆','2025 🥈','2026'],
+    datasets:[
+      {label:'Season Net Avg',data:[71.3,70.77,69.88,77],
+       backgroundColor:['rgba(74,158,255,.3)','rgba(74,158,255,.55)','rgba(74,158,255,.8)','rgba(74,158,255,.2)'],
+       borderColor:'#4a9eff',borderWidth:2,borderRadius:6},
+      {label:'Season Low',data:[67,62,62,77],type:'line',
+       borderColor:'rgba(240,192,64,.6)',backgroundColor:'transparent',
+       pointBackgroundColor:'#f0c040',pointRadius:6,borderWidth:2,fill:false,tension:.2}
+    ]
+  },options:{responsive:true,plugins:{
+    legend:{labels:{color:'#5a7a5a',font:{size:11}}},
+    tooltip:{backgroundColor:'rgba(14,20,14,.95)',borderColor:'rgba(74,158,255,.3)',borderWidth:1,titleColor:'#4a9eff',bodyColor:'#e8f0e8'}
+  },scales:{
+    x:{ticks:{color:'#5a7a5a',font:{size:11}},grid:{color:'rgba(36,48,36,.4)'}},
+    y:{min:58,max:80,ticks:{color:'#3a5a3a',font:{size:10},stepSize:3},grid:{color:'rgba(36,48,36,.4)'}}
+  }}});
+})();
+</script>
+</body>
+</html>

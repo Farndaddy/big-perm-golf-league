@@ -1,0 +1,6 @@
+# Spreadsheets (data source, not part of the website)
+*.xlsx
+*.csv
+.DS_Store
+__pycache__/
+*.pyc

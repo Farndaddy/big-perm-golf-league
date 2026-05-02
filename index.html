@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Perm Golf League</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080f08;--bg2:#0f1f0f;--card:#121f12;--card2:#1a2e1a;
+  --gold:#f0c040;--gold2:#c8a030;--green:#3a8a3a;--bright:#4caf50;
+  --white:#f0f0f0;--gray:#7a8f7a;--red:#e05050;--border:#243824;
+  --nav-h:52px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.5}
+
+/* HEADER */
+header{background-image:url('IMG_4776.jpeg');background-size:cover;background-position:center 65%;border-bottom:3px solid var(--gold);padding:3.5rem 1rem 2.5rem;text-align:center;position:relative;overflow:hidden;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+header::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,4,.72) 0%,rgba(6,14,6,.60) 40%,rgba(4,10,4,.82) 100%);pointer-events:none}
+header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(240,192,64,.07) 0%,transparent 65%);pointer-events:none}
+header>*{position:relative;z-index:1}
+.mascot-wrap{position:relative;width:110px;height:110px;margin:0 auto 1rem}
+.mascot-ring{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);overflow:hidden;box-shadow:0 0 0 4px rgba(240,192,64,.15),0 8px 32px rgba(0,0,0,.6)}
+.mascot-ring img{width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block}
+.mascot-glow{position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,.18) 0%,transparent 70%);animation:glow-pulse 2.5s ease-in-out infinite;pointer-events:none}
+@keyframes glow-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+.badge{display:inline-block;background:var(--gold);color:#000;font-size:.65rem;font-weight:800;letter-spacing:3px;padding:4px 14px;border-radius:2px;margin-bottom:.75rem;text-transform:uppercase}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,12vw,8rem);letter-spacing:6px;line-height:.88;color:var(--white);text-shadow:0 4px 30px rgba(0,0,0,.8),0 0 60px rgba(240,192,64,.2)}
+h1 span{color:var(--gold)}
+.tagline{color:rgba(240,240,240,.75);font-size:.8rem;letter-spacing:3px;margin-top:.75rem;text-transform:uppercase;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(14,30,14,.8);border:1px solid #2a4a2a;border-radius:20px;padding:5px 16px;font-size:.7rem;color:#5ab85a;margin-top:1rem;letter-spacing:1px;backdrop-filter:blur(4px)}
+.live-dot{width:6px;height:6px;background:var(--bright);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+/* NAV */
+nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;justify-content:center;overflow-x:auto;position:sticky;top:0;z-index:100;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:none;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:2px;padding:.9rem 1.2rem;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+nav button:hover{color:var(--white);background:rgba(255,255,255,.03)}
+nav button.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* SECTIONS */
+.section{display:none;max-width:1100px;margin:0 auto;padding:2rem 1rem 3rem}
+.section.active{display:block}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;color:var(--gold);margin-bottom:.2rem}
+.sec-sub{color:var(--gray);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.75rem}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
+
+/* LEADERBOARD */
+.lb{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:2rem}
+.lb-head,.lb-row{display:grid;grid-template-columns:56px 1fr 100px 90px 90px 90px;padding:.7rem 1.25rem;align-items:center}
+.lb-head{background:var(--card2);font-size:.65rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;border-bottom:1px solid var(--border)}
+.lb-row{border-bottom:1px solid var(--border);transition:background .15s}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:rgba(255,255,255,.025)}
+.lb-row.r1{background:linear-gradient(90deg,rgba(240,192,64,.07) 0%,transparent 60%)}
+.lb-head div:not(:first-child),.stat{text-align:right}
+.rank{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gray)}
+.r1 .rank{color:var(--gold)}.r2 .rank{color:#b0b8b0}.r3 .rank{color:#a07840}
+.pname{font-size:1rem;font-weight:700}
+.r1 .pname{color:var(--gold)}
+.pbadge{font-size:.6rem;background:var(--gold);color:#000;padding:2px 6px;border-radius:2px;margin-left:7px;font-weight:800;letter-spacing:1px;vertical-align:middle}
+.stat{font-size:1rem;font-weight:600}
+.stat.gold{color:var(--gold)}.stat.good{color:#4caf50}.stat.dim{color:var(--gray)}
+
+/* CHAMPION MINI CARD */
+.champ-mini{background:linear-gradient(135deg,rgba(15,25,8,.95) 0%,rgba(26,46,14,.95) 100%);border:1px solid var(--gold);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.champ-mini::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.champ-mini-inner{display:flex;align-items:center;gap:1.25rem}
+.champ-mini-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 0 0 3px rgba(240,192,64,.12),0 4px 16px rgba(0,0,0,.5)}
+.champ-mini-badge{font-size:.6rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:.15rem}
+.champ-mini-name{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--white);letter-spacing:4px;line-height:1}
+.champ-mini-stats{font-size:.75rem;color:var(--gray);margin-top:.25rem}
+.champ-mini-trophy{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:2.5rem;opacity:.25}
+
+/* FUN STAT CARDS */
+.fun-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:2.5rem}
+.fun-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;position:relative;overflow:hidden}
+.fun-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.fun-card-player{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--gold);margin-bottom:.4rem}
+.fun-card-stat{font-size:.88rem;line-height:1.5;color:var(--white)}
+.fun-card-icon{font-size:1.5rem;margin-bottom:.5rem}
+
+/* FLIP PLAYER CARDS */
+.player-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem;margin-bottom:2rem}
+.flip-card{height:300px;cursor:pointer;perspective:1000px}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.flip-front{border:1px solid var(--border)}
+.flip-back{transform:rotateY(180deg);background:var(--card2);border:2px solid var(--gold);display:flex;flex-direction:column;justify-content:flex-start;padding:1rem}
+.flip-front-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.flip-front-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(4,10,4,.95) 0%,rgba(4,10,4,.5) 60%,transparent 100%);padding:1rem}
+.flip-front-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--white);line-height:1}
+.flip-front-hc{display:inline-block;background:var(--gold);color:#000;font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:3px;margin-top:.3rem;letter-spacing:1px}
+.flip-front-hint{font-size:.62rem;color:rgba(240,240,240,.5);margin-top:.3rem;letter-spacing:1px}
+.flip-back-type{font-size:.55rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:.3rem}
+.flip-back-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:.6rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:.22rem 0;border-bottom:1px solid rgba(36,56,36,.5)}
+.stat-row:last-child{border-bottom:none}
+.stat-row-label{font-size:.6rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase}
+.stat-row-val{font-size:.85rem;font-weight:700;color:var(--white);white-space:nowrap}
+.stat-row-val.gold{color:var(--gold)}
+
+/* SCORE TABLE */
+.tbl-wrap{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow-x:auto;margin-bottom:1.5rem}
+.tbl-label{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;padding:.9rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:400px}
+th{background:var(--card2);color:var(--gray);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem .75rem;text-align:center;white-space:nowrap;position:sticky;top:var(--nav-h);z-index:2}
+th:first-child{text-align:left}
+/* Sticky first column — Player/Date stays visible on horizontal scroll */
+.tbl-wrap table td:first-child{position:sticky;left:0;z-index:1;background:var(--card)}
+.tbl-wrap table thead th:first-child{position:sticky;left:0;z-index:4;background:var(--card2)}
+.tbl-wrap table tfoot td:first-child{position:sticky;left:0;z-index:1;background:var(--card2)}
+td{padding:.55rem .75rem;text-align:center;border-bottom:1px solid var(--border);font-weight:500}
+td:first-child{text-align:left;color:var(--gray);font-size:.78rem;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+tfoot td{font-weight:700;background:var(--card2)}
+tfoot td:first-child{color:var(--gray)}
+.sc-best{color:#4caf50;font-weight:700}.sc-worst{color:var(--red)}.sc-low{color:var(--gold);font-weight:800}
+.sc-dash{color:var(--border)}.sc-note{color:var(--gray);font-style:italic;font-size:.75rem}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;gap:.4rem}
+.tog-btn{background:var(--card2);border:1px solid var(--border);border-radius:5px;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:1px;padding:.3rem .9rem;cursor:pointer;transition:all .2s}
+.tog-btn.active{background:var(--gold);color:#000;border-color:var(--gold)}
+
+/* YEAR ACHIEVEMENT BOXES */
+.achiev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.85rem;margin-bottom:1.5rem}
+.achiev-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.1rem;border-left:3px solid var(--gold)}
+.achiev-icon{font-size:1.3rem;margin-bottom:.4rem}
+.achiev-text{font-size:.83rem;line-height:1.5;color:var(--white)}
+.achiev-text strong{color:var(--gold)}
+
+/* YEAR TABS (History) */
+.ytabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.ytab{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:.45rem 1.2rem;cursor:pointer;transition:all .2s}
+.ytab:hover{color:var(--white)}
+.ytab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.ycontent{display:none}
+.ycontent.active{display:block}
+
+/* STATS YEAR TABS */
+.stabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.stab{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:.45rem 1.2rem;cursor:pointer;transition:all .2s}
+.stab:hover{color:var(--white)}
+.stab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.s-ycontent{display:none}
+.s-ycontent.active{display:block}
+
+/* CHAMPIONS ROW */
+.champs-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.champ-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center}
+.champ-card.current{border-color:var(--gold);background:linear-gradient(135deg,#131f06 0%,#1f3810 100%)}
+.cc-year{font-size:.65rem;letter-spacing:3px;color:var(--gray);text-transform:uppercase}
+.cc-icon{font-size:1.8rem;margin:.3rem 0}
+.cc-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
+.cc-avg{font-size:.8rem;color:var(--gray)}
+
+/* HOLE STATS */
+.above{color:var(--red)}.even{color:var(--gray)}.under{color:var(--bright);font-weight:700}.way-under{color:var(--gold);font-weight:800}
+
+/* SIDE BETS */
+.bet-year-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.bet-ytab{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:.45rem 1.2rem;cursor:pointer;transition:all .2s}
+.bet-ytab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.bet-ycontent{display:none}
+.bet-ycontent.active{display:block}
+.bet-row{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;margin-bottom:.75rem}
+.bet-row-left{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.winner-photo{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);flex-shrink:0}
+.winner-initials{width:52px;height:52px;border-radius:50%;background:var(--card2);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);flex-shrink:0}
+.bet-details{}
+.bet-category{font-size:.65rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:.2rem}
+.bet-winner-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--white);line-height:1;margin-bottom:.2rem}
+.bet-detail{font-size:.8rem;color:var(--gray)}
+.bet-amt{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);text-align:right;white-space:nowrap}
+
+/* ALL TIME TRACKER TABLE */
+.tracker-wrap{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow-x:auto;margin-bottom:2rem}
+.tracker-label{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.tracker-table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:700px}
+.tracker-table th{background:var(--card2);color:var(--gray);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem .6rem;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:var(--nav-h);z-index:2}
+.tracker-table th:first-child{text-align:left}
+.tracker-table td{padding:.6rem .6rem;text-align:center;border-bottom:1px solid var(--border)}
+.tracker-table td:first-child{text-align:left;font-weight:700}
+.tracker-table tr:last-child td{border-bottom:none}
+.tracker-table tr:hover td{background:rgba(255,255,255,.02)}
+.win-badge{display:inline-block;background:var(--gold);color:#000;font-weight:800;border-radius:4px;padding:2px 8px;font-size:.8rem;min-width:24px}
+.zero-badge{color:var(--border);font-size:.9rem}
+
+/* RECORDS */
+.records{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+.rec-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center}
+.rec-icon{font-size:1.5rem;margin-bottom:.4rem}
+.rec-label{font-size:.65rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:.2rem}
+.rec-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold)}
+.rec-sub{font-size:.75rem;color:var(--gray);margin-top:.2rem}
+
+/* SCHEDULE ATTENDANCE */
+.sched-attend-wrap{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow-x:auto;margin-bottom:1.5rem}
+.sched-attend{width:100%;border-collapse:collapse;font-size:.82rem;min-width:520px}
+.sched-attend th{background:var(--card2);color:var(--gray);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem .5rem;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;position:static}
+.sched-attend th:nth-child(1),.sched-attend th:nth-child(2){text-align:left}
+.sched-attend td{padding:.5rem .5rem;text-align:center;border-bottom:1px solid var(--border)}
+.sched-attend td:nth-child(1),.sched-attend td:nth-child(2){text-align:left;white-space:nowrap}
+.sched-attend td:nth-child(1){color:var(--gray);font-size:.78rem}
+.sched-attend td:nth-child(2){font-weight:600;font-size:.78rem;color:var(--gray)}
+.sched-attend tr:last-child td{border-bottom:none}
+.sched-attend tr:hover td{background:rgba(255,255,255,.02)}
+.sched-attend tr.played-row td:nth-child(1){color:var(--bright)}
+.sched-attend tr.no-rd td{background:rgba(0,0,0,.15)}
+.sched-attend tr.no-rd td{color:var(--border)}
+.att-in{display:inline-block;background:rgba(76,175,80,.12);color:#4caf50;border:1px solid rgba(76,175,80,.25);border-radius:4px;padding:2px 7px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.att-out{display:inline-block;color:var(--border);font-size:.7rem}
+.att-tbd{display:inline-block;color:var(--gray);font-size:.68rem}
+.att-avail{display:inline-block;background:rgba(255,193,7,.08);color:#ffc107;border:1px solid rgba(255,193,7,.2);border-radius:4px;padding:2px 7px;font-size:.68rem;font-weight:700;white-space:nowrap}
+
+/* SMACK TALK */
+.smack-banner{background:linear-gradient(135deg,#1a1500 0%,#2a2000 100%);border:1px solid rgba(240,192,64,.35);border-radius:12px;padding:1.75rem;margin-bottom:2rem;text-align:center}
+.smack-banner-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:3px}
+.smack-banner p{color:var(--gray);font-size:.85rem;margin-top:.4rem}
+.talk-wall{display:grid;gap:.85rem;margin-bottom:2rem}
+.talk-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.4rem;position:relative;display:flex;gap:1rem;align-items:flex-start}
+.talk-card::before{content:'"';position:absolute;top:-8px;left:14px;font-size:3.5rem;color:var(--gold);opacity:.15;font-family:Georgia,serif;line-height:1}
+.card-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--border);flex-shrink:0}
+.card-body{flex:1;min-width:0}
+.talk-from{font-size:.7rem;font-weight:800;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
+.talk-to{color:var(--gray);font-weight:400}
+.talk-text{font-size:.95rem;line-height:1.55;color:var(--white)}
+.talk-date{font-size:.7rem;color:var(--border);margin-top:.6rem}
+.saying-card{display:flex;gap:1rem;align-items:flex-start}
+.card-delete{position:absolute;top:.6rem;right:.7rem;background:none;border:none;color:var(--border);font-size:.85rem;cursor:pointer;line-height:1;padding:2px 5px;border-radius:4px;transition:color .15s,background .15s}
+.card-delete:hover{color:#ff5555;background:rgba(255,85,85,.08)}
+/* Weekly Shot Cards */
+.wk-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:var(--gold);margin-bottom:.35rem}
+.wk-section-sub{font-size:.78rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.25rem}
+.wk-year-tabs{display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.wk-ytab{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--gray);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;padding:.35rem 1rem;cursor:pointer;transition:all .2s}
+.wk-ytab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.wk-ycontent{display:none}.wk-ycontent.active{display:block}
+.wk-month-block{margin-bottom:3rem}
+.wk-month-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.wk-month-label{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);white-space:nowrap}
+.wk-month-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(240,192,64,.4),transparent)}
+.wk-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.4rem 1.6rem;position:relative;border-left:4px solid var(--pc)}
+.wk-badge{position:absolute;top:-1px;right:14px;font-size:.52rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:0 0 5px 5px}
+.wk-badge.record{background:var(--gold);color:#000}
+.wk-badge.hot{background:#ff4444;color:#fff}
+.wk-badge.champ{background:linear-gradient(90deg,#f0c040,#ffaa00);color:#000}
+.wk-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.wk-week{font-size:.62rem;letter-spacing:1.5px;color:var(--gray);font-weight:700;text-transform:uppercase}
+.wk-score-pill{font-size:.62rem;background:rgba(240,192,64,.08);color:var(--gold);border:1px solid rgba(240,192,64,.2);border-radius:4px;padding:2px 8px;font-weight:800;letter-spacing:1px}
+.wk-text{font-size:.9rem;line-height:1.65;color:var(--white);margin-bottom:.7rem;font-style:italic}
+.wk-from{font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--pc)}
+.wk-arrow{color:var(--gray);font-weight:400}
+.wk-divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+.wk-wall{display:block}
+.wk-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+@media(max-width:700px){.wk-card-grid{grid-template-columns:1fr;gap:1.5rem}}
+.talk-form-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem}
+.talk-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;margin-bottom:1rem;color:var(--white)}
+.post-type-row{display:flex;gap:.6rem;margin-bottom:1.25rem}
+.post-type-btn{flex:1;padding:.65rem 1rem;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--gray);cursor:pointer;transition:all .2s}
+.post-type-btn.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.65rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase}
+.fg select,.fg textarea{background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--white);padding:.6rem .75rem;font-family:'Inter',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:90px}
+.fg-full{grid-column:1/-1}
+.btn-fire{background:var(--gold);color:#000;border:none;border-radius:6px;padding:.7rem 2rem;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.btn-fire:hover{background:var(--gold2)}
+/* League Saying cards */
+.saying-card{background:linear-gradient(135deg,var(--card) 0%,rgba(240,192,64,.05) 100%);border:1px solid rgba(240,192,64,.25);border-radius:10px;padding:1.5rem 1.75rem;text-align:center;position:relative}
+.saying-card::before{content:'\201C';position:absolute;top:-10px;left:16px;font-size:4rem;color:var(--gold);opacity:.25;font-family:Georgia,serif;line-height:1}
+.saying-text{font-size:1rem;line-height:1.6;color:var(--white);font-style:italic;margin-bottom:.75rem}
+.saying-by{font-size:.65rem;font-weight:800;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase}
+.saying-label{display:inline-block;font-size:.52rem;background:rgba(240,192,64,.12);color:var(--gold);border:1px solid rgba(240,192,64,.2);border-radius:3px;padding:2px 7px;letter-spacing:1.5px;font-weight:800;text-transform:uppercase;margin-bottom:.6rem}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);text-align:center;padding:1.5rem;color:var(--gray);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase}
+
+/* ── PROFILE OVERLAY ─────────────────────────── */
+.profile-overlay{position:fixed;inset:0;z-index:500;background:var(--bg);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);overflow:hidden;will-change:transform}
+.profile-overlay.open{transform:translateX(0)}
+.profile-frame{width:100%;height:100%;border:none;display:block}
+.pf-close{position:fixed;top:.85rem;right:.85rem;z-index:600;width:44px;height:44px;border-radius:50%;background:rgba(8,15,8,.9);border:1px solid var(--border);color:var(--white);font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,background .2s,border-color .2s,color .2s;backdrop-filter:blur(8px);line-height:1}
+.pf-close.visible{opacity:1;pointer-events:auto}
+.pf-close:hover{background:rgba(240,192,64,.14);border-color:var(--gold);color:var(--gold)}
+
+/* ── PROFILES TAB ────────────────────────────── */
+.profile-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1.25rem;margin-bottom:2rem}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer}
+.pcard:hover{border-color:rgba(240,192,64,.5);transform:translateY(-3px)}
+.pcard-photo{width:100%;height:210px;object-fit:cover;object-position:center top;display:block}
+.pcard-fallback{width:100%;height:210px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:4.5rem;color:var(--gold)}
+.pcard-body{padding:1.1rem 1.1rem 1.2rem}
+.pcard-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;color:var(--white);line-height:1;margin-bottom:.35rem}
+.pcard-hc{display:inline-block;background:var(--gold);color:#000;font-size:.65rem;font-weight:800;padding:2px 9px;border-radius:3px;letter-spacing:1px;margin-bottom:.75rem}
+.pcard-stats{display:flex;flex-direction:column;gap:.28rem;margin-bottom:.9rem}
+.pcard-stat{display:flex;justify-content:space-between;font-size:.72rem;border-bottom:1px solid rgba(36,56,36,.4);padding-bottom:.2rem}
+.pcard-stat:last-child{border-bottom:none}
+.pcard-stat-label{color:var(--gray)}
+.pcard-stat-val{color:var(--white);font-weight:600}
+.pcard-stat-val.gold{color:var(--gold)}
+.pcard-btn{display:block;width:100%;background:var(--gold);color:#000;border:none;border-radius:8px;padding:.65rem;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:2px;text-align:center;transition:background .2s}
+.pcard:hover .pcard-btn{background:var(--gold2)}
+.pcard-champ-bar{background:linear-gradient(90deg,rgba(240,192,64,.15),transparent);border-top:1px solid rgba(240,192,64,.25);font-size:.62rem;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;padding:.35rem .75rem;text-align:center}
+
+/* flip card profile link */
+.flip-profile-btn{display:block;width:100%;margin-top:.6rem;padding:.35rem;background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.3);border-radius:5px;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:1.5px;text-align:center;cursor:pointer;transition:background .2s}
+.flip-profile-btn:hover{background:rgba(240,192,64,.2)}
+
+@media(max-width:700px){
+  /* Nav — bigger tap targets */
+  nav button{padding:.85rem .9rem;font-size:1rem}
+
+  /* Sections */
+  .section{padding:1.25rem .75rem 2.5rem}
+  .sec-title{font-size:1.9rem}
+
+  /* Leaderboard — hide Best/Last columns */
+  .lb-head,.lb-row{grid-template-columns:46px 1fr 85px 72px}
+  .lb-head div:nth-child(5),.lb-head div:nth-child(6),.lb-row div:nth-child(5),.lb-row div:nth-child(6){display:none}
+  .rank{font-size:1.4rem}
+  .pname{font-size:.92rem}
+  .stat{font-size:.92rem}
+
+  /* Champion mini card */
+  .champ-mini{padding:1rem 1.1rem}
+  .champ-mini-trophy{display:none}
+  .champ-mini-name{font-size:2rem}
+  .champ-mini-photo{width:58px;height:58px}
+
+  /* Fun stat cards — 2 col */
+  .fun-cards{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .fun-card{padding:1.1rem}
+
+  /* Player flip cards — 2 col, taller */
+  .player-cards{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .flip-card{height:280px}
+  .flip-front-name{font-size:1.2rem}
+  .flip-back-name{font-size:1.1rem}
+  .stat-row-label{font-size:.58rem}
+  .stat-row-val{font-size:.8rem}
+
+  /* Tables — readable on mobile */
+  table{font-size:.8rem}
+  th{font-size:.62rem;padding:.65rem .55rem}
+  td{padding:.55rem .55rem;font-size:.8rem}
+  tfoot td{font-size:.78rem}
+
+  /* Score table toggle label */
+  .tbl-label{font-size:1rem;padding:.75rem 1rem}
+
+  /* Achievement cards — 1 col on small screens */
+  .achiev-grid{grid-template-columns:1fr}
+  .achiev-card{padding:1rem}
+
+  /* Champions history cards */
+  .champs-row{grid-template-columns:1fr}
+  .cc-name{font-size:1.7rem}
+
+  /* Year tabs */
+  .ytab,.stab,.bet-ytab{font-size:1rem;padding:.4rem 1rem}
+
+  /* Records — 2 col */
+  .records{grid-template-columns:repeat(2,1fr)}
+
+  /* Side bets */
+  .bet-row{grid-template-columns:1fr;gap:.6rem}
+  .bet-amt{font-size:1.5rem;text-align:left}
+  .bet-winner-name{font-size:1.3rem}
+  .winner-photo,.winner-initials{width:44px;height:44px}
+
+  /* Schedule attendance badges */
+  .att-in,.att-avail,.att-out,.att-tbd{font-size:.62rem;padding:2px 5px}
+  .sched-attend th{font-size:.55rem;padding:.55rem .4rem}
+  .sched-attend td{padding:.45rem .4rem;font-size:.72rem}
+
+  /* Tracker table */
+  .tracker-table{font-size:.75rem}
+  .tracker-table th{font-size:.58rem}
+
+  /* Smack talk form */
+  .form-grid{grid-template-columns:1fr}
+  .talk-text{font-size:.88rem}
+
+  /* Champ mini stats text */
+  .champ-mini-stats{font-size:.7rem}
+}
+
+@media(max-width:420px){
+  /* Very small phones — single column cards */
+  .player-cards{grid-template-columns:1fr 1fr}
+  .flip-card{height:240px}
+  .fun-cards{grid-template-columns:1fr}
+  .records{grid-template-columns:repeat(2,1fr)}
+  nav button{padding:.8rem .7rem;font-size:.9rem;letter-spacing:1px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="mascot-wrap">
+    <div class="mascot-glow"></div>
+    <div class="mascot-ring"><img src="Big_Perm.jpeg" alt="Big Perm"></div>
+  </div>
+  <div class="badge">Est. 2023 · Sunday Golf</div>
+  <h1>BIG <span>PERM</span><br>GOLF LEAGUE</h1>
+  <div class="tagline">Every Sunday. No Excuses. Gotta Finish 7.</div>
+  <div class="live-badge"><span class="live-dot"></span>2026 Season In Progress · Round 1 Complete</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('league',this)">League</button>
+  <button onclick="showTab('history',this)">History</button>
+  <button onclick="showTab('sidebets',this)">Side Bets</button>
+  <button onclick="showTab('stats',this)">Stats</button>
+  <button onclick="showTab('schedule',this)">Schedule</button>
+  <button onclick="showTab('smacktalk',this)">Smack Talk</button>
+  <button onclick="showTab('profiles',this)">Profiles</button>
+</nav>
+
+<!-- ══════════════════════════════ LEAGUE TAB -->
+<div id="league" class="section active">
+
+  <div class="sec-title">2026 Season — Early Look</div>
+  <div class="sec-sub">Round 1 of 20 · April 26, 2026 · Updates every Sunday</div>
+  <div class="lb">
+    <div class="lb-head"><div>Rank</div><div>Player</div><div>Avg</div><div>Rounds</div><div>Best</div><div>Last</div></div>
+    <div class="lb-row r1">
+      <div class="rank">T1</div>
+      <div class="pname">Farnia <span class="pbadge">DEF. CHAMP</span></div>
+      <div class="stat gold">73</div><div class="stat">1</div><div class="stat good">73</div><div class="stat">73</div>
+    </div>
+    <div class="lb-row r1">
+      <div class="rank">T1</div>
+      <div class="pname">Felter</div>
+      <div class="stat gold">73</div><div class="stat">1</div><div class="stat good">73</div><div class="stat">73</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank">3</div>
+      <div class="pname">Owens</div>
+      <div class="stat">77</div><div class="stat">1</div><div class="stat">77</div><div class="stat">77</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank">4</div>
+      <div class="pname">Carter</div>
+      <div class="stat">78</div><div class="stat">1</div><div class="stat">78</div><div class="stat">78</div>
+    </div>
+    <div class="lb-row"><div class="rank dim">—</div><div class="pname dim">Lorenz</div><div class="stat dim">—</div><div class="stat dim">0</div><div class="stat dim">—</div><div class="stat dim">—</div></div>
+  </div>
+
+  <!-- DEFENDING CHAMPION CARD -->
+  <div class="champ-mini">
+    <div class="champ-mini-trophy">🏆</div>
+    <div class="champ-mini-inner">
+      <img class="champ-mini-photo" src="Farnia.png" alt="Farnia">
+      <div>
+        <div class="champ-mini-badge">🏆 Defending Champion · 2025</div>
+        <div class="champ-mini-name">FARNIA</div>
+        <div class="champ-mini-stats">Top-8 Avg: 69.00 · Dethroned the 2-time champ · Best average in league history</div>
+      </div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+  <div class="sec-title">League Legends</div>
+  <div class="sec-sub">One fun fact per player — all receipts kept</div>
+  <div class="fun-cards">
+    <div class="fun-card">
+      <div class="fun-card-icon">⛳</div>
+      <div class="fun-card-player">Kevin Owens</div>
+      <div class="fun-card-stat">Shot the all-time league low of <strong style="color:var(--gold)">62</strong> in the second-to-last round of 2025... and still finished 2nd.</div>
+    </div>
+    <div class="fun-card">
+      <div class="fun-card-icon">💸</div>
+      <div class="fun-card-player">Carter Grant</div>
+      <div class="fun-card-stat">Three seasons. <strong style="color:var(--gold)">$0</strong> in career earnings. Not a single side bet win. The most dedicated unpaid participant in sports history.</div>
+    </div>
+    <div class="fun-card">
+      <div class="fun-card-icon">🎢</div>
+      <div class="fun-card-player">Jon Felter</div>
+      <div class="fun-card-stat">Shot a <strong style="color:var(--gold)">65 AND an 88</strong> in the same season. A 23-stroke gap between his best and worst rounds. Truly two different golfers.</div>
+    </div>
+    <div class="fun-card">
+      <div class="fun-card-icon">🐦</div>
+      <div class="fun-card-player">Kevin Lorenz</div>
+      <div class="fun-card-stat">Led the entire league in birdies per round in 2025 (<strong style="color:var(--gold)">0.88/rd</strong>) and still finished dead last. The most exciting last-place finisher in history. <em style="color:var(--gray)">#ClassicRenzy</em></div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+  <div class="sec-title">The Roster</div>
+  <div class="sec-sub">Click a card to flip for stats · Current 2026 handicaps shown</div>
+  <div class="player-cards">
+
+    <!-- OWENS -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img class="flip-front-img" src="Owens.png" alt="Owens">
+          <div class="flip-front-overlay">
+            <div class="flip-front-name">Owens</div>
+            <div class="flip-front-hc">HC: 10.2</div>
+            <div class="flip-front-hint">TAP TO FLIP</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-type">All-Time Stats</div>
+          <div class="flip-back-name">OWENS</div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">10.2</span></div>
+          <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">62 🏆</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">72.1</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">81</span></div>
+          <div class="stat-row"><span class="stat-row-label">Best Hole</span><span class="stat-row-val">#16</span></div>
+          <div class="stat-row"><span class="stat-row-label">Titles</span><span class="stat-row-val gold">2023, 2024</span></div>
+          <div class="stat-row"><span class="stat-row-label">Career Earnings</span><span class="stat-row-val gold">$1,450 🏆</span></div>
+          <div class="flip-profile-btn" onclick="event.stopPropagation();openProfile('owens')">Full Profile →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FELTER -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img class="flip-front-img" src="Felter.png" alt="Felter">
+          <div class="flip-front-overlay">
+            <div class="flip-front-name">Felter</div>
+            <div class="flip-front-hc">HC: 16.4</div>
+            <div class="flip-front-hint">TAP TO FLIP</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-type">All-Time Stats</div>
+          <div class="flip-back-name">FELTER</div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">16.4</span></div>
+          <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">65</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">74.9</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">85</span></div>
+          <div class="stat-row"><span class="stat-row-label">Best Hole</span><span class="stat-row-val">#8</span></div>
+          <div class="stat-row"><span class="stat-row-label">Titles</span><span class="stat-row-val dim">—</span></div>
+          <div class="stat-row"><span class="stat-row-label">Career Earnings</span><span class="stat-row-val dim">$0</span></div>
+          <div class="flip-profile-btn" onclick="event.stopPropagation();openProfile('felter')">Full Profile →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FARNIA -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img class="flip-front-img" src="Farnia.png" alt="Farnia">
+          <div class="flip-front-overlay">
+            <div class="flip-front-name">Farnia</div>
+            <div class="flip-front-hc">HC: 17.1</div>
+            <div class="flip-front-hint">TAP TO FLIP</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-type">All-Time Stats</div>
+          <div class="flip-back-name">FARNIA</div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">17.1</span></div>
+          <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">64</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">74.5</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">87</span></div>
+          <div class="stat-row"><span class="stat-row-label">Best Hole</span><span class="stat-row-val">#11</span></div>
+          <div class="stat-row"><span class="stat-row-label">Titles</span><span class="stat-row-val gold">2025</span></div>
+          <div class="stat-row"><span class="stat-row-label">Career Earnings</span><span class="stat-row-val">$800</span></div>
+          <div class="flip-profile-btn" onclick="event.stopPropagation();openProfile('farnia')">Full Profile →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTER -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img class="flip-front-img" src="Carter.png" alt="Carter">
+          <div class="flip-front-overlay">
+            <div class="flip-front-name">Carter</div>
+            <div class="flip-front-hc">HC: 14.2</div>
+            <div class="flip-front-hint">TAP TO FLIP</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-type">All-Time Stats</div>
+          <div class="flip-back-name">CARTER</div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">14.2</span></div>
+          <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">68</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">74.0</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">87</span></div>
+          <div class="stat-row"><span class="stat-row-label">Best Hole</span><span class="stat-row-val">#8</span></div>
+          <div class="stat-row"><span class="stat-row-label">Titles</span><span class="stat-row-val dim">—</span></div>
+          <div class="stat-row"><span class="stat-row-label">Career Earnings</span><span class="stat-row-val dim">$0</span></div>
+          <div class="flip-profile-btn" onclick="event.stopPropagation();openProfile('carter')">Full Profile →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LORENZ -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img class="flip-front-img" src="Lorenz.png" alt="Lorenz">
+          <div class="flip-front-overlay">
+            <div class="flip-front-name">Lorenz</div>
+            <div class="flip-front-hc">HC: 14.0</div>
+            <div class="flip-front-hint">TAP TO FLIP</div>
+          </div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-type">All-Time Stats</div>
+          <div class="flip-back-name">LORENZ</div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">14.0</span></div>
+          <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">64</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">72.9</span></div>
+          <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">88</span></div>
+          <div class="stat-row"><span class="stat-row-label">Best Hole</span><span class="stat-row-val">#16</span></div>
+          <div class="stat-row"><span class="stat-row-label">Titles</span><span class="stat-row-val dim">—</span></div>
+          <div class="stat-row"><span class="stat-row-label">Career Earnings</span><span class="stat-row-val">$350</span></div>
+          <div class="flip-profile-btn" onclick="event.stopPropagation();openProfile('lorenz')">Full Profile →</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ PROFILES TAB -->
+<div id="profiles" class="section">
+  <div class="sec-title">Player Profiles</div>
+  <div class="sec-sub">Full scorecards · charts · hole heatmap · career records</div>
+  <div class="profile-cards-grid">
+
+    <!-- OWENS -->
+    <div class="pcard" onclick="openProfile('owens')">
+      <img class="pcard-photo" src="Owens.png" alt="Owens" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-fallback" style="display:none">O</div>
+      <div class="pcard-champ-bar">🏆 2024 Champion · 🏆 2023 Champion</div>
+      <div class="pcard-body">
+        <div class="pcard-name">OWENS</div>
+        <div class="pcard-hc">HC 10.2</div>
+        <div class="pcard-stats">
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">62</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">70.5</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Rounds</span><span class="pcard-stat-val">42</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Earnings</span><span class="pcard-stat-val gold">$1,450</span></div>
+        </div>
+        <div class="pcard-btn">Full Profile →</div>
+      </div>
+    </div>
+
+    <!-- FELTER -->
+    <div class="pcard" onclick="openProfile('felter')">
+      <img class="pcard-photo" src="Felter.png" alt="Felter" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-fallback" style="display:none">F</div>
+      <div class="pcard-champ-bar">🎢 65 AND 88 in same season · #Chaos</div>
+      <div class="pcard-body">
+        <div class="pcard-name">FELTER</div>
+        <div class="pcard-hc">HC 16.4</div>
+        <div class="pcard-stats">
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">65</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">74.9</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Rounds</span><span class="pcard-stat-val">42</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Earnings</span><span class="pcard-stat-val">$0</span></div>
+        </div>
+        <div class="pcard-btn">Full Profile →</div>
+      </div>
+    </div>
+
+    <!-- FARNIA -->
+    <div class="pcard" onclick="openProfile('farnia')">
+      <img class="pcard-photo" src="Farnia.png" alt="Farnia" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-fallback" style="display:none">F</div>
+      <div class="pcard-champ-bar">🏆 2025 Champion · Defending Champ</div>
+      <div class="pcard-body">
+        <div class="pcard-name">FARNIA</div>
+        <div class="pcard-hc">HC 17.1</div>
+        <div class="pcard-stats">
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">64</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">74.5</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Rounds</span><span class="pcard-stat-val">42</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Earnings</span><span class="pcard-stat-val">$800</span></div>
+        </div>
+        <div class="pcard-btn">Full Profile →</div>
+      </div>
+    </div>
+
+    <!-- CARTER -->
+    <div class="pcard" onclick="openProfile('carter')">
+      <img class="pcard-photo" src="Carter.png" alt="Carter" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-fallback" style="display:none">C</div>
+      <div class="pcard-champ-bar">🎯 Career Low 68 · Consistency King</div>
+      <div class="pcard-body">
+        <div class="pcard-name">CARTER</div>
+        <div class="pcard-hc">HC 14.2</div>
+        <div class="pcard-stats">
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">68</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">74.0</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Rounds</span><span class="pcard-stat-val">42</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Earnings</span><span class="pcard-stat-val">$0</span></div>
+        </div>
+        <div class="pcard-btn">Full Profile →</div>
+      </div>
+    </div>
+
+    <!-- LORENZ -->
+    <div class="pcard" onclick="openProfile('lorenz')">
+      <img class="pcard-photo" src="Lorenz.png" alt="Lorenz" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pcard-fallback" style="display:none">L</div>
+      <div class="pcard-champ-bar">🐦 Most Birdies/Rd 2025 · 0.88/rd</div>
+      <div class="pcard-body">
+        <div class="pcard-name">LORENZ</div>
+        <div class="pcard-hc">HC 14.0</div>
+        <div class="pcard-stats">
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">64</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">72.9</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Rounds</span><span class="pcard-stat-val">42</span></div>
+          <div class="pcard-stat"><span class="pcard-stat-label">Earnings</span><span class="pcard-stat-val">$350</span></div>
+        </div>
+        <div class="pcard-btn">Full Profile →</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ HISTORY TAB -->
+<div id="history" class="section">
+
+  <div class="sec-title">All-Time Champions</div>
+  <div class="sec-sub">Most recent to first</div>
+  <div class="champs-row">
+    <div class="champ-card current">
+      <div class="cc-year">2025 Champion</div>
+      <div class="cc-icon">🏆</div>
+      <div class="cc-name">FARNIA</div>
+      <div class="cc-avg">69.00 top-8 avg</div>
+    </div>
+    <div class="champ-card">
+      <div class="cc-year">2024 Champion</div>
+      <div class="cc-icon">🏆</div>
+      <div class="cc-name">OWENS</div>
+      <div class="cc-avg">69.11 top-9 avg</div>
+    </div>
+    <div class="champ-card">
+      <div class="cc-year">2023 Champion</div>
+      <div class="cc-icon">🏆</div>
+      <div class="cc-name">OWENS</div>
+      <div class="cc-avg">71.3 season avg</div>
+    </div>
+  </div>
+
+  <div class="ytabs" id="hist-ytabs">
+    <button class="ytab active" onclick="showYear(this,'y2025')">2025</button>
+    <button class="ytab" onclick="showYear(this,'y2024')">2024</button>
+    <button class="ytab" onclick="showYear(this,'y2023')">2023</button>
+  </div>
+
+  <!-- 2025 -->
+  <div id="y2025" class="ycontent active">
+    <div class="achiev-grid">
+      <div class="achiev-card"><div class="achiev-icon">🏆</div><div class="achiev-text"><strong>Farnia</strong> dethroned the 2-time champ — 69.00 top-8 avg, best in league history at the time. First time anyone took it from Owens.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">⛳</div><div class="achiev-text"><strong>Owens</strong> shot the all-time course low of 62 on Aug 31 — and still finished 2nd. A round the league will talk about forever.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">🎢</div><div class="achiev-text"><strong>Felter</strong> went 65 to 88 in the same summer — a 23-stroke spread across rounds. Bipolar golf at its finest.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">💼</div><div class="achiev-text"><strong>Carter</strong> grinded through 11 rounds at a 71.50 top-8 avg — and matched Farnia shot-for-shot on Aug 3 with a co-low 68. No spotlight, just output.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">🐦</div><div class="achiev-text"><strong>Lorenz</strong> led the entire league in birdies at 0.88 per round — in just 8 appearances. Most dangerous part-timer in league history.</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2025 Weekly Scores <span class="mode-txt">(NET)</span>
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showMode(this,'net2025')">NET</button>
+          <button class="tog-btn" onclick="showMode(this,'gross2025')">GROSS</button>
+        </div>
+      </div>
+      <div id="net2025">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
+        <tbody id="t2025"></tbody>
+        <tfoot><tr><td>Top 8 Avg</td><td class="sc-low">69.00</td><td>69.88</td><td>70.88</td><td>71.50</td><td>73.88</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="gross2025" style="display:none">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
+        <tbody id="hg2025-body"></tbody>
+        <tfoot><tr><td colspan="6" style="font-size:.7rem;color:var(--gray);text-align:center;padding:.6rem">Season avg gross — per-round detail populates automatically via Google Sheets pipeline</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2024 -->
+  <div id="y2024" class="ycontent">
+    <div class="achiev-grid">
+      <div class="achiev-card"><div class="achiev-icon">🏆</div><div class="achiev-text"><strong>Owens</strong> goes back-to-back — 69.11 top-9 avg, the most dominant back-to-back championship run in league history.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">💪</div><div class="achiev-text"><strong>Lorenz</strong> finished runner-up at 69.78 — the biggest surprise of any season. Nobody saw it coming, including probably Lorenz.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">💰</div><div class="achiev-text"><strong>Farnia</strong> swept the par categories — Best Par 3, Best Par 5, and Best on Hole 7. $200 in side bet wins despite missing the championship podium.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">❓</div><div class="achiev-text"><strong>Carter</strong> played only 9 rounds — one short of the Top 9 qualifying minimum. Technically unranked by his own league's rules. Painful.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">🔥</div><div class="achiev-text"><strong>Felter</strong> fired a 68 on Jul 7 — a career low at the time — then shot 77 and 87 the next two weeks. The highest highs, the lowest lows, all in one month.</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2024 Weekly Scores <span class="mode-txt">(NET)</span>
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showMode(this,'net2024')">NET</button>
+          <button class="tog-btn" onclick="showMode(this,'gross2024')">GROSS</button>
+        </div>
+      </div>
+      <div id="net2024">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
+        <tbody id="t2024"></tbody>
+        <tfoot><tr><td>Top 9 Avg</td><td>71.78</td><td class="sc-low">69.11</td><td>74.22</td><td>73.78</td><td>69.78</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="gross2024" style="display:none">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
+        <tbody id="hg2024-body"></tbody>
+        <tfoot><tr><td colspan="6" style="font-size:.7rem;color:var(--gray);text-align:center;padding:.6rem">Season avg gross — per-round detail populates automatically via Google Sheets pipeline</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2023 -->
+  <div id="y2023" class="ycontent">
+    <div class="achiev-grid">
+      <div class="achiev-card"><div class="achiev-icon">🏆</div><div class="achiev-text"><strong>Owens</strong> wins the inaugural title at 71.3 avg — the dynasty begins. Set the bar no one expected to reach year one.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">📊</div><div class="achiev-text"><strong>Felter</strong> pushed hardest — 72.1 avg, just 0.8 strokes off the champion all year. A second-place finish that felt like a win until it didn't.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">⚡</div><div class="achiev-text"><strong>Lorenz</strong> shot a 64 on Jul 23 — best single round of the entire inaugural season. Then went on an extended hiatus. Classic Lorenz arrival and departure.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">💪</div><div class="achiev-text"><strong>Farnia</strong> played 14 rounds — tied for the most in 2023. Never missed a tee time, never stopped chasing. The original grinder of the Big Perm.</div></div>
+      <div class="achiev-card"><div class="achiev-icon">🏗️</div><div class="achiev-text"><strong>Carter</strong> was a founding fixture — 14 rounds, 73.3 avg, and a blistering 68 low on Jul 23. Ground floor member, still chasing that first title.</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2023 Weekly Scores <span class="mode-txt">(NET)</span>
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showMode(this,'net2023')">NET</button>
+          <button class="tog-btn" onclick="showMode(this,'gross2023')">GROSS</button>
+        </div>
+      </div>
+      <div id="net2023">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
+        <tbody id="t2023"></tbody>
+        <tfoot><tr><td>Season Avg</td><td>75.3</td><td class="sc-low">71.3</td><td>73.3</td><td>72.1</td><td>74.0</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="gross2023" style="display:none">
+        <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
+        <tbody id="tg2023"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ SIDE BETS TAB -->
+<div id="sidebets" class="section">
+  <div class="sec-title">Side Bets & Payouts</div>
+  <div class="sec-sub">Where the real competition lives</div>
+
+  <div class="bet-year-tabs">
+    <button class="bet-ytab active" onclick="showBetYear(this,'bets2025')">2025</button>
+    <button class="bet-ytab" onclick="showBetYear(this,'bets2024')">2024</button>
+  </div>
+
+  <!-- 2025 BETS -->
+  <div id="bets2025" class="bet-ycontent active">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gray);letter-spacing:2px;margin-bottom:1rem">TOTAL POT: <span style="color:var(--gold)">$1,250</span></div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Farnia.png" alt="Farnia">
+        <div class="bet-details">
+          <div class="bet-category">Season Champion (Net)</div>
+          <div class="bet-winner-name">FARNIA</div>
+          <div class="bet-detail">Top 8 Avg: 69.00 · Dethroned the 2-time champ</div>
+        </div>
+      </div>
+      <div class="bet-amt">$600</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">Season Runner Up (Net)</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">Top 8 Avg: 69.88 · 0.88 strokes off the title</div>
+        </div>
+      </div>
+      <div class="bet-amt">$250</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">5-Hole Draft Avg Score (Net)</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">Holes 4, 8, 11, 13, 16 · Avg: 17.88</div>
+        </div>
+      </div>
+      <div class="bet-amt">$175</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">Lowest Score of the Year (Net)</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">Shot a 62 on Aug 31 — all-time league record</div>
+        </div>
+      </div>
+      <div class="bet-amt">$125</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Lorenz.png" alt="Lorenz">
+        <div class="bet-details">
+          <div class="bet-category">Most Birdies Per Round (Gross)</div>
+          <div class="bet-winner-name">LORENZ</div>
+          <div class="bet-detail">0.88 birdies per round · #ClassicRenzy</div>
+        </div>
+      </div>
+      <div class="bet-amt">$100</div>
+    </div>
+  </div>
+
+  <!-- 2024 BETS -->
+  <div id="bets2024" class="bet-ycontent">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gray);letter-spacing:2px;margin-bottom:1rem">TOTAL POT: <span style="color:var(--gold)">$1,250</span></div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">Season Champion (Net)</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">Top 9 Avg: 69.11 · Back-to-back titles</div>
+        </div>
+      </div>
+      <div class="bet-amt">$600</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Lorenz.png" alt="Lorenz">
+        <div class="bet-details">
+          <div class="bet-category">Season Runner Up (Net)</div>
+          <div class="bet-winner-name">LORENZ</div>
+          <div class="bet-detail">Top 9 Avg: 69.78 · Biggest surprise of any season</div>
+        </div>
+      </div>
+      <div class="bet-amt">$250</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Farnia.png" alt="Farnia">
+        <div class="bet-details">
+          <div class="bet-category">Best Par 3 Average</div>
+          <div class="bet-winner-name">FARNIA</div>
+          <div class="bet-detail">2.69 avg on par 3s — best in the field</div>
+        </div>
+      </div>
+      <div class="bet-amt">$75</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">Best Par 4 Average</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">3.42 avg on par 4s — consistently under par</div>
+        </div>
+      </div>
+      <div class="bet-amt">$75</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Farnia.png" alt="Farnia">
+        <div class="bet-details">
+          <div class="bet-category">Best Par 5 Average</div>
+          <div class="bet-winner-name">FARNIA</div>
+          <div class="bet-detail">4.06 avg on par 5s — best in the field</div>
+        </div>
+      </div>
+      <div class="bet-amt">$75</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Owens.png" alt="Owens">
+        <div class="bet-details">
+          <div class="bet-category">Lowest Score of the Year (Net)</div>
+          <div class="bet-winner-name">OWENS</div>
+          <div class="bet-detail">Shot a 62 — also the all-time league record</div>
+        </div>
+      </div>
+      <div class="bet-amt">$125</div>
+    </div>
+
+    <div class="bet-row">
+      <div class="bet-row-left">
+        <img class="winner-photo" src="Farnia.png" alt="Farnia">
+        <div class="bet-details">
+          <div class="bet-category">Best Average on Hole 7</div>
+          <div class="bet-winner-name">FARNIA</div>
+          <div class="bet-detail">4.11 avg on the par 5 — best in the field</div>
+        </div>
+      </div>
+      <div class="bet-amt">$50</div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+  <!-- CAREER EARNINGS -->
+  <div class="tracker-wrap" style="margin-bottom:1.5rem">
+    <div class="tracker-label">Career Earnings</div>
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">Player</th>
+          <th>2023</th>
+          <th>2024</th>
+          <th>2025</th>
+          <th>Career Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="display:flex;align-items:center;gap:.6rem">
+            <img src="Owens.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)">Owens
+          </td>
+          <td>—</td>
+          <td style="color:var(--white)">$800</td>
+          <td style="color:var(--white)">$550</td>
+          <td><span class="win-badge">$1,350 🏆</span></td>
+        </tr>
+        <tr>
+          <td style="display:flex;align-items:center;gap:.6rem">
+            <img src="Farnia.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)">Farnia
+          </td>
+          <td>—</td>
+          <td style="color:var(--white)">$200</td>
+          <td style="color:var(--white)">$600</td>
+          <td><span class="win-badge">$800</span></td>
+        </tr>
+        <tr>
+          <td style="display:flex;align-items:center;gap:.6rem">
+            <img src="Lorenz.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)">Lorenz
+          </td>
+          <td>—</td>
+          <td style="color:var(--white)">$250</td>
+          <td style="color:var(--white)">$100</td>
+          <td><span class="win-badge">$350</span></td>
+        </tr>
+        <tr>
+          <td style="display:flex;align-items:center;gap:.6rem">
+            <img src="Felter.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)">Felter
+          </td>
+          <td>—</td>
+          <td style="color:var(--border)">$0</td>
+          <td style="color:var(--border)">$0</td>
+          <td><span class="zero-badge">$0</span></td>
+        </tr>
+        <tr>
+          <td style="display:flex;align-items:center;gap:.6rem">
+            <img src="Carter.png" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--gold)">Carter
+          </td>
+          <td>—</td>
+          <td style="color:var(--border)">$0</td>
+          <td style="color:var(--border)">$0</td>
+          <td><span class="zero-badge">$0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tracker-wrap">
+    <div class="tracker-label">All-Time Honors Board</div>
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Player</th><th>Champ</th><th>Runner Up</th><th>Birdies</th><th>5-Hole</th>
+          <th>Low Score</th><th>Best Par 3</th><th>Best Par 4</th><th>Best Par 5</th><th>Hole 7</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Owens</td>
+          <td><span class="win-badge">2</span></td><td><span class="win-badge">1</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="win-badge">1</span></td>
+          <td><span class="win-badge">2</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="win-badge">1</span></td><td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+        </tr>
+        <tr>
+          <td>Farnia</td>
+          <td><span class="win-badge">1</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="win-badge">1</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="win-badge">1</span></td><td><span class="win-badge">1</span></td>
+        </tr>
+        <tr>
+          <td>Lorenz</td>
+          <td><span class="zero-badge">—</span></td><td><span class="win-badge">1</span></td>
+          <td><span class="win-badge">1</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+        </tr>
+        <tr>
+          <td>Felter</td>
+          <td><span class="zero-badge">—</span></td><td><span class="win-badge">1</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+        </tr>
+        <tr>
+          <td>Carter</td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+          <td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td><td><span class="zero-badge">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ STATS TAB -->
+<div id="stats" class="section">
+  <div class="sec-title">Deep Stats</div>
+  <div class="sec-sub">Numbers don't lie. But they do hurt.</div>
+
+  <div class="stabs">
+    <button class="stab active" onclick="showStatsYear(this,'sy2026')">2026</button>
+    <button class="stab" onclick="showStatsYear(this,'sy2025')">2025</button>
+    <button class="stab" onclick="showStatsYear(this,'sy2024')">2024</button>
+    <button class="stab" onclick="showStatsYear(this,'sy2023')">2023</button>
+  </div>
+
+  <!-- 2025 Stats -->
+  <div id="sy2025" class="s-ycontent">
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2025 — Avg Score Per Hole
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showStatsMode(this,'sn2025','sg2025')">NET</button>
+          <button class="tog-btn" onclick="showStatsMode(this,'sg2025','sn2025')">GROSS</button>
+        </div>
+      </div>
+      <div id="sn2025">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sn2025-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="sg2025" style="display:none">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sg2025-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <div class="tbl-label">2025 — 5-Hole Draft (Holes 4, 8, 11, 13, 16)</div>
+      <table><thead><tr><th>Player</th><th>Hole 4</th><th>Hole 8</th><th>Hole 11</th><th>Hole 13</th><th>Hole 16</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;text-align:left">Farnia</td><td>3.50</td><td>3.50</td><td>2.88</td><td>3.88</td><td>4.38</td><td>18.13</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Owens</td><td>3.75</td><td>3.25</td><td>3.50</td><td>3.75</td><td>3.63</td><td class="sc-low">17.88</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Felter</td><td>4.00</td><td>2.88</td><td>4.00</td><td>3.63</td><td>4.00</td><td>18.50</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Carter</td><td>4.25</td><td>3.25</td><td>4.13</td><td>3.63</td><td>4.63</td><td>19.88</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Lorenz</td><td>4.38</td><td>3.63</td><td>4.13</td><td>4.13</td><td>4.63</td><td>20.88</td></tr>
+        <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td style="color:var(--gray)">21</td></tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2024 Stats -->
+  <div id="sy2024" class="s-ycontent">
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2024 — Avg Score Per Hole
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showStatsMode(this,'sn2024','sg2024')">NET</button>
+          <button class="tog-btn" onclick="showStatsMode(this,'sg2024','sn2024')">GROSS</button>
+        </div>
+      </div>
+      <div id="sn2024">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sn2024-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="sg2024" style="display:none">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sg2024-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+    <div style="font-size:.78rem;color:var(--gray);padding:.5rem 0;margin-bottom:1rem">No 5-Hole Draft in 2024 — that bet was introduced in 2025.</div>
+  </div>
+
+  <!-- 2023 Stats -->
+  <div id="sy2023" class="s-ycontent">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:1.5rem;margin-bottom:.75rem">📋</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gray);margin-bottom:.5rem">Per-Hole Stats Not Tracked in 2023</div>
+      <div style="font-size:.82rem;color:var(--gray)">The inaugural season didn't include per-hole breakdowns. Season-level stats are in the History tab.</div>
+    </div>
+  </div>
+
+  <!-- 2026 Stats -->
+  <div id="sy2026" class="s-ycontent active">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:1.5rem;margin-bottom:.75rem">⏳</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:.5rem">Season In Progress</div>
+      <div style="font-size:.82rem;color:var(--gray)">Per-hole averages will populate as rounds are played. Round 1 complete (Apr 27, 2026).</div>
+    </div>
+
+    <div class="tbl-wrap">
+      <div class="tbl-label">2026 — 5-Hole Draft (Holes 4, 8, 11, 13, 16)</div>
+      <table><thead><tr><th>Player</th><th>Hole 4</th><th>Hole 8</th><th>Hole 11</th><th>Hole 13</th><th>Hole 16</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;text-align:left">Farnia</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="color:var(--gray)">R1: TBD</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Owens</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Felter</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Carter</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Lorenz</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td></tr>
+        <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td style="color:var(--gray)">21</td></tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;margin-bottom:1rem">Season Records</div>
+  <div class="records">
+    <div class="rec-card"><div class="rec-icon">⛳</div><div class="rec-label">All-Time Low Net</div><div class="rec-val">62</div><div class="rec-sub">Owens · Aug 31, 2025</div></div>
+    <div class="rec-card"><div class="rec-icon">😬</div><div class="rec-label">2025 High Score</div><div class="rec-val">88</div><div class="rec-sub">Felter · Aug 24, 2025</div></div>
+    <div class="rec-card"><div class="rec-icon">🐦</div><div class="rec-label">Birdies/Round (2025)</div><div class="rec-val">0.88</div><div class="rec-sub">Lorenz</div></div>
+    <div class="rec-card"><div class="rec-icon">🏌️</div><div class="rec-label">Best Front 9 Avg</div><div class="rec-val">33</div><div class="rec-sub">Farnia & Felter · 2025</div></div>
+    <div class="rec-card"><div class="rec-icon">🏁</div><div class="rec-label">Best Back 9 Avg</div><div class="rec-val">32</div><div class="rec-sub">Farnia · 2025</div></div>
+    <div class="rec-card"><div class="rec-icon">🎯</div><div class="rec-label">Best Par 3 Avg</div><div class="rec-val">2.69</div><div class="rec-sub">Farnia · 2024</div></div>
+  </div>
+
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;margin-bottom:1rem">2025 Birdie Leaders</div>
+  <div class="lb">
+    <div class="lb-head"><div>Rank</div><div>Player</div><div>Birdies/Rd</div><div>Rounds</div><div>Front Avg</div><div>Back Avg</div></div>
+    <div class="lb-row r1"><div class="rank">1</div><div class="pname">Lorenz</div><div class="stat gold">0.88</div><div class="stat">8</div><div class="stat">45</div><div class="stat">43</div></div>
+    <div class="lb-row r2"><div class="rank">2</div><div class="pname">Owens</div><div class="stat">0.75</div><div class="stat">12</div><div class="stat">41</div><div class="stat">40</div></div>
+    <div class="lb-row r3"><div class="rank">3</div><div class="pname">Felter</div><div class="stat">0.64</div><div class="stat">16</div><div class="stat">43</div><div class="stat">42</div></div>
+    <div class="lb-row"><div class="rank">4</div><div class="pname">Farnia</div><div class="stat">0.38</div><div class="stat">13</div><div class="stat">44</div><div class="stat">43</div></div>
+    <div class="lb-row"><div class="rank">5</div><div class="pname">Carter</div><div class="stat dim">0.09</div><div class="stat">11</div><div class="stat">44</div><div class="stat">43</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ SCHEDULE TAB -->
+<div id="schedule" class="section">
+  <div class="sec-title">Schedule & Attendance</div>
+  <div class="sec-sub">Sundays · Glenview Golf Club · Every week, no excuses</div>
+
+  <div class="ytabs" id="sched-ytabs">
+    <button class="ytab active" onclick="showSchedYear(this,'sched2026')">2026</button>
+    <button class="ytab" onclick="showSchedYear(this,'sched2025')">2025</button>
+  </div>
+
+  <div id="sched2026" class="ycontent active">
+    <div class="sched-attend-wrap">
+      <table class="sched-attend">
+        <thead>
+          <tr><th>Date</th><th>Rnd</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr>
+        </thead>
+        <tbody id="sched2026-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="sched2025" class="ycontent">
+    <div class="sched-attend-wrap">
+      <table class="sched-attend">
+        <thead>
+          <tr><th>Date</th><th>Rnd</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr>
+        </thead>
+        <tbody id="sched2025-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ SMACK TALK TAB -->
+<div id="smacktalk" class="section">
+  <div class="smack-banner">
+    <div class="smack-banner-title">THE SMACK TALK WALL</div>
+    <p>Where dignity goes to die and receipts are kept forever.</p>
+  </div>
+
+  <!-- Weekly Shots Fired -->
+  <div class="wk-section-title">WEEKLY SHOTS FIRED</div>
+  <div class="wk-section-sub">Straight from the winner · every round · no filter</div>
+  <div class="wk-year-tabs">
+    <button class="wk-ytab active" onclick="showWkYear(this,'wk-2026')">2026</button>
+    <button class="wk-ytab" onclick="showWkYear(this,'wk-2025')">2025</button>
+  </div>
+  <div id="wk-2026" class="wk-ycontent active">
+    <div class="wk-wall" id="wk-wall-2026"></div>
+  </div>
+  <div id="wk-2025" class="wk-ycontent">
+    <div class="wk-wall" id="wk-wall-2025"></div>
+  </div>
+
+  <hr class="wk-divider">
+
+  <!-- Community Wall -->
+  <div class="wk-section-title" style="font-size:1.4rem;color:var(--white)">COMMUNITY WALL</div>
+  <div class="wk-section-sub" style="margin-bottom:1.25rem">Drop your own heat or lock in a league classic</div>
+
+  <!-- Form sits right at the top -->
+  <div class="talk-form-wrap">
+    <div class="talk-form-title">Drop Some Heat or Spice Up League Sayings</div>
+    <div class="post-type-row">
+      <button class="post-type-btn active" onclick="setPostType('smack',this)">💬 Smack Talk</button>
+      <button class="post-type-btn" onclick="setPostType('saying',this)">⚡ League Saying</button>
+    </div>
+
+    <!-- Smack Talk form -->
+    <div id="form-smack">
+      <div class="form-grid">
+        <div class="fg"><label>From</label>
+          <select id="tf-from"><option value="">— Select —</option><option>Farnia</option><option>Owens</option><option>Felter</option><option>Carter</option><option>Lorenz</option></select>
+        </div>
+        <div class="fg"><label>Directed At</label>
+          <select id="tf-to"><option value="The Whole League">The Whole League</option><option>Farnia</option><option>Owens</option><option>Felter</option><option>Carter</option><option>Lorenz</option></select>
+        </div>
+        <div class="fg fg-full"><label>The Message</label>
+          <textarea id="tf-msg" placeholder="Let 'em have it..."></textarea>
+        </div>
+      </div>
+      <button class="btn-fire" onclick="addTalk()">SEND IT</button>
+    </div>
+
+    <!-- League Saying form -->
+    <div id="form-saying" style="display:none">
+      <div class="form-grid">
+        <div class="fg fg-full"><label>Posted By</label>
+          <select id="tf-say-from"><option value="">— Select —</option><option>Farnia</option><option>Owens</option><option>Felter</option><option>Carter</option><option>Lorenz</option></select>
+        </div>
+        <div class="fg fg-full"><label>The Saying</label>
+          <textarea id="tf-say-msg" placeholder="Drop a league classic..."></textarea>
+        </div>
+      </div>
+      <button class="btn-fire" onclick="addSaying()">LOCK IT IN</button>
+    </div>
+  </div>
+
+  <!-- Wall renders below the form -->
+  <div class="talk-wall" id="talk-wall"></div>
+</div>
+
+<footer>Big Perm Golf League · Est. 2023 · Glenview Golf Club · Last Updated: April 28, 2026</footer>
+
+<script>
+// ═══ DATA ═══════════════════════════════════════════════════
+
+// d2025 player order: [Farnia, Owens, Felter, Carter, Lorenz]
+const d2025=[
+  {d:'Apr 27',v:[70,null,null,null,null]},
+  {d:'May 4', v:[75,null,78,75,77]},
+  {d:'May 11',v:[null,null,null,null,null],note:'No Round'},
+  {d:'May 18',v:[73,null,74,73,null]},
+  {d:'May 25',v:[null,74,75,null,null]},
+  {d:'Jun 1', v:[81,69,null,null,null]},
+  {d:'Jun 8', v:[null,73,68,75,null]},
+  {d:'Jun 15',v:[64,null,76,72,null]},
+  {d:'Jun 22',v:[76,78,72,71,null]},
+  {d:'Jun 29',v:[null,70,74,71,null]},
+  {d:'Jul 6', v:[75,82,71,null,null]},
+  {d:'Jul 13',v:[null,69,65,73,68]},
+  {d:'Jul 20',v:[null,73,70,null,71]},
+  {d:'Jul 27',v:[66,77,80,null,76]},
+  {d:'Aug 3', v:[68,69,null,68,76]},
+  {d:'Aug 10',v:[null,null,null,null,null],note:'No Round'},
+  {d:'Aug 17',v:[68,null,73,74,75]},
+  {d:'Aug 24',v:[74,null,88,73,73]},
+  {d:'Aug 31',v:[74,62,76,null,null]},
+  {d:'Sep 7', v:[69,76,null,71,75]},
+];
+
+// d2024 player order: [Farnia, Owens, Carter, Felter, Lorenz]
+const d2024=[
+  {d:'Apr 28',v:[74,71,78,85,null]},
+  {d:'May 5', v:[77,62,71,null,null]},
+  {d:'May 12',v:[null,68,null,null,null]},
+  {d:'May 19',v:[70,null,76,null,71]},
+  {d:'May 26',v:[null,72,null,71,null]},
+  {d:'Jun 2', v:[71,74,null,77,64]},
+  {d:'Jun 9', v:[73,71,null,87,77]},
+  {d:'Jun 16',v:[77,null,77,81,null]},
+  {d:'Jun 23',v:[72,68,78,null,69]},
+  {d:'Jun 30',v:[79,74,73,null,68]},
+  {d:'Jul 7', v:[80,75,null,68,null]},
+  {d:'Jul 14',v:[null,null,null,null,null],note:'No Round'},
+  {d:'Jul 21',v:[null,67,72,77,72]},
+  {d:'Jul 28',v:[68,null,null,null,73]},
+  {d:'Aug 4', v:[75,null,null,72,68]},
+  {d:'Aug 11',v:[null,74,null,70,null]},
+  {d:'Aug 18',v:[71,null,null,null,70]},
+  {d:'Aug 25',v:[null,75,73,74,73]},
+  {d:'Sep 1', v:[75,69,null,74,78]},
+  {d:'Sep 8', v:[72,null,70,null,null]},
+];
+
+// d2023 player order: [Farnia, Owens, Carter, Felter, Lorenz]
+const d2023=[
+  {d:'Apr 30',v:[78,75,76,74,null]},
+  {d:'May 7', v:[74,67,77,null,80]},
+  {d:'May 14',v:[null,null,null,null,null],note:'No Round'},
+  {d:'May 21',v:[null,72,69,null,82]},
+  {d:'May 28',v:[78,72,null,82,null]},
+  {d:'Jun 4', v:[78,75,79,83,null]},
+  {d:'Jun 11',v:[79,76,81,76,null]},
+  {d:'Jun 18',v:[76,null,79,null,79]},
+  {d:'Jun 25',v:[83,75,75,82,null]},
+  {d:'Jul 2', v:[81,72,null,75,71]},
+  {d:'Jul 9', v:[null,69,78,67,null]},
+  {d:'Jul 16',v:[72,77,78,72,null]},
+  {d:'Jul 23',v:[null,72,68,70,64]},
+  {d:'Jul 30',v:[null,null,74,68,69]},
+  {d:'Aug 6', v:[null,70,null,70,null]},
+  {d:'Aug 13',v:[82,71,71,null,null]},
+  {d:'Aug 20',v:[77,null,null,null,78]},
+  {d:'Aug 27',v:[87,73,71,72,null]},
+  {d:'Sep 3', v:[69,75,null,77,70]},
+  {d:'Sep 10',v:[72,null,74,77,73]},
+];
+
+// d2023gross player order: [Farnia, Owens, Carter, Felter, Lorenz]
+// Source: Weekly Scores - 2023 tab (actual per-hole gross scores summed)
+const d2023gross=[
+  {d:'Apr 30',v:[98,89,93,95,null]},
+  {d:'May 7', v:[94,81,95,null,95]},
+  {d:'May 14',v:[null,null,null,null,null],note:'No Round'},
+  {d:'May 21',v:[null,85,87,null,98]},
+  {d:'May 28',v:[99,86,null,103,null]},
+  {d:'Jun 4', v:[100,88,96,105,null]},
+  {d:'Jun 11',v:[101,89,98,98,null]},
+  {d:'Jun 18',v:[97,null,96,null,99]},
+  {d:'Jun 25',v:[104,90,92,103,null]},
+  {d:'Jul 2', v:[102,87,null,96,93]},
+  {d:'Jul 9', v:[null,84,96,90,null]},
+  {d:'Jul 16',v:[94,91,96,94,null]},
+  {d:'Jul 23',v:[null,86,86,92,86]},
+  {d:'Jul 30',v:[null,null,92,90,91]},
+  {d:'Aug 6', v:[null,85,null,92,null]},
+  {d:'Aug 13',v:[104,85,89,null,null]},
+  {d:'Aug 20',v:[100,null,null,null,97]},
+  {d:'Aug 27',v:[110,87,89,93,null]},
+  {d:'Sep 3', v:[92,90,null,98,88]},
+  {d:'Sep 10',v:[94,null,92,98,91]},
+];
+
+// d2026 player order: [Farnia, Owens, Felter, Carter, Lorenz]
+// att = attendance from Schedule Tracker: IN/OUT/TBD/Avail
+const d2026=[
+  {d:'Apr 26',v:[73,77,73,78,null], att:['IN','IN','IN','IN','Avail']},
+  {d:'May 3', v:[null,null,null,null,null], att:['IN','OUT','IN','IN','IN']},
+  {d:'May 10',v:[null,null,null,null,null], att:['OUT','OUT','OUT','OUT','OUT'], note:'No Round'},
+  {d:'May 17',v:[null,null,null,null,null], att:['IN','IN','IN','IN','OUT']},
+  {d:'May 24',v:[null,null,null,null,null], att:['IN','IN','IN','OUT','IN']},
+  {d:'May 31',v:[null,null,null,null,null], att:['IN','IN','IN','OUT','OUT']},
+  {d:'Jun 7', v:[null,null,null,null,null], att:['IN','IN','Avail','IN','IN']},
+  {d:'Jun 14',v:[null,null,null,null,null], att:['IN','IN','IN','Avail','IN']},
+  {d:'Jun 21',v:[null,null,null,null,null], att:['IN','TBD','OUT','IN','OUT']},
+  {d:'Jun 28',v:[null,null,null,null,null], att:['IN','Avail','IN','IN','IN']},
+  {d:'Jul 5', v:[null,null,null,null,null], att:['IN','TBD','IN','OUT','IN']},
+  {d:'Jul 12',v:[null,null,null,null,null], att:['IN','IN','IN','IN','OUT']},
+  {d:'Jul 19',v:[null,null,null,null,null], att:['OUT','OUT','OUT','IN','IN']},
+  {d:'Jul 26',v:[null,null,null,null,null], att:['Avail','IN','IN','IN','IN']},
+  {d:'Aug 2', v:[null,null,null,null,null], att:['OUT','IN','IN','IN','OUT']},
+  {d:'Aug 9', v:[null,null,null,null,null], att:['OUT','OUT','IN','IN','IN']},
+  {d:'Aug 16',v:[null,null,null,null,null], att:['IN','TBD','IN','OUT','OUT']},
+  {d:'Aug 23',v:[null,null,null,null,null], att:['IN','OUT','IN','IN','OUT']},
+  {d:'Aug 30',v:[null,null,null,null,null], att:['IN','IN','Avail','IN','IN']},
+  {d:'Sep 6', v:[null,null,null,null,null], att:['IN','IN','IN','OUT','IN']},
+];
+
+// Per-hole averages
+const net2025Holes=[
+  {p:'Farnia',v:[3.6,4.2,4.0,3.7,3.5,2.6,4.5,3.7,3.2,3.2,3.1,4.0,4.1,3.7,3.6,4.5,2.8,3.3]},
+  {p:'Owens', v:[3.6,3.6,3.9,4.0,3.8,3.9,4.4,3.4,3.6,3.4,3.6,3.6,4.0,4.1,4.4,3.9,3.4,3.6]},
+  {p:'Felter',v:[3.8,4.4,3.6,4.3,4.1,3.1,4.7,3.1,2.3,2.7,4.2,3.8,3.8,3.5,4.3,4.2,2.6,3.4]},
+  {p:'Carter',v:[3.6,4.3,4.0,4.4,4.2,3.2,5.0,3.4,3.0,3.4,4.3,4.4,3.7,3.7,3.8,4.7,3.5,3.5]},
+  {p:'Lorenz',v:[4.1,4.1,4.0,4.4,4.4,3.8,5.0,3.6,4.0,3.6,4.1,3.8,4.1,3.9,4.4,4.6,3.9,4.1]},
+];
+const gross2025Holes=[
+  {p:'Farnia',v:[4.6,5.2,5.0,5.6,4.8,3.6,6.5,4.7,4.2,4.2,5.1,5.0,5.1,4.7,4.6,6.3,3.8,4.3]},
+  {p:'Owens', v:[4.5,4.6,4.9,5.0,4.8,3.9,5.4,4.1,3.6,3.4,4.6,4.6,4.9,5.1,4.7,4.9,3.4,4.6]},
+  {p:'Felter',v:[4.8,5.4,4.6,5.3,5.1,3.8,6.3,4.1,3.3,3.7,5.4,4.8,4.8,4.5,5.3,5.2,3.4,4.4]},
+  {p:'Carter',v:[4.6,5.3,5.0,5.4,5.2,3.7,6.0,4.4,4.0,4.4,5.3,5.4,4.7,4.7,4.8,5.7,3.5,4.5]},
+  {p:'Lorenz',v:[5.1,5.1,5.0,5.4,5.4,3.8,6.0,4.6,4.1,3.6,5.1,4.8,5.1,4.9,5.1,5.6,3.9,5.1]},
+];
+const net2024Holes=[
+  {p:'Farnia',v:[4.3,4.6,4.6,3.6,4.8,3.0,4.6,4.1,3.3,3.6,4.1,4.5,4.8,4.9,4.1,4.4,3.0,3.5]},
+  {p:'Owens', v:[3.6,3.8,4.5,4.1,4.3,4.1,4.9,3.6,3.9,4.0,4.8,4.1,3.9,4.0,4.7,4.8,3.6,3.6]},
+  {p:'Felter',v:[4.5,4.3,5.0,4.4,4.8,3.6,5.2,4.1,3.3,3.3,4.7,4.4,4.5,4.5,4.5,5.0,3.4,3.8]},
+  {p:'Carter',v:[4.6,4.5,5.0,4.3,4.5,3.2,5.4,3.6,3.8,3.5,4.7,4.0,4.1,4.0,4.1,5.0,3.4,3.7]},
+  {p:'Lorenz',v:[3.4,4.6,4.8,3.9,4.2,3.8,5.0,3.9,3.3,3.8,4.3,4.0,4.3,3.9,4.0,4.4,3.4,3.6]},
+];
+const gross2024Holes=[
+  {p:'Farnia',v:[5.3,5.6,5.6,5.6,6.1,4.0,6.6,5.1,4.3,4.6,6.1,5.5,5.8,5.9,5.1,6.4,4.0,4.5]},
+  {p:'Owens', v:[4.5,4.6,5.1,5.0,4.8,3.8,5.8,4.2,4.1,4.0,5.3,5.0,4.5,4.6,5.0,5.8,3.2,4.4]},
+  {p:'Carter',v:[5.6,5.6,6.1,5.2,5.6,4.1,6.3,4.3,4.6,4.4,5.6,5.1,5.0,5.0,5.0,5.8,3.4,4.6]},
+  {p:'Felter',v:[5.2,5.2,6.0,5.2,5.7,4.7,6.5,5.0,4.2,4.2,5.9,5.3,5.6,5.5,5.1,5.8,4.0,4.8]},
+  {p:'Lorenz',v:[4.4,5.4,5.5,4.8,5.0,4.0,6.2,4.8,3.5,4.1,5.3,4.8,5.2,4.9,5.0,5.4,3.6,4.5]},
+];
+const par=[4,4,4,4,4,3,5,4,3,3,4,4,4,4,4,5,3,4];
+
+let talks=[];
+// Player brand colors
+const PC={Farnia:'#f0c040',Owens:'#4a9eff',Felter:'#ff7733',Carter:'#5bc96e',Lorenz:'#e04060'};
+const weeklySmack2026=[
+  {w:1,d:'Apr 26',winner:'Farnia',net:73,to:'Owens & Carter',badge:null,
+   text:"Opening day 2026 and y'all already showed me what I needed to know. Felter and I are tied at 73 — respect the effort from my co-winner, I guess. Owens at 77 means the former champ is rusty and that's fine, it's April. Carter hit 78 and I genuinely believe he was thinking about something peaceful instead of the scorecard. Real talk — this is just the preview. Come May, the gap opens up. I'm ready."},
+];
+const weeklySmack2025=[
+  {w:1,d:'Apr 27',winner:'Farnia',net:70,to:'The Whole League',badge:null,
+   text:"70 and nobody here to see it. That's cool. That's fine. I hit every fairway talking to myself and shot a 70 while the rest of you were home doing whatever you do on a Sunday. On god, I don't need witnesses. The card don't lie. Just know — while you were sitting out, I was out here building. No cap."},
+  {w:2,d:'May 4',winner:'Carter',net:75,to:'Farnia',badge:null,
+   text:"Pursuant to the official scorecard, entered into evidence this fine Sunday morning: Carter, J., shot 75 and tied for the week. I hereby move that this court recognize both the score and the vibe with which it was achieved. Farnia, you were right there with me and I respect that — but our journeys to 75 were fundamentally different. Mine was aligned. Namaste and good luck next week."},
+  {w:4,d:'May 18',winner:'Farnia',net:73,to:'Carter',badge:null,
+   text:"We tied again, Carter. Two weeks in a row. On god, I respect the effort but understand something — every time we tie I'm studying. Every stroke you take, every hole you play, I'm downloading data. Real talk, the next time we line up these numbers there's gonna be a gap. And it ain't gonna be in your favor. On sight."},
+  {w:5,d:'May 25',winner:'Owens',net:74,to:'Felter',badge:null,
+   text:"One shot, Felter. That's the margin between a good Sunday and the right kind of Sunday. I'm not going to gloat — that's not my style. But I will say: the tide goes in, the tide goes out, and today it went out on you. That's compound interest, my friend. You put in the work and the returns just show up. Margaritaville was open for business. You're picking up the tab."},
+  {w:6,d:'Jun 1',winner:'Owens',net:69,to:'Farnia',badge:null,
+   text:"Farnia. 81. I know you, and I know that number is going to live in your head until next Sunday. Good. It should. I put up a 69 — smooth, unhurried, completely inevitable — while you were out there posting a number that rhymes with 'fell.' The portfolio took a hit today, brother. A 12-stroke loss. The market corrects. But today, it corrected in my direction entirely."},
+  {w:7,d:'Jun 8',winner:'Felter',net:68,to:'The Whole League',badge:null,
+   text:"68 on a Sunday and I am absolutely, professionally, energetically ON FIRE. Owens, 73 — great effort, love the consistency, put it in a drawer. Carter, 75 has potential written all over it, it just needs development time. Me? I found my line, identified every objection that Glenview put in front of me, and CLOSED every single one. That is called execution. Truly inspired round."},
+  {w:8,d:'Jun 15',winner:'Farnia',net:64,to:'The Whole League',badge:'hot',
+   text:"Sixty. Four. No explanation, no breakdown, no analysis. I'm not going to tell you what I ate or how I stretched. I shot 64 at Glenview on a Sunday in June and left everybody in the parking lot. Felter, 76 — I see you. Carter, 72 — that's respectable golf. But 64 is a whole different zip code. I'm not out here playing for second. I don't even know what second looks like from here.",featured:true},
+  {w:9,d:'Jun 22',winner:'Carter',net:71,to:'The Whole League',badge:null,
+   text:"Let the record reflect: Carter played with intention today. 71, while Felter came in at 72, Farnia drifted to 76, and Owens — our defending champion — gave us a beautiful 78. I'm not saying the universe rewarded my mindfulness. I'm just saying the universe rewarded my mindfulness. The body is a vehicle and mine found every fairway. I rest my case. Peace."},
+  {w:10,d:'Jun 29',winner:'Owens',net:70,to:'Carter & Felter',badge:null,
+   text:"70. Carter, you were right on my bumper at 71 and I respect the chase — genuinely. But one back is still back. Felter, 74 means you left money on the table and in this economy that's not advisable. I'm not running this on momentum alone. This is a long-game operation and I play every Sunday like the dividend check is on the line. See you both next week."},
+  {w:11,d:'Jul 6',winner:'Felter',net:71,to:'Owens',badge:null,
+   text:"71 and I want to acknowledge the group for showing up. Owens, 82 — that's a Tuesday score on a Sunday, but I appreciate the participation. Farnia, 75 means you were in the conversation which is good. Me? I came with a plan, I worked the plan, and the plan returned a 71. That's pipeline management. That's called the funnel delivering. Great team effort out there today."},
+  {w:12,d:'Jul 13',winner:'Felter',net:65,to:'The Whole League',badge:'hot',
+   text:"65. Gentlemen, I need to talk about what 65 feels like because I want to bottle this energy and sell it. Lorenz, 68 — outstanding round, big energy, love the enthusiasm. Owens, 69 is genuinely elite golf. Carter, 73 is very zen-coded, I respect it. But today I wasn't selling — today I was buying. And I bought the whole building. This is the best round I have ever played and I need everyone to sit with that.",featured:true},
+  {w:13,d:'Jul 20',winner:'Felter',net:70,to:'Lorenz',badge:null,
+   text:"One stroke, Lorenz! ONE! I can already hear you — 'I almost had him' — and I want you to know that almost only counts in horseshoes. 70 to your 71. That's the difference between closing and not closing. Owens, 73 is a fine afternoon on the course. We're not here for fine. We're here for first. Great energy from everyone. Especially me."},
+  {w:14,d:'Jul 27',winner:'Farnia',net:66,to:'The Whole League',badge:'hot',
+   text:"66 and let me be honest — I was locked in from the first tee. Lorenz, 76, you're fun to play with and I respect the hustle. Owens, 77, the former champ has seen better days but I know you'll be back. Felter shot 80 and I'm not going to pile on because he'll bounce back — I've seen it. But right now, on this Sunday, I put up 66 and the conversation ends there. Real talk. No debate.",featured:true},
+  {w:15,d:'Aug 3',winner:'Farnia',net:68,to:'Lorenz',badge:null,
+   text:"68 and Carter matched me which, fine, respect. Owens right behind at 69 — that's professional golf right there. But Lorenz, brother, 76 in August? I need more from you. I know you've got it. Come Sunday you gotta treat this course like the job you love — show up committed, work the problem, bring the energy. The rest of us are out here posting scores. We need you in the conversation."},
+  {w:17,d:'Aug 17',winner:'Farnia',net:68,to:'The Whole League',badge:null,
+   text:"Three 68s in August. Three. I'm not going to dress this up. Felter came in at 73 — solid, professional, not enough. Carter 74, Lorenz 75 — y'all are stacking up real nice right behind me. Same photo every week: me at the front, everyone else in the background looking focused. Come take this course. It's just sitting here. On sight."},
+  {w:18,d:'Aug 24',winner:'Lorenz',net:73,to:'Felter',badge:null,
+   text:"Alright ALRIGHT — Lorenz and Carter tied at 73 and I'll be honest, I wasn't sure I had it today. Felt like a four-alarm situation out there. Farnia was one back at 74, which in late-August heat is serious commitment. But FELTER. 88. Brother, I need to know you're okay. As a firefighter, I know what a controlled burn that gets away from you looks like. That was an 88. Drink water. We'll get you right next week. I'm sending the unit."},
+  {w:19,d:'Aug 31',winner:'Owens',net:62,to:'The Whole League',badge:'record',
+   text:"62. This is where I'm supposed to say something clever but there's no clever way to say league record. I shot 62. Farnia, your 74 on a normal Sunday is respectable golf — this wasn't a normal Sunday. Felter, 76 is a solid round in a vacuum and today's vacuum was named Owens' Perfect Sunday. The tide went all the way out on both of you. I was somewhere warm and unhurried and absolutely locked in. This one lives in the books.",featured:true},
+  {w:20,d:'Sep 7',winner:'Farnia',net:69,to:'The Whole League',badge:'champ',
+   text:"Last Sunday of the season and I put up 69. That's not a coincidence — that's character. Carter gave me 71, which is real golf from a real competitor. Lorenz showed up at 75. Owens posted 76 trying to close the gap. But it was too late. It was always too late once August started. The season is mine. The championship is mine. 2025 belongs to Farnia — and that is not a statement. That is a result. See y'all next April.",featured:true},
+];
+
+// ═══ RENDER ══════════════════════════════════════════════════
+
+function renderScoreTable(data,tbodyId){
+  const tb=document.getElementById(tbodyId);if(!tb)return;
+  data.forEach(row=>{
+    const tr=document.createElement('tr');
+    if(row.note){tr.innerHTML=`<td>${row.d}</td><td colspan="5" class="sc-note">${row.note}</td>`;tb.appendChild(tr);return;}
+    const scores=row.v.filter(v=>v!==null);
+    const mn=scores.length?Math.min(...scores):null;
+    const mx=scores.length?Math.max(...scores):null;
+    let html=`<td>${row.d}</td>`;
+    row.v.forEach(s=>{
+      if(s===null){html+=`<td class="sc-dash">—</td>`;return;}
+      let cls=scores.length>1&&s===mn?'sc-best':scores.length>1&&s===mx?'sc-worst':'';
+      html+=`<td class="${cls}">${s}</td>`;
+    });
+    tr.innerHTML=html;tb.appendChild(tr);
+  });
+}
+
+function renderHoleTable(data,tbodyId,isGross){
+  const tb=document.getElementById(tbodyId);if(!tb)return;
+  data.forEach(row=>{
+    const tr=document.createElement('tr');
+    const total=row.v.reduce((a,b)=>a+b,0).toFixed(1);
+    let html=`<td style="font-weight:700;text-align:left">${row.p}</td>`;
+    row.v.forEach((val,i)=>{
+      const diff=val-par[i];
+      let cls=diff<-0.6?'way-under':diff<-0.1?'under':diff>0.6?'above':'even';
+      if(isGross)cls=diff>1.2?'above':diff<0?'under':'even';
+      html+=`<td class="${cls}">${val}</td>`;
+    });
+    html+=`<td style="font-weight:700">${total}</td>`;
+    tr.innerHTML=html;tb.appendChild(tr);
+  });
+}
+
+function renderScheduleGrid(data,tbodyId,year){
+  const tb=document.getElementById(tbodyId);if(!tb)return;
+  let rnd=0;
+  data.forEach(row=>{
+    rnd++;
+    const tr=document.createElement('tr');
+    const played=row.v.some(v=>v!==null);
+    const noRound=!!row.note;
+    if(noRound){
+      tr.className='no-rd';
+      tr.innerHTML=`<td>${row.d}, ${year}</td><td style="color:var(--border)">R${rnd}</td><td colspan="5" style="color:var(--border);text-align:center;font-size:.72rem;letter-spacing:1px">NO ROUND</td>`;
+    } else {
+      if(played) tr.className='played-row';
+      let html=`<td>${row.d}, ${year}</td><td>R${rnd}</td>`;
+      for(let pi=0;pi<5;pi++){
+        const score=row.v[pi];
+        if(score!==null){
+          html+=`<td><span class="att-in">IN ${score}</span></td>`;
+        } else if(row.att){
+          // Use official attendance data when available
+          const a=row.att[pi];
+          if(a==='IN')       html+=`<td><span class="att-in">IN</span></td>`;
+          else if(a==='OUT') html+=`<td><span class="att-out">OUT</span></td>`;
+          else if(a==='Avail') html+=`<td><span class="att-avail">AVAIL</span></td>`;
+          else               html+=`<td><span class="att-tbd">TBD</span></td>`;
+        } else if(played){
+          html+=`<td><span class="att-out">OUT</span></td>`;
+        } else {
+          html+=`<td><span class="att-tbd">TBD</span></td>`;
+        }
+      }
+      tr.innerHTML=html;
+    }
+    tb.appendChild(tr);
+  });
+}
+
+const playerImg={Farnia:'Farnia.png',Owens:'Owens.png',Felter:'Felter.png',Carter:'Carter.png',Lorenz:'Lorenz.png'};
+function avatarEl(name){
+  const src=playerImg[name];
+  return src?`<img class="card-avatar" src="${src}" alt="${name}">`:`<div class="card-avatar" style="background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--gold)">${(name||'?')[0]}</div>`;
+}
+function deletePost(idx,name){
+  if(confirm(`Are you ${name}? This will delete your post.`)){
+    talks.splice(idx,1);
+    renderTalkWall();
+  }
+}
+function renderTalkWall(){
+  const wall=document.getElementById('talk-wall');wall.innerHTML='';
+  // Work on a reversed copy but track original index for deletion
+  [...talks].map((t,i)=>({t,i})).reverse().forEach(({t,i})=>{
+    const div=document.createElement('div');
+    const delBtn=`<button class="card-delete" onclick="deletePost(${i},'${t.from}')" title="Delete your post">✕</button>`;
+    if(t.type==='saying'){
+      div.className='saying-card';
+      div.innerHTML=`${delBtn}${avatarEl(t.from)}<div class="card-body"><div class="saying-label">⚡ League Saying</div><div class="saying-text">"${t.text}"</div><div class="saying-by">— ${t.from}</div></div>`;
+    } else {
+      div.className='talk-card';
+      div.innerHTML=`${delBtn}${avatarEl(t.from)}<div class="card-body"><div class="talk-from">${t.from} <span class="talk-to">→ ${t.to}</span></div><div class="talk-text">${t.text}</div><div class="talk-date">${t.date||''}</div></div>`;
+    }
+    wall.appendChild(div);
+  });
+}
+
+function renderWeeklyShots(data,wallId){
+  const wall=document.getElementById(wallId);if(!wall)return;
+  wall.innerHTML='';
+
+  function monthGroup(d){
+    if(d.startsWith('Apr')||d.startsWith('May')) return 'APR / MAY';
+    if(d.startsWith('Jun')) return 'JUNE';
+    if(d.startsWith('Jul')) return 'JULY';
+    if(d.startsWith('Aug')) return 'AUGUST';
+    if(d.startsWith('Sep')) return 'SEPTEMBER';
+    return d.split(' ')[0].toUpperCase();
+  }
+
+  function buildCard(s){
+    const div=document.createElement('div');
+    const pc=PC[s.winner]||'var(--gold)';
+    div.className='wk-card';
+    div.style.setProperty('--pc',pc);
+    let badge='';
+    if(s.badge==='record') badge=`<div class="wk-badge record">🏅 LEAGUE RECORD</div>`;
+    else if(s.badge==='hot') badge=`<div class="wk-badge hot">🔥 HIGHLIGHT</div>`;
+    else if(s.badge==='champ') badge=`<div class="wk-badge champ">🏆 CHAMPION</div>`;
+    div.innerHTML=`${badge}
+      <div class="wk-header">
+        <span class="wk-week">Week ${s.w} · ${s.d}</span>
+        <span class="wk-score-pill">NET ${s.net}</span>
+      </div>
+      <div class="wk-text">"${s.text}"</div>
+      <div class="wk-from">${s.winner} <span class="wk-arrow">→</span> <span style="color:var(--gray);font-weight:400;text-transform:none;letter-spacing:0">${s.to}</span></div>`;
+    return div;
+  }
+
+  // Collect ordered groups
+  const order=[];const groups={};
+  data.forEach(s=>{
+    const g=monthGroup(s.d);
+    if(!groups[g]){groups[g]=[];order.push(g);}
+    groups[g].push(s);
+  });
+
+  // Each month = full-width block with a 2-col card grid inside
+  order.forEach(grp=>{
+    const block=document.createElement('div');block.className='wk-month-block';
+    block.innerHTML=`<div class="wk-month-header"><span class="wk-month-label">${grp}</span><span class="wk-month-line"></span></div>`;
+    const grid=document.createElement('div');grid.className='wk-card-grid';
+    groups[grp].forEach(s=>grid.appendChild(buildCard(s)));
+    block.appendChild(grid);
+    wall.appendChild(block);
+  });
+}
+
+function showWkYear(btn,id){
+  document.querySelectorAll('.wk-ytab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.wk-ycontent').forEach(y=>y.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function setPostType(type,btn){
+  document.querySelectorAll('.post-type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('form-smack').style.display=type==='smack'?'':'none';
+  document.getElementById('form-saying').style.display=type==='saying'?'':'none';
+}
+
+function addTalk(){
+  const from=document.getElementById('tf-from').value;
+  const to=document.getElementById('tf-to').value;
+  const msg=document.getElementById('tf-msg').value.trim();
+  if(!from){alert('Pick a player first.');return;}
+  if(!msg){alert('Say something!');return;}
+  const d=new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  talks.push({type:'smack',from,to:to||'The Whole League',text:msg,date:d});
+  document.getElementById('tf-from').value='';
+  document.getElementById('tf-msg').value='';
+  renderTalkWall();
+  document.getElementById('talk-wall').scrollIntoView({behavior:'smooth'});
+}
+
+function addSaying(){
+  const from=document.getElementById('tf-say-from').value;
+  const msg=document.getElementById('tf-say-msg').value.trim();
+  if(!from){alert('Pick who posted it.');return;}
+  if(!msg){alert('Add the saying!');return;}
+  talks.push({type:'saying',from,text:msg});
+  document.getElementById('tf-say-from').value='';
+  document.getElementById('tf-say-msg').value='';
+  renderTalkWall();
+  document.getElementById('talk-wall').scrollIntoView({behavior:'smooth'});
+}
+
+// ═══ NAVIGATION ══════════════════════════════════════════════
+
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showYear(btn,yr){
+  // scope to history tab only
+  const histTab=document.getElementById('history');
+  histTab.querySelectorAll('.ycontent').forEach(y=>y.classList.remove('active'));
+  document.querySelectorAll('#hist-ytabs .ytab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(yr).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showSchedYear(btn,id){
+  document.querySelectorAll('#sched-ytabs .ytab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#schedule .ycontent').forEach(y=>y.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showBetYear(btn,id){
+  document.querySelectorAll('.bet-ycontent').forEach(y=>y.classList.remove('active'));
+  document.querySelectorAll('.bet-ytab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showMode(btn,showId){
+  // History NET/GROSS toggle — scoped to direct children of tbl-wrap
+  const wrap=btn.closest('.toggle-wrap');
+  wrap.querySelectorAll('.tog-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const tblWrap=btn.closest('.tbl-wrap');
+  // Update the mode label (NET/GROSS) in the tbl-label header
+  const lbl=tblWrap.querySelector('.mode-txt');
+  if(lbl) lbl.textContent='('+btn.textContent.trim()+')';
+  tblWrap.querySelectorAll(':scope > div[id]').forEach(el=>el.style.display='none');
+  document.getElementById(showId).style.display='';
+}
+
+function showStatsYear(btn,id){
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.s-ycontent').forEach(y=>y.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showStatsMode(btn,showId,hideId){
+  const wrap=btn.closest('.toggle-wrap');
+  wrap.querySelectorAll('.tog-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(hideId).style.display='none';
+  document.getElementById(showId).style.display='';
+}
+
+// ═══ INIT ════════════════════════════════════════════════════
+
+renderScoreTable(d2025,'t2025');
+renderScoreTable(d2024,'t2024');
+renderScoreTable(d2023,'t2023');
+renderScoreTable(d2023gross,'tg2023');
+renderHoleTable(net2025Holes,'sn2025-body',false);
+renderHoleTable(gross2025Holes,'sg2025-body',true);
+renderHoleTable(net2024Holes,'sn2024-body',false);
+renderHoleTable(gross2024Holes,'sg2024-body',true);
+// Gross summary rows for History tab — one "Season Avg" row styled like per-round table
+function renderGrossSummary(holeData,tbodyId){
+  const tb=document.getElementById(tbodyId);if(!tb)return;
+  const totals=holeData.map(p=>+(p.v.reduce((a,b)=>a+b,0).toFixed(1)));
+  const mn=Math.min(...totals),mx=Math.max(...totals);
+  const tr=document.createElement('tr');
+  let html='<td>Season Avg</td>';
+  totals.forEach(t=>{
+    let cls=t===mn?'sc-best':t===mx?'sc-worst':'';
+    html+=`<td class="${cls}">${t}</td>`;
+  });
+  tr.innerHTML=html;tb.appendChild(tr);
+}
+renderGrossSummary(gross2025Holes,'hg2025-body');
+renderGrossSummary(gross2024Holes,'hg2024-body');
+renderScheduleGrid(d2026,'sched2026-body',2026);
+renderScheduleGrid(d2025,'sched2025-body',2025);
+renderTalkWall();
+renderWeeklyShots(weeklySmack2026,'wk-wall-2026');
+renderWeeklyShots(weeklySmack2025,'wk-wall-2025');
+
+// ═══ PROFILE OVERLAY ════════════════════════════════════════
+
+const PROFILE_PAGES={
+  owens:'owens_profile.html',
+  farnia:'farnia_profile.html',
+  lorenz:'lorenz_profile.html',
+  carter:'carter_profile.html',
+  felter:'felter_profile.html'
+};
+
+function openProfile(slug){
+  if(!PROFILE_PAGES[slug])return;
+  const overlay=document.getElementById('profile-overlay');
+  const frame=document.getElementById('profile-frame');
+  const closeBtn=document.getElementById('pf-close');
+  frame.src=PROFILE_PAGES[slug];
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  closeBtn.classList.add('visible');
+  document.body.style.overflow='hidden';
+  if(location.hash!=='#'+slug)
+    history.pushState({profile:slug},'','#'+slug);
+}
+
+function closeProfile(){
+  const overlay=document.getElementById('profile-overlay');
+  const frame=document.getElementById('profile-frame');
+  const closeBtn=document.getElementById('pf-close');
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  closeBtn.classList.remove('visible');
+  document.body.style.overflow='';
+  // clear src after slide-out animation finishes
+  setTimeout(()=>{frame.src='';},420);
+  history.pushState(null,'',location.pathname+location.search);
+}
+
+// browser back / forward
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.profile){
+    openProfile(e.state.profile);
+  } else {
+    const overlay=document.getElementById('profile-overlay');
+    if(overlay.classList.contains('open')){
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden','true');
+      document.getElementById('pf-close').classList.remove('visible');
+      document.body.style.overflow='';
+      setTimeout(()=>{document.getElementById('profile-frame').src='';},420);
+    }
+  }
+});
+
+// Escape key closes overlay
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') closeProfile();
+});
+
+// On page load — open profile if URL has a player hash
+(function(){
+  const slug=location.hash.slice(1);
+  if(PROFILE_PAGES[slug]) openProfile(slug);
+})();
+
+</script>
+
+<!-- PROFILE OVERLAY -->
+<div id="profile-overlay" class="profile-overlay" aria-hidden="true">
+  <iframe id="profile-frame" class="profile-frame" src="" title="Player Profile"></iframe>
+</div>
+<button id="pf-close" class="pf-close" onclick="closeProfile()" aria-label="Close profile">✕</button>
+
+</body>
+</html>
