@@ -1234,10 +1234,26 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 
   <!-- 2026 Stats -->
   <div id="sy2026" class="s-ycontent active">
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;margin-bottom:1.5rem">
-      <div style="font-size:1.5rem;margin-bottom:.75rem">⏳</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:.5rem">Season In Progress</div>
-      <div style="font-size:.82rem;color:var(--gray)">Per-hole averages will populate as rounds are played. 2 rounds complete through May 3, 2026.</div>
+    <div class="tbl-wrap">
+      <div class="tbl-label">
+        2026 — Avg Score Per Hole <span style="font-size:.72rem;font-family:sans-serif;color:var(--gray);letter-spacing:0;font-weight:400">(through R2 · May 3)</span>
+        <div class="toggle-wrap">
+          <button class="tog-btn active" onclick="showStatsMode(this,'sn2026','sg2026')">NET</button>
+          <button class="tog-btn" onclick="showStatsMode(this,'sg2026','sn2026')">GROSS</button>
+        </div>
+      </div>
+      <div id="sn2026">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sn2026-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
+      <div id="sg2026" style="display:none">
+        <table><thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>Total</th></tr></thead>
+        <tbody id="sg2026-body"></tbody>
+        <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
+        </table>
+      </div>
     </div>
 
     <div class="tbl-wrap">
@@ -1547,6 +1563,21 @@ const gross2024Holes=[
   {p:'Carter',v:[5.6,5.6,6.1,5.2,5.6,4.1,6.3,4.3,4.6,4.4,5.6,5.1,5.0,5.0,5.0,5.8,3.4,4.6]},
   {p:'Felter',v:[5.2,5.2,6.0,5.2,5.7,4.7,6.5,5.0,4.2,4.2,5.9,5.3,5.6,5.5,5.1,5.8,4.0,4.8]},
   {p:'Lorenz',v:[4.4,5.4,5.5,4.8,5.0,4.0,6.2,4.8,3.5,4.1,5.3,4.8,5.2,4.9,5.0,5.4,3.6,4.5]},
+];
+// 2026 per-hole averages (through R2, May 3)
+const net2026Holes=[
+  {p:'Farnia',v:[5.0,3.0,5.5,5.5,3.5,3.5,5.0,3.5,3.0,4.0,4.5,4.0,4.0,4.5,4.0,4.0,3.5,4.5]},
+  {p:'Owens', v:[4.0,4.0,5.0,4.0,4.0,4.0,5.0,4.0,4.0,4.0,4.0,4.0,4.0,4.0,5.0,6.0,4.0,4.0]},
+  {p:'Felter',v:[4.0,4.0,4.0,5.0,3.5,3.0,3.5,4.0,4.5,3.5,5.0,5.0,3.0,4.0,3.5,4.0,3.0,4.5]},
+  {p:'Carter',v:[3.5,3.5,5.0,4.5,3.5,5.0,4.5,4.0,4.0,4.0,4.5,4.0,5.0,5.0,4.5,5.0,3.5,5.0]},
+  {p:'Lorenz',v:[3.0,4.0,6.0,3.0,4.0,4.0,4.0,3.0,6.0,4.0,6.0,5.0,5.0,6.0,2.0,5.0,3.0,6.0]},
+];
+const gross2026Holes=[
+  {p:'Farnia',v:[6.0,4.0,6.5,6.5,4.5,4.5,7.0,4.5,4.0,5.0,5.5,5.0,5.0,5.5,5.0,5.0,4.5,5.5]},
+  {p:'Owens', v:[5.0,5.0,6.0,5.0,5.0,4.0,6.0,4.0,4.0,4.0,5.0,5.0,5.0,5.0,5.0,7.0,4.0,5.0]},
+  {p:'Felter',v:[5.0,5.0,5.0,6.0,4.5,4.0,5.5,5.0,5.5,4.5,6.0,6.0,4.0,5.0,4.5,5.0,4.0,5.5]},
+  {p:'Carter',v:[4.5,4.5,6.0,5.5,4.5,5.0,5.5,5.0,5.0,5.0,5.5,5.0,6.0,6.0,5.5,6.0,3.5,6.0]},
+  {p:'Lorenz',v:[4.0,5.0,7.0,4.0,5.0,4.0,5.0,4.0,6.0,4.0,7.0,6.0,6.0,7.0,3.0,6.0,3.0,7.0]},
 ];
 const par=[4,4,4,4,4,3,5,4,3,3,4,4,4,4,4,5,3,4];
 
@@ -1984,6 +2015,8 @@ renderScoreTable(d2025,'t2025');
 renderScoreTable(d2024,'t2024');
 renderScoreTable(d2023,'t2023');
 renderScoreTable(d2023gross,'tg2023');
+renderHoleTable(net2026Holes,'sn2026-body',false);
+renderHoleTable(gross2026Holes,'sg2026-body',true);
 renderHoleTable(net2025Holes,'sn2025-body',false);
 renderHoleTable(gross2025Holes,'sg2025-body',true);
 renderHoleTable(net2024Holes,'sn2024-body',false);
