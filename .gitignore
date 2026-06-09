@@ -4,3 +4,6 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Secret config — never commit this
+automation/config.json

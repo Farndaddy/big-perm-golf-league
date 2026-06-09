@@ -1,0 +1,26 @@
+{
+  "anthropic_api_key": "sk-ant-YOUR_KEY_HERE",
+  "apps_script_url": "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec",
+
+  "scorecards_folder": "../Scorecards",
+  "site_folder": "..",
+
+  "playing_handicaps": {
+    "Farnia": 19,
+    "Owens":  12,
+    "Felter": 18,
+    "Carter": 16,
+    "Lorenz": 14
+  },
+
+  "handicap_indices": {
+    "Farnia": 17.1,
+    "Owens":  10.2,
+    "Felter": 16.4,
+    "Carter": 14.2,
+    "Lorenz": 14.0
+  },
+
+  "repo_remote": "origin",
+  "repo_branch": "main"
+}
