@@ -248,7 +248,7 @@ def compute_season_stats(calc):
 
     season = {p: [] for p in PLAYERS}
     for (d, v_str, att_str) in re.findall(
-            r"\{d:'([^']+)',v:\[([^\]]+)\],att:\[([^\]]+)\]", m.group(1)):
+            r"\{d:'([^']+)',v:\[([^\]]+)\],\s*att:\[([^\]]+)\]", m.group(1)):
         vals = [x.strip() for x in v_str.split(',')]
         atts = [x.strip().strip("'") for x in att_str.split(',')]
         for i, player in enumerate(PLAYERS):
@@ -269,12 +269,15 @@ def update_index_html(date, calc, season):
     path = SITE_DIR / "index.html"
     html = path.read_text()
 
+    # Normalize date: "Jun 07" → "Jun 7" to match d2026 format
+    date_norm = re.sub(r' 0(\d),', r' \1,', date + ',')[:-1]
+
     # 7a — update the existing date row in d2026 with actual scores
     net_vals = [str(calc[p]["net_total"]) if p in calc else "null" for p in PLAYERS]
     att_vals = ["'IN'" if p in calc else "'OUT'" for p in PLAYERS]
-    new_row  = f"{{d:'{date}',v:[{','.join(net_vals)}],att:[{','.join(att_vals)}]}}"
+    new_row  = f"{{d:'{date_norm}',v:[{','.join(net_vals)}],att:[{','.join(att_vals)}]}}"
     html = re.sub(
-        rf"\{{d:'{re.escape(date)}',v:\[[^\]]*\],att:\[[^\]]*\](?:,[^}}]*)?\}}",
+        rf"\{{d:'{re.escape(date_norm)}',v:\[[^\]]*\],\s*att:\[[^\]]*\](?:,[^}}]*)?\}}",
         new_row, html
     )
 
