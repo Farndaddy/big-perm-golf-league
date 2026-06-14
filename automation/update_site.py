@@ -84,13 +84,16 @@ def find_latest_scorecard_folder():
         print(f"❌ No images found in {latest}")
         sys.exit(1)
 
-    # Separate GHIN screenshot from 18 Birdies scorecards
-    ghin_image     = next((f for f in all_images if 'ghin' in f.stem.lower()), None)
-    scorecard_imgs = [f for f in all_images if 'ghin' not in f.stem.lower()]
+    # Separate GHIN/handicap screenshot from 18 Birdies scorecards
+    # Matches filenames containing: ghin, playing, handicap, hc (case-insensitive)
+    GHIN_KEYWORDS = ['ghin', 'playing', 'handicap', ' hc']
+    ghin_image     = next((f for f in all_images
+                           if any(kw in f.stem.lower() for kw in GHIN_KEYWORDS)), None)
+    scorecard_imgs = [f for f in all_images if f != ghin_image]
 
     print(f"📂 Folder: {latest.name}")
     print(f"   Scorecard images: {len(scorecard_imgs)}")
-    print(f"   GHIN image: {'✅ found' if ghin_image else '⚠️  not found — using config.json fallback'}")
+    print(f"   GHIN image: {'✅ ' + ghin_image.name if ghin_image else '⚠️  not found — using config.json fallback'}")
 
     return latest, scorecard_imgs, ghin_image
 
