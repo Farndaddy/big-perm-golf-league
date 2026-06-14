@@ -231,7 +231,17 @@ def send_to_google_sheet(date, scores, playing_hc, hc_index):
     }
     print("📊 Updating Google Sheet...")
     try:
-        resp = requests.post(APPS_SCRIPT_URL, json=payload, timeout=30)
+        # Google Apps Script redirects POST requests — we must follow the redirect
+        # manually and re-POST, otherwise Python converts the redirect to a GET (no body).
+        resp = requests.post(APPS_SCRIPT_URL, json=payload, timeout=30,
+                             allow_redirects=False)
+
+        # Follow redirect (301/302) with a fresh POST to the final URL
+        if resp.status_code in (301, 302, 303, 307, 308):
+            redirect_url = resp.headers.get("Location")
+            if redirect_url:
+                resp = requests.post(redirect_url, json=payload, timeout=30)
+
         result = resp.json()
         if result.get("success"):
             print(f"✅ Sheet updated: {result.get('message')}")
