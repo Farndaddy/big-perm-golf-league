@@ -1,34 +1,50 @@
 // ============================================================
-// BIG PERM GOLF LEAGUE — Google Apps Script
-// Paste this entire file into Tools > Apps Script in your sheet.
-// Then deploy as a Web App (see SETUP.md for instructions).
+// BIG PERM GOLF LEAGUE — Google Apps Script (v2 — Full Rewrite)
+// Paste this entire file into Extensions > Apps Script in your sheet.
+// Then: Deploy > New Deployment > Web App
+//   Execute as: Me
+//   Who has access: Anyone
+// Copy the new deployment URL into config.json → apps_script_url
 // ============================================================
 
-// ── Sheet & Player Config ────────────────────────────────────
-const PLAYERS = ['Farnia', 'Owens', 'Felter', 'Carter', 'Lorenz'];
+const PLAYERS  = ['Farnia', 'Owens', 'Felter', 'Carter', 'Lorenz'];
+const HOLE_HC  = [11,7,9,3,5,17,1,13,15,16,2,10,12,6,14,4,18,8];
+const HOLE_PAR = [4,4,4,4,4,3,5,4,3,4,3,4,4,4,4,5,3,4];
 
-// Playing handicaps — update these when CDGA handicaps change
-const PLAYING_HC = {
-  Farnia: 19,
-  Owens:  12,
-  Felter: 18,
-  Carter: 16,
-  Lorenz: 14
+// Month abbreviation to full name  ("Jun" → "June")
+const MONTH_FULL = {
+  Jan:'January', Feb:'February', Mar:'March',    Apr:'April',
+  May:'May',     Jun:'June',     Jul:'July',      Aug:'August',
+  Sep:'September', Oct:'October', Nov:'November', Dec:'December'
 };
 
-// Hole handicap difficulty ratings (1=hardest, 18=easiest)
-const HOLE_HC = [11,7,9,3,5,17,1,13,15,16,2,10,12,6,14,4,18,8];
+// Month abbreviation to 0-indexed number for JS Date comparison
+const MONTH_NUM = {
+  Jan:0, Feb:1, Mar:2, Apr:3, May:4,  Jun:5,
+  Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11
+};
 
-// Par per hole
-const HOLE_PAR = [4,4,4,4,4,3,5,4,3,4,3,4,4,4,4,5,3,4];
+// "Jun 14" → "June 14"
+function expandDate(d) {
+  return d.replace(/^([A-Za-z]+)/, function(m) { return MONTH_FULL[m] || m; });
+}
+
+// Check if a cell value matches a target date.
+// Handles both Date objects (from Google Sheets date cells) and text strings.
+function cellMatchesDate(cellVal, targetMonth, targetDay, longDate) {
+  if (!cellVal && cellVal !== 0) return false;
+  if (cellVal instanceof Date) {
+    return cellVal.getMonth() === targetMonth && cellVal.getDate() === targetDay;
+  }
+  return cellVal.toString().trim() === longDate;
+}
 
 
 // ── Web App Entry Point ──────────────────────────────────────
-// This is called by the Python script via HTTP POST.
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
-    const result = processRoundData(data);
+    var data   = JSON.parse(e.postData.contents);
+    var result = processRoundData(data);
     return ContentService
       .createTextOutput(JSON.stringify({ success: true, message: result }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -39,170 +55,260 @@ function doPost(e) {
   }
 }
 
-// ── Main processing function ─────────────────────────────────
-// Call this manually from the Apps Script editor to test:
-// processRoundData({ date: "May 31", scores: { Farnia: [4,5,...], Owens: [3,4,...], ... } })
+
+// ── Main Processing ──────────────────────────────────────────
 function processRoundData(data) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const date = data.date;              // e.g. "May 31"
-  const scores = data.scores;          // { Farnia: [h1,h2,...,h18], Owens: [...], ... }
-  const hcOverrides = data.playing_hc || {};  // playing (course) handicaps from GHIN screenshot
-  const hcIndices   = data.hc_index   || {};  // CDGA handicap indices (for reference)
+  var ss         = SpreadsheetApp.getActiveSpreadsheet();
+  var rawDate    = data.date;           // "Jun 14"
+  var scores     = data.scores;         // { Farnia: [h1..h18], ... }
+  var hcOverride = data.playing_hc || {};
+  var hcIndex    = data.hc_index   || {};
 
-  const log = [];
+  // Fallback playing HC — updated to current values
+  var FALLBACK_HC = { Farnia:18, Owens:13, Felter:19, Carter:16, Lorenz:15 };
+  function getHC(p) { return hcOverride[p] || FALLBACK_HC[p] || 16; }
 
-  // Calculate net scores for each player
-  const netScores = {};
-  PLAYERS.forEach(player => {
+  // Calculate gross + net per player
+  var calc = {};
+  PLAYERS.forEach(function(player) {
     if (!scores[player]) return;
-    const hc = hcOverrides[player] || PLAYING_HC[player];
-    const grossHoles = scores[player];
-    const netHoles = calcNetHoles(grossHoles, hc);
-    const grossTotal = grossHoles.reduce((a, b) => a + b, 0);
-    const netTotal = netHoles.reduce((a, b) => a + b, 0);
-    netScores[player] = {
-      grossHoles,
-      netHoles,
-      grossTotal,
-      netTotal,
-      hc
+    var hc    = getHC(player);
+    var gross = scores[player];
+    var net   = calcNetHoles(gross, hc);
+    calc[player] = {
+      gross:      gross,
+      net:        net,
+      grossTotal: gross.reduce(function(a,b){return a+b;}, 0),
+      netTotal:   net.reduce(function(a,b){return a+b;}, 0),
+      hc:         hc
     };
   });
 
-  // Update each tab
-  log.push(updateLeaderboard(ss, date, netScores));
-  log.push(updateWeeklyScorecard(ss, date, netScores, hcOverrides));
-  log.push(updateScheduleTracker(ss, date, scores));
+  var log = [];
+  log.push(updateLeaderboard(ss, rawDate, calc));
+  log.push(updateWeeklyScorecard(ss, rawDate, calc));
+  log.push(updateScheduleTracker(ss, rawDate, scores));
+  PLAYERS.forEach(function(player) {
+    try {
+      log.push(updatePlayerTab(ss, player, rawDate, calc[player] || null));
+    } catch(err) {
+      log.push(player + ' tab error: ' + err.toString());
+    }
+  });
 
   return log.join(' | ');
 }
 
-// ── Net score calculator ─────────────────────────────────────
-function calcNetHoles(grossHoles, hc) {
-  const strokes = new Array(18).fill(0);
-  // First pass: 1 stroke on holes ranked 1..min(hc,18)
-  for (let i = 0; i < 18; i++) {
-    if (HOLE_HC[i] <= Math.min(hc, 18)) strokes[i]++;
-  }
-  // Second pass: extra stroke if hc > 18 (on hole ranked 1)
-  if (hc > 18) {
-    const extraHoles = hc - 18;
-    for (let i = 0; i < 18; i++) {
-      if (HOLE_HC[i] <= extraHoles) strokes[i]++;
-    }
-  }
-  return grossHoles.map((g, i) => g - strokes[i]);
+
+// ── Net Score Calculator ─────────────────────────────────────
+function calcNetHoles(gross, hc) {
+  var s = new Array(18).fill(0);
+  for (var i = 0; i < 18; i++) if (HOLE_HC[i] <= Math.min(hc, 18)) s[i]++;
+  if (hc > 18) for (var i = 0; i < 18; i++) if (HOLE_HC[i] <= hc - 18) s[i]++;
+  return gross.map(function(g, i) { return g - s[i]; });
 }
 
-// ── Update Leaderboard tab ───────────────────────────────────
-function updateLeaderboard(ss, date, netScores) {
-  const sheet = ss.getSheetByName('Leaderboard');
-  if (!sheet) return 'Leaderboard tab not found';
 
-  // Find header row to determine player column order
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const playerCols = {};
-  headers.forEach((h, i) => {
-    const name = h.toString().trim();
-    if (PLAYERS.includes(name)) playerCols[name] = i + 1; // 1-indexed
+// ── 1. LEADERBOARD TAB ───────────────────────────────────────
+// Row 2  = header:  blank | Farnia | Felter | Owens | Carter | Lorenz
+// Rows 3-22 = pre-built date rows: "April 26", "May 3", ...
+// DO NOT touch rows 23+ (Total, Top 8 Avg, etc.)
+// Action: find the row whose col A = date, write each player's net total
+function updateLeaderboard(ss, rawDate, calc) {
+  var sheet = ss.getSheetByName('Leaderboard');
+  if (!sheet) return 'Leaderboard: tab not found';
+
+  var longDate    = expandDate(rawDate);
+  var parts       = rawDate.split(' ');
+  var targetMonth = MONTH_NUM[parts[0]];
+  var targetDay   = parseInt(parts[1]);
+
+  // Read player columns from header row 2
+  var headers    = sheet.getRange(2, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var playerCols = {};
+  headers.forEach(function(h, i) {
+    var n = h.toString().trim();
+    if (PLAYERS.indexOf(n) >= 0) playerCols[n] = i + 1;
   });
 
-  // Find next empty row (after header rows)
-  const lastRow = sheet.getLastRow();
-  const newRow = lastRow + 1;
-
-  // Write date in column A
-  sheet.getRange(newRow, 1).setValue(date);
-
-  // Write net scores for each player
-  PLAYERS.forEach(player => {
-    if (!playerCols[player]) return;
-    const col = playerCols[player];
-    if (netScores[player]) {
-      sheet.getRange(newRow, col).setValue(netScores[player].netTotal);
-    } else {
-      sheet.getRange(newRow, col).setValue('---');
-    }
-  });
-
-  return `Leaderboard: wrote row ${newRow} for ${date}`;
-}
-
-// ── Update Weekly Scorecard tab ──────────────────────────────
-// hcOverrides = playing handicaps from GHIN screenshot (course handicap)
-function updateWeeklyScorecard(ss, date, netScores, hcOverrides) {
-  const sheet = ss.getSheetByName('Weekly Scorecard');
-  if (!sheet) return 'Weekly Scorecard tab not found';
-
-  // Use live GHIN playing HC if provided, otherwise fall back to hardcoded values
-  const getPlayingHC = (player) => hcOverrides[player] ?? PLAYING_HC[player];
-
-  let nextRow = sheet.getLastRow() + 1;
-
-  PLAYERS.forEach(player => {
-    const playingHC = getPlayingHC(player);
-    if (!netScores[player]) {
-      // Player did not play — write DNS row with their current playing HC
-      const row = [date, player, ...new Array(18).fill('---'), '---', playingHC, '---'];
-      sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
-    } else {
-      const { grossHoles, grossTotal, netTotal } = netScores[player];
-      // Column V = playing (course) handicap from GHIN — this is the correct value
-      const row = [date, player, ...grossHoles, grossTotal, playingHC, netTotal];
-      sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
-    }
-    nextRow++;
-  });
-
-  return `Weekly Scorecard: wrote ${PLAYERS.length} rows for ${date}`;
-}
-
-// ── Update Schedule Tracker tab ──────────────────────────────
-function updateScheduleTracker(ss, date, scores) {
-  const sheet = ss.getSheetByName('Schedule Tracker');
-  if (!sheet) return 'Schedule Tracker tab not found (skipped)';
-
-  // Find the row for this date
-  const col1 = sheet.getRange('A:A').getValues();
-  let targetRow = -1;
-  for (let i = 0; i < col1.length; i++) {
-    const cellVal = col1[i][0].toString().trim();
-    if (cellVal === date || cellVal.includes(date)) {
-      targetRow = i + 1;
+  // Find date row in rows 3-22
+  var colA      = sheet.getRange(3, 1, 20, 1).getValues();
+  var targetRow = -1;
+  for (var i = 0; i < colA.length; i++) {
+    if (cellMatchesDate(colA[i][0], targetMonth, targetDay, longDate)) {
+      targetRow = i + 3;
       break;
     }
   }
-  if (targetRow === -1) return `Schedule Tracker: no row found for date "${date}" (skipped)`;
+  if (targetRow === -1) return 'Leaderboard: no row found for "' + longDate + '"';
 
-  // Find player columns from row 3 (header)
-  const headers = sheet.getRange(3, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const playerCols = {};
-  headers.forEach((h, i) => {
-    const name = h.toString().trim();
-    if (PLAYERS.includes(name)) playerCols[name] = i + 1;
+  // Write net totals
+  PLAYERS.forEach(function(player) {
+    if (!playerCols[player]) return;
+    if (calc[player]) {
+      sheet.getRange(targetRow, playerCols[player]).setValue(calc[player].netTotal);
+    }
+    // DNS: leave blank
   });
 
-  PLAYERS.forEach(player => {
+  return 'Leaderboard: row ' + targetRow + ' updated (' + longDate + ')';
+}
+
+
+// ── 2. WEEKLY SCORECARD TAB ───────────────────────────────────
+// Row 5 = header: Date | Player/Hole | 1 | 2 | ... | 18 | Total | HC | Net
+// Pre-built rows (5 players per date + 1 blank spacer):
+//   Col A = date text only on the first player's row ("June 14")
+//   Col B = player name
+//   Cols C-T (3-20) = H1-H18 gross
+//   Col U  (21)     = gross total
+//   Col V  (22)     = playing HC
+//   Col W  (23)     = net total
+// Action: find each player's row by date+name, fill in scores
+function updateWeeklyScorecard(ss, rawDate, calc) {
+  var sheet = ss.getSheetByName('Weekly Scorecard');
+  if (!sheet) return 'Weekly Scorecard: tab not found';
+
+  var longDate    = expandDate(rawDate);
+  var parts       = rawDate.split(' ');
+  var targetMonth = MONTH_NUM[parts[0]];
+  var targetDay   = parseInt(parts[1]);
+
+  var lastRow = sheet.getLastRow();
+  var abCols  = sheet.getRange(1, 1, lastRow, 2).getValues();
+
+  // Find the block start: first row where col A matches our date
+  var blockStart = -1;
+  for (var i = 0; i < abCols.length; i++) {
+    if (cellMatchesDate(abCols[i][0], targetMonth, targetDay, longDate)) {
+      blockStart = i;
+      break;
+    }
+  }
+  if (blockStart === -1) return 'Weekly Scorecard: no block found for "' + longDate + '"';
+
+  // Scan next 6 rows to find each player by name in col B
+  var written = 0;
+  for (var i = blockStart; i < Math.min(blockStart + 7, abCols.length); i++) {
+    var playerName = abCols[i][1].toString().trim();
+    if (PLAYERS.indexOf(playerName) < 0) continue;
+    if (!calc[playerName]) continue; // DNS — leave blank
+
+    var c      = calc[playerName];
+    var rowNum = i + 1; // 1-indexed
+
+    sheet.getRange(rowNum, 3, 1, 18).setValues([c.gross]); // H1-H18
+    sheet.getRange(rowNum, 21).setValue(c.grossTotal);      // Total
+    sheet.getRange(rowNum, 22).setValue(c.hc);              // HC
+    sheet.getRange(rowNum, 23).setValue(c.netTotal);        // Net
+    written++;
+  }
+
+  return 'Weekly Scorecard: ' + written + ' players written for ' + longDate;
+}
+
+
+// ── 3. SCHEDULE TRACKER TAB ───────────────────────────────────
+// Row 3 = header: Date | Confirmed Players | Farnia | Owens | Carter | Felter | Lorenz | Extras
+// Rows 4-23 = date rows (col A stores actual Date values, displayed as m/d)
+// Action: find the date row, write IN/OUT for each player
+function updateScheduleTracker(ss, rawDate, scores) {
+  var sheet = ss.getSheetByName('Schedule Tracker');
+  if (!sheet) return 'Schedule Tracker: tab not found';
+
+  var parts       = rawDate.split(' ');
+  var targetMonth = MONTH_NUM[parts[0]];
+  var targetDay   = parseInt(parts[1]);
+  var longDate    = expandDate(rawDate);
+
+  // Read player columns from header row 3
+  var headers    = sheet.getRange(3, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var playerCols = {};
+  headers.forEach(function(h, i) {
+    var n = h.toString().trim();
+    if (PLAYERS.indexOf(n) >= 0) playerCols[n] = i + 1;
+  });
+
+  // Find date row in rows 4-23
+  var colA      = sheet.getRange(4, 1, 20, 1).getValues();
+  var targetRow = -1;
+  for (var i = 0; i < colA.length; i++) {
+    if (cellMatchesDate(colA[i][0], targetMonth, targetDay, longDate)) {
+      targetRow = i + 4;
+      break;
+    }
+  }
+  if (targetRow === -1) return 'Schedule Tracker: no row found for ' + rawDate;
+
+  PLAYERS.forEach(function(player) {
     if (!playerCols[player]) return;
-    const status = scores[player] ? 'IN' : 'OUT';
+    var status = scores[player] ? 'IN' : 'OUT';
     sheet.getRange(targetRow, playerCols[player]).setValue(status);
   });
 
-  return `Schedule Tracker: updated row ${targetRow} for ${date}`;
+  return 'Schedule Tracker: row ' + targetRow + ' updated';
 }
 
-// ── Manual test function ─────────────────────────────────────
-// Run this from the Apps Script editor to test with fake data
-function testWithSampleData() {
-  const sampleData = {
-    date: "May 31",
+
+// ── 4. INDIVIDUAL PLAYER TABS ─────────────────────────────────
+// Tab names: "Farnia", "Owens", "Felter", "Carter", "Lorenz"
+// Structure:
+//   Rows 1-6:  summary headers — DO NOT TOUCH
+//   Row 7:     header: Date | Player/Hole | 1 | 2 | ... | 18 | Total
+//   Rows 8-27: one pre-built gross row per round
+//              Col A = date ("April 26" or Date object)
+//              Col B = player name
+//              Cols C-T (3-20) = H1-H18 gross scores
+//              Col U  (21)     = gross total (may have SUM formula)
+//   Rows 28+:  summary + net score section (formula-driven) — DO NOT TOUCH
+// Action: find the gross row for this date, fill in H1-H18 gross + total
+function updatePlayerTab(ss, player, rawDate, c) {
+  var sheet = ss.getSheetByName(player);
+  if (!sheet) return player + ' tab: not found (skipped)';
+
+  var longDate    = expandDate(rawDate);
+  var parts       = rawDate.split(' ');
+  var targetMonth = MONTH_NUM[parts[0]];
+  var targetDay   = parseInt(parts[1]);
+
+  // Scan rows 8-27 for the date in col A
+  var scanData  = sheet.getRange(8, 1, 20, 1).getValues();
+  var grossRow  = -1;
+  for (var i = 0; i < scanData.length; i++) {
+    if (cellMatchesDate(scanData[i][0], targetMonth, targetDay, longDate)) {
+      grossRow = i + 8; // 1-indexed row
+      break;
+    }
+  }
+  if (grossRow === -1) return player + ' tab: no row found for ' + longDate;
+
+  if (!c) return player + ' tab: DNS — row ' + grossRow + ' left blank';
+
+  // Write H1-H18 gross in cols C-T (3-20), total in col U (21)
+  sheet.getRange(grossRow, 3, 1, 18).setValues([c.gross]);
+  sheet.getRange(grossRow, 21).setValue(c.grossTotal);
+
+  return player + ' tab: gross written to row ' + grossRow;
+}
+
+
+// ── Manual Test ──────────────────────────────────────────────
+// Run this from the Apps Script editor to verify all tabs update correctly.
+// Go to Run menu → Run → testWithTodaysData
+// Then check the Execution Log (View → Logs) for results.
+function testWithTodaysData() {
+  var data = {
+    date: "Jun 14",
+    playing_hc: { Farnia:18, Owens:13, Felter:19, Carter:16, Lorenz:15 },
     scores: {
-      Farnia: [5,6,5,5,5,4,7,4,4,4,5,4,5,4,4,6,4,5],
-      Owens:  [4,4,6,6,5,3,5,4,3,4,5,5,4,4,5,5,3,4],
-      Felter: [4,5,5,5,4,4,5,4,4,4,6,6,4,5,5,5,3,4],
-      Carter: [4,5,4,5,6,4,6,5,5,3,6,4,5,6,4,5,5,4]
-      // Lorenz: not included = DNS
+      Farnia: [5,6,6,6,3,6,3,5,5,4,5,7,5,5,5,5,5,5],
+      Owens:  [5,6,5,5,5,4,6,4,3,3,6,5,4,4,6,4,5,5],
+      Felter: [5,6,5,6,7,4,5,4,3,4,6,6,3,6,5,5,4,4],
+      Lorenz: [4,6,7,6,5,4,6,4,3,4,5,7,6,7,7,7,4,5]
+      // Carter DNS — not included
     }
   };
-  Logger.log(processRoundData(sampleData));
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
 }
