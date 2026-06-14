@@ -187,10 +187,17 @@ function updateWeeklyScorecard(ss, rawDate, calc) {
   }
   if (blockStart === -1) return 'Weekly Scorecard: no block found for "' + longDate + '"';
 
-  // Scan next 6 rows to find each player by name in col B
+  // Scan rows in this date block — stop at blank spacer row or new date
   var written = 0;
-  for (var i = blockStart; i < Math.min(blockStart + 7, abCols.length); i++) {
-    var playerName = abCols[i][1].toString().trim();
+  for (var i = blockStart; i < abCols.length; i++) {
+    var colAVal    = abCols[i][0] ? abCols[i][0].toString().trim() : '';
+    var playerName = abCols[i][1] ? abCols[i][1].toString().trim() : '';
+
+    // A new date appeared in col A — we've crossed into the next block
+    if (i > blockStart && colAVal) break;
+    // Col B is empty — blank spacer row, end of this date's block
+    if (i > blockStart && !playerName) break;
+
     if (PLAYERS.indexOf(playerName) < 0) continue;
     if (!calc[playerName]) continue; // DNS — leave blank
 
@@ -301,11 +308,12 @@ function testWithTodaysData() {
     date: "Jun 14",
     playing_hc: { Farnia:18, Owens:13, Felter:19, Carter:16, Lorenz:15 },
     scores: {
-      Farnia: [5,6,6,6,3,6,3,5,5,4,5,7,5,5,5,5,5,5],
-      Owens:  [5,6,5,5,5,4,6,4,3,3,6,5,4,4,6,4,5,5],
-      Felter: [5,6,5,6,7,4,5,4,3,4,6,6,3,6,5,5,4,4],
-      Lorenz: [4,6,7,6,5,4,6,4,3,4,5,7,6,7,7,7,4,5]
-      // Carter DNS — not included
+      // Actual scores from 06-14-26 scorecards
+      Farnia: [5,6,6,6,3,6,3,5,6, 4,5,7,5,5,5,2,6,5],  // gross 90, net 72
+      Owens:  [5,6,5,5,5,4,6,4,3, 3,6,5,4,4,4,5,3,5],  // gross 82, net 69
+      Felter: [5,6,5,6,7,4,5,4,4, 4,6,6,3,6,5,5,4,4],  // gross 89, net 70
+      Lorenz: [3,6,7,6,5,4,6,4,3, 4,7,5,7,6,7,7,4,5]   // gross 96, net 81
+      // Carter: DNS
     }
   };
   var result = processRoundData(data);
