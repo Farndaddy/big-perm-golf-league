@@ -2,20 +2,30 @@
 """
 Big Perm Golf League — Weekly Update Script
 ============================================
-Drop this week's files into Scorecards/MM-DD-YY/:
-  - 18 Birdies scorecard screenshot(s)  →  scores read automatically
-  - GHIN screenshot (named GHIN.PNG)    →  handicaps read automatically
+EVERY SUNDAY — drop this week's files into Scorecards/MM-DD-YY/:
+  - 18 Birdies scorecard screenshot(s)   →  gross scores read automatically
+  - CDGA/GHIN handicap screenshot        →  playing HCs read automatically
+    (name it anything with "ghin", "handicap", or "hc" in the filename,
+     e.g. GHIN.PNG, handicap.jpg, hc-jun21.png)
+    If no HC screenshot is provided, falls back to config.json values.
 
-Then run:
-  python automation/update_site.py
+Then double-click "Run Weekly Update.command" (or: python3 automation/update_site.py)
 
 What it does:
-  1. Reads GHIN screenshot → extracts each player's HC index + playing HC
-  2. Reads 18 Birdies scorecard(s) → extracts gross scores (guests filtered out)
-  3. Calculates net scores using the live GHIN playing handicaps
-  4. Sends everything to Google Sheet via Apps Script
-  5. Rebuilds index.html leaderboard + hole averages
-  6. Rebuilds all 5 player profile pages
+  1. Reads GHIN/CDGA screenshot → extracts each player's HC index + playing HC
+       Playing HC determines which holes get strokes:
+         HC=14 → stroke on the 14 hardest holes
+         HC=18 → stroke on all 18 holes
+         HC=19 → stroke on all 18 + extra stroke on the hardest hole
+  2. Reads 18 Birdies scorecard(s) → extracts gross scores per hole per player
+  3. Calculates per-hole net scores (gross − strokes received per hole)
+  4. Sends to Google Sheet via Apps Script → updates:
+       • Weekly Scorecard: gross scores, HC column (V), net total
+       • Each player's tab: gross section + "Net Score w/Handicap" section
+       • Leaderboard tab: net totals for the date
+       • Schedule Tracker: marks IN/OUT for each player
+  5. Updates index.html: leaderboard rankings + round count
+  6. Updates all 5 player profile pages
   7. Commits and pushes to GitHub — site is live in ~60 seconds
 """
 

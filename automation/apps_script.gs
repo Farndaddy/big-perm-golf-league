@@ -260,15 +260,19 @@ function updateScheduleTracker(ss, rawDate, scores) {
 // ── 4. INDIVIDUAL PLAYER TABS ─────────────────────────────────
 // Tab names: "Farnia", "Owens", "Felter", "Carter", "Lorenz"
 // Structure:
-//   Rows 1-6:  summary headers — DO NOT TOUCH
-//   Row 7:     header: Date | Player/Hole | 1 | 2 | ... | 18 | Total
-//   Rows 8-27: one pre-built gross row per round
+//   Rows 1-6:  summary headers
+//   Row 7:     gross header: Date | Player/Hole | 1–18 | Total
+//   Rows 8-27: gross rows (one per round date)
 //              Col A = date ("April 26" or Date object)
 //              Col B = player name
 //              Cols C-T (3-20) = H1-H18 gross scores
-//              Col U  (21)     = gross total (may have SUM formula)
-//   Rows 28+:  summary + net score section (formula-driven) — DO NOT TOUCH
-// Action: find the gross row for this date, fill in H1-H18 gross + total
+//              Col U  (21)     = gross total
+//   Rows 28+:  stats + "Net Score w/Handicap" section
+//              Header row contains "Net Score w/Handicap" in col A
+//              Net rows below that header mirror the same dates as gross rows
+//              Cols C-T (3-20) = per-hole net scores
+//              Col U  (21)     = net total
+// Action: find the gross row + net row for this date, fill in all values
 function updatePlayerTab(ss, player, rawDate, c) {
   var sheet = ss.getSheetByName(player);
   if (!sheet) return player + ' tab: not found (skipped)';
@@ -278,24 +282,62 @@ function updatePlayerTab(ss, player, rawDate, c) {
   var targetMonth = MONTH_NUM[parts[0]];
   var targetDay   = parseInt(parts[1]);
 
-  // Scan rows 8-27 for the date in col A
+  // ── GROSS SECTION: scan rows 8-27 for the date in col A ─────
   var scanData  = sheet.getRange(8, 1, 20, 1).getValues();
   var grossRow  = -1;
   for (var i = 0; i < scanData.length; i++) {
     if (cellMatchesDate(scanData[i][0], targetMonth, targetDay, longDate)) {
-      grossRow = i + 8; // 1-indexed row
+      grossRow = i + 8;
       break;
     }
   }
-  if (grossRow === -1) return player + ' tab: no row found for ' + longDate;
-
-  if (!c) return player + ' tab: DNS — row ' + grossRow + ' left blank';
+  if (grossRow === -1) return player + ' tab: no gross row found for ' + longDate;
+  if (!c) return player + ' tab: DNS — gross row ' + grossRow + ' left blank';
 
   // Write H1-H18 gross in cols C-T (3-20), total in col U (21)
   sheet.getRange(grossRow, 3, 1, 18).setValues([c.gross]);
   sheet.getRange(grossRow, 21).setValue(c.grossTotal);
 
-  return player + ' tab: gross written to row ' + grossRow;
+  // ── NET SECTION: find "Net Score w/Handicap" header row ──────
+  // Search from row 28 onward for the net section header
+  var lastRow   = sheet.getLastRow();
+  var searchLen = Math.min(lastRow - 27, 50);
+  if (searchLen < 1) {
+    return player + ' tab: gross row ' + grossRow + ' written (no net section found)';
+  }
+  var colAData     = sheet.getRange(28, 1, searchLen, 1).getValues();
+  var netHeaderRow = -1;
+  for (var i = 0; i < colAData.length; i++) {
+    var v = colAData[i][0];
+    if (v && v.toString().indexOf('Net Score') >= 0) {
+      netHeaderRow = i + 28;
+      break;
+    }
+  }
+  if (netHeaderRow === -1) {
+    return player + ' tab: gross row ' + grossRow + ' written (net header not found)';
+  }
+
+  // Search up to 25 rows below the header for the matching date
+  var netScanLen  = Math.min(lastRow - netHeaderRow, 25);
+  var netScanData = sheet.getRange(netHeaderRow + 1, 1, netScanLen, 1).getValues();
+  var netRow      = -1;
+  for (var i = 0; i < netScanData.length; i++) {
+    if (cellMatchesDate(netScanData[i][0], targetMonth, targetDay, longDate)) {
+      netRow = netHeaderRow + 1 + i;
+      break;
+    }
+  }
+  if (netRow === -1) {
+    return player + ' tab: gross row ' + grossRow + ' written (net date row not found)';
+  }
+
+  // Write per-hole net scores (cols C-T) and net total (col U)
+  sheet.getRange(netRow, 3, 1, 18).setValues([c.net]);
+  sheet.getRange(netRow, 21).setValue(c.netTotal);
+
+  return (player + ' tab: gross row ' + grossRow +
+          ' + net row ' + netRow + ' written (' + longDate + ')');
 }
 
 
