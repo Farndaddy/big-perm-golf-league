@@ -64,8 +64,13 @@ def call_claude(image_parts, prompt, max_tokens=1024):
         messages=[{"role": "user", "content": content}]
     )
     raw = response.content[0].text.strip()
+    # Strip markdown code fences if present
     raw = re.sub(r'^```(?:json)?\s*', '', raw)
-    raw = re.sub(r'\s*```$', '', raw)
+    raw = re.sub(r'\s*```.*$', '', raw, flags=re.DOTALL)
+    # Extract just the JSON object — find first { and its matching }
+    match = re.search(r'\{.*\}', raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
     return json.loads(raw)
 
 
