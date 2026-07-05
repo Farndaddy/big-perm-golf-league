@@ -416,3 +416,25 @@ function testWithTodaysData() {
   Logger.log(result);
   console.log(result);
 }
+
+// ── Jul 5 Test ───────────────────────────────────────────────
+// Run this to push Jul 5, 2026 scores directly into the sheet.
+// Select "testJul5Data" from the function dropdown, then click Run.
+// Check the Execution log below for success/error messages.
+function testJul5Data() {
+  var data = {
+    date: "Jul 5",
+    playing_hc: { Farnia:18, Felter:17, Lorenz:15 },
+    hc_index:   { Farnia:16.2, Felter:15.9, Lorenz:13.0 },
+    scores: {
+      Farnia: [5,4,5,6,4,4,7,4,4, 4,5,5,5,5,4,7,5,6],  // gross 89, net 71
+      Felter: [4,6,3,4,6,4,6,5,4, 4,5,5,6,5,4,6,4,6],  // gross 87, net 70
+      Lorenz: [4,7,6,5,6,5,6,4,5, 4,5,4,5,5,7,6,3,4]   // gross 91, net 76
+      // Carter, Owens: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
