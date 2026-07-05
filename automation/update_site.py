@@ -233,6 +233,46 @@ def calc_all_nets(scores, playing_hc):
 
 
 # ── Step 5: Send to Google Sheet ─────────────────────────────
+def sync_schedule_from_sheet():
+    """Pull Schedule Tracker attendance from Google Sheet and update d2026 att[] values in index.html."""
+    if not APPS_SCRIPT_URL or "YOUR_DEPLOYMENT_ID" in APPS_SCRIPT_URL:
+        print("⚠️  Apps Script URL not set — skipping schedule sync.")
+        return
+
+    print("📅 Syncing schedule from Google Sheet...")
+    try:
+        resp = requests.get(APPS_SCRIPT_URL + "?action=schedule", timeout=30,
+                            allow_redirects=True)
+        result = resp.json()
+        if not result.get("success"):
+            print(f"⚠️  Schedule sync error: {result.get('error')}")
+            return
+
+        schedule = result.get("schedule", [])
+        index_path = SITE_DIR / "index.html"
+        html = index_path.read_text(encoding="utf-8")
+
+        updated = 0
+        for row in schedule:
+            date_str = row["date"]        # e.g. "Jun 14"
+            att = row["att"]              # [Farnia, Owens, Felter, Carter, Lorenz]
+            att_js = "[" + ",".join(f"'{v}'" for v in att) + "]"
+
+            # Match the existing att:[] for this date and replace it
+            pattern = rf"({{d:'{re.escape(date_str)}',v:\[[^\]]*\][^}}]*?)att:\[[^\]]*\]"
+            replacement = rf"\1att:{att_js}"
+            new_html, n = re.subn(pattern, replacement, html)
+            if n:
+                html = new_html
+                updated += 1
+
+        index_path.write_text(html, encoding="utf-8")
+        print(f"✅ Schedule updated for {updated} dates.")
+
+    except Exception as e:
+        print(f"⚠️  Could not sync schedule: {e}")
+
+
 def send_to_google_sheet(date, scores, playing_hc, hc_index):
     if not APPS_SCRIPT_URL or "YOUR_DEPLOYMENT_ID" in APPS_SCRIPT_URL:
         print("⚠️  Apps Script URL not set — skipping Google Sheets update.")
@@ -480,6 +520,9 @@ def main():
 
     # Step 5 — Google Sheet
     send_to_google_sheet(date, scores, playing_hc, hc_index)
+
+    # Step 5b — sync schedule attendance from Sheet
+    sync_schedule_from_sheet()
 
     # Step 6 — season context
     season = compute_season_stats(calc)

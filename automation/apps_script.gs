@@ -40,7 +40,61 @@ function cellMatchesDate(cellVal, targetMonth, targetDay, longDate) {
 }
 
 
-// ── Web App Entry Point ──────────────────────────────────────
+// ── Web App Entry Points ─────────────────────────────────────
+
+// GET: return schedule attendance data as JSON
+// Usage: fetch(APPS_SCRIPT_URL + '?action=schedule')
+function doGet(e) {
+  try {
+    var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'schedule';
+    if (action === 'schedule') {
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var ws = ss.getSheetByName('Schedule Tracker');
+      if (!ws) throw new Error('Schedule Tracker tab not found');
+      var lastRow = ws.getLastRow();
+      // Column order in sheet: Date(1), Count(2), Farnia(3), Owens(4), Carter(5), Felter(6), Lorenz(7), Extras(8)
+      var data = ws.getRange(3, 1, lastRow - 2, 8).getValues();
+      var rows = [];
+      for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        var dateVal = row[0];
+        if (!dateVal || !(dateVal instanceof Date)) continue;
+        var m = dateVal.getMonth(); // 0-indexed
+        var d = dateVal.getDate();
+        var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var dateStr = MONTHS[m] + ' ' + d;
+        var farnia = row[2] ? row[2].toString() : null;
+        var owens  = row[3] ? row[3].toString() : null;
+        var carter = row[4] ? row[4].toString() : null;
+        var felter = row[5] ? row[5].toString() : null;
+        var lorenz = row[6] ? row[6].toString() : null;
+        var extras = row[7] ? row[7].toString() : '';
+        // Infer 'Avail' from Extras column when attendance is null
+        if (!farnia && extras.toLowerCase().indexOf('farn') >= 0) farnia = 'Avail';
+        if (!owens  && extras.toLowerCase().indexOf('owens') >= 0) owens = 'Avail';
+        if (!felter && extras.toLowerCase().indexOf('felter') >= 0) felter = 'Avail';
+        if (!carter && extras.toLowerCase().indexOf('carter') >= 0) carter = 'Avail';
+        if (!lorenz && extras.toLowerCase().indexOf('lorenz') >= 0) lorenz = 'Avail';
+        // Site order: Farnia, Owens, Felter, Carter, Lorenz
+        rows.push({
+          date: dateStr,
+          att: [farnia || 'TBD', owens || 'TBD', felter || 'TBD', carter || 'TBD', lorenz || 'TBD']
+        });
+      }
+      return ContentService
+        .createTextOutput(JSON.stringify({ success: true, schedule: rows }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: 'Unknown action' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
 function doPost(e) {
   try {
     var data   = JSON.parse(e.postData.contents);
