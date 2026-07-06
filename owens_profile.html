@@ -370,7 +370,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
   </section>
 
   <section class="section">
-    <div class="section-title">Handicap Progression</div>
+    <div class="section-title">Playing Handicap at Glenview Golf Club | Progression</div>
     <div class="chart-wrap">
       <canvas id="hcChart"></canvas>
     </div>
@@ -382,7 +382,8 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
     <div class="chart-wrap">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
         <div id="hm-yr-tabs" style="display:flex;gap:.5rem">
-          <div class="ytab active" onclick="showHeatmap('2025',this)" style="font-size:.65rem;padding:.25rem .6rem">2025</div>
+          <div class="ytab active" onclick="showHeatmap('2026',this)" style="font-size:.65rem;padding:.25rem .6rem">2026</div>
+          <div class="ytab" onclick="showHeatmap('2025',this)" style="font-size:.65rem;padding:.25rem .6rem">2025</div>
           <div class="ytab" onclick="showHeatmap('2024',this)" style="font-size:.65rem;padding:.25rem .6rem">2024</div>
         </div>
         <div style="display:flex;gap:.2rem;background:var(--bg2);border-radius:20px;padding:.2rem;border:1px solid var(--border)">
@@ -390,7 +391,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
           <div class="hm-tog" onclick="toggleHeatmapMode('net',this)">Net</div>
         </div>
       </div>
-      <div id="hm-sub" style="font-size:.7rem;color:var(--gray);margin-bottom:.75rem">2025 — avg gross score per hole vs par</div>
+      <div id="hm-sub" style="font-size:.7rem;color:var(--gray);margin-bottom:.75rem">2026 — avg gross score per hole vs par</div>
       <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pc);margin-bottom:.4rem">Front 9</div>
       <div id="heatmap-front" style="display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin-bottom:1rem"></div>
       <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pc);margin-bottom:.4rem">Back 9</div>
@@ -684,7 +685,7 @@ function showYear(yr,el){
   },scales:{
     x:{ticks:{color:'#3a5a3a',font:{size:9},maxRotation:45},grid:{color:'rgba(36,48,36,.4)'}},
     y:{min:8,max:17,reverse:false,ticks:{color:'#3a5a3a',font:{size:10},stepSize:1},grid:{color:'rgba(36,48,36,.4)'},
-       title:{display:true,text:'Handicap',color:'#5a7a5a',font:{size:10}}}
+       title:{display:true,text:'Playing Handicap at Glenview Golf Club | Progression',color:'#5a7a5a',font:{size:10}}}
   }}});
 })();
 
@@ -755,7 +756,7 @@ function toggleHeatmapMode(mode,el){
   el.classList.add('hm-tog-active');
   buildHeatmap(null, mode);
 }
-buildHeatmap('2025','gross');
+buildHeatmap('2026','gross');
 
 // ═══════════════════════════════════════════════
 // CAREER TREND CHART
