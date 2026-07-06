@@ -106,6 +106,8 @@ nav button.active{color:var(--gold);border-bottom-color:var(--gold)}
 
 /* SCORE TABLE */
 .tbl-wrap{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow-x:auto;margin-bottom:1.5rem}
+.tbl-legend{font-size:.61rem;color:var(--gray);padding:.35rem 1.25rem .6rem;display:flex;gap:.9rem;flex-wrap:wrap;border-top:1px solid var(--border);letter-spacing:.3px}
+.tbl-legend b{font-size:.75rem;line-height:1}
 .tbl-label{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;padding:.9rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:400px}
 th{background:var(--card2);color:var(--gray);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:.6rem .75rem;text-align:center;white-space:nowrap;position:sticky;top:var(--nav-h);z-index:2}
@@ -501,6 +503,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <tbody id="tg2026home"></tbody>
       </table>
     </div>
+    <div class="tbl-legend">
+      <span><b style="color:#4caf50">●</b> Best score that round</span>
+      <span><b style="color:var(--red)">●</b> Worst score that round</span>
+      <span><b style="color:var(--gold)">●</b> Season leader</span>
+      <span><b style="color:var(--border)">—</b> Did not play</span>
+    </div>
   </div>
 
   <!-- 5-HOLE SCORING LEADERBOARD -->
@@ -866,6 +874,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tfoot><tr><td>Season Avg</td><td>87.3</td><td class="sc-best">81.0</td><td>84.2</td><td>86.6</td><td class="sc-worst">87.7</td></tr></tfoot>
         </table>
       </div>
+      <div class="tbl-legend">
+        <span><b style="color:#4caf50">●</b> Best score that round</span>
+        <span><b style="color:var(--red)">●</b> Worst score that round</span>
+        <span><b style="color:var(--gold)">●</b> Season leader</span>
+        <span><b style="color:var(--border)">—</b> Did not play</span>
+      </div>
     </div>
   </div>
 
@@ -898,6 +912,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tfoot><tr><td>Season Avg</td><td class="sc-worst">96.1</td><td class="sc-best">83.7</td><td>93.9</td><td>91.3</td><td>86.4</td></tr></tfoot>
         </table>
       </div>
+      <div class="tbl-legend">
+        <span><b style="color:#4caf50">●</b> Best score that round</span>
+        <span><b style="color:var(--red)">●</b> Worst score that round</span>
+        <span><b style="color:var(--gold)">●</b> Season leader</span>
+        <span><b style="color:var(--border)">—</b> Did not play</span>
+      </div>
     </div>
   </div>
 
@@ -928,6 +948,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Carter</th><th>Felter</th><th>Lorenz</th></tr></thead>
         <tbody id="tg2023"></tbody>
         </table>
+      </div>
+      <div class="tbl-legend">
+        <span><b style="color:#4caf50">●</b> Best score that round</span>
+        <span><b style="color:var(--red)">●</b> Worst score that round</span>
+        <span><b style="color:var(--gold)">●</b> Season leader</span>
+        <span><b style="color:var(--border)">—</b> Did not play</span>
       </div>
     </div>
   </div>
@@ -1246,6 +1272,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
         </table>
       </div>
+      <div class="tbl-legend">
+        <span><b style="color:var(--gold)">●</b> Well under par (avg &gt;0.6 below)</span>
+        <span><b style="color:#4caf50">●</b> Under par</span>
+        <span><b style="color:var(--gray)">●</b> Near par</span>
+        <span><b style="color:var(--red)">●</b> Over par</span>
+      </div>
     </div>
 
     <div class="tbl-wrap">
@@ -1260,6 +1292,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td style="color:var(--gray)">21</td></tr>
       </tbody>
       </table>
+      <div class="tbl-legend">
+        <span><b style="color:var(--gold)">●</b> Season leader (lowest avg total)</span>
+      </div>
     </div>
   </div>
 
@@ -1284,6 +1319,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tbody id="sg2024-body"></tbody>
         <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
         </table>
+      </div>
+      <div class="tbl-legend">
+        <span><b style="color:var(--gold)">●</b> Well under par (avg &gt;0.6 below)</span>
+        <span><b style="color:#4caf50">●</b> Under par</span>
+        <span><b style="color:var(--gray)">●</b> Near par</span>
+        <span><b style="color:var(--red)">●</b> Over par</span>
       </div>
     </div>
     <div style="font-size:.78rem;color:var(--gray);padding:.5rem 0;margin-bottom:1rem">No 5-Hole Draft in 2024 — that bet was introduced in 2025.</div>
@@ -1320,6 +1361,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tfoot><tr><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>3</td><td>3</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td>5</td><td>3</td><td>4</td><td>72</td></tr></tfoot>
         </table>
       </div>
+      <div class="tbl-legend">
+        <span><b style="color:var(--gold)">●</b> Well under par (avg &gt;0.6 below)</span>
+        <span><b style="color:#4caf50">●</b> Under par</span>
+        <span><b style="color:var(--gray)">●</b> Near par</span>
+        <span><b style="color:var(--red)">●</b> Over par</span>
+      </div>
     </div>
 
     <div class="tbl-wrap">
@@ -1335,6 +1382,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
         <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td><td style="color:var(--gray)">19</td></tr>
       </tbody>
       </table>
+      <div class="tbl-legend">
+        <span><b style="color:#4caf50">●</b> Best round score (that player)</span>
+        <span><b style="color:var(--border)">—</b> Did not play that round</span>
+      </div>
       <!-- FIVE_HOLE_2026_END -->
     </div>
   </div>
