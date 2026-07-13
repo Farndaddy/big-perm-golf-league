@@ -8,8 +8,8 @@
 // ============================================================
 
 const PLAYERS  = ['Farnia', 'Owens', 'Felter', 'Carter', 'Lorenz'];
-const HOLE_HC  = [11,7,9,3,5,17,1,13,15,16,2,10,12,6,14,4,18,8];
-const HOLE_PAR = [4,4,4,4,4,3,5,4,3,4,3,4,4,4,4,5,3,4];
+const HOLE_HC  = [11,5,9,7,1,17,3,13,15,16,2,4,10,8,12,6,18,14];  // corrected Jul 12 from scorecard
+const HOLE_PAR = [4,4,4,4,4,3,5,4,3,3,4,4,4,4,4,5,3,4];          // par 70: H10=3, H11=4
 
 // Month abbreviation to full name  ("Jun" → "June")
 const MONTH_FULL = {
@@ -118,8 +118,8 @@ function processRoundData(data) {
   var hcOverride = data.playing_hc || {};
   var hcIndex    = data.hc_index   || {};
 
-  // Fallback playing HC — updated to current values
-  var FALLBACK_HC = { Farnia:18, Owens:13, Felter:19, Carter:16, Lorenz:15 };
+  // Fallback playing HC — updated to Jul 12 2026 values
+  var FALLBACK_HC = { Farnia:16, Owens:12, Felter:15, Carter:13, Lorenz:13 };
   function getHC(p) { return hcOverride[p] || FALLBACK_HC[p] || 16; }
 
   // Calculate gross + net per player
@@ -431,6 +431,28 @@ function testJul5Data() {
       Felter: [4,6,3,4,6,4,6,5,4, 4,5,5,6,5,4,6,4,6],  // gross 87, net 70
       Lorenz: [4,7,6,5,6,5,6,4,5, 4,5,4,5,5,7,6,3,4]   // gross 91, net 76
       // Carter, Owens: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
+
+// ── Jul 12 Test (R12) ────────────────────────────────────────
+// Run this to push Jul 12, 2026 scores directly into the sheet.
+// Select "testJul12Data" from the function dropdown, then click Run.
+// Check the Execution log below for success/error messages.
+function testJul12Data() {
+  var data = {
+    date: "Jul 12",
+    playing_hc: { Owens:14, Carter:15, Felter:17 },
+    hc_index:   { Farnia:16.0, Owens:12.1, Felter:15.3, Carter:13.1, Lorenz:13.0 },
+    scores: {
+      Owens:  [4,5,6,5,4,3,7,5,3, 5,6,5,6,4,4,6,4,5],  // gross 87, net 73
+      Carter: [5,5,5,5,4,4,6,5,3, 5,5,7,5,3,6,6,5,4],  // gross 88, net 73 (birdie H14)
+      Felter: [5,7,6,6,4,5,6,4,3, 4,7,4,5,4,7,6,6,5]   // gross 94, net 77
+      // Farnia, Lorenz: DNS
     }
   };
   var result = processRoundData(data);
