@@ -1,26 +1,26 @@
 {
   "anthropic_api_key": "sk-ant-YOUR_KEY_HERE",
-  "apps_script_url": "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec",
+  "apps_script_url":   "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec",
+  "github_pat":        "ghp_YOUR_PERSONAL_ACCESS_TOKEN_HERE",
+  "github_repo":       "Farndaddy/big-perm-golf-league",
+  "github_branch":     "main",
 
   "scorecards_folder": "../Scorecards",
-  "site_folder": "..",
+  "site_folder":       "..",
 
   "playing_handicaps": {
-    "Farnia": 19,
+    "Farnia": 16,
     "Owens":  12,
-    "Felter": 18,
-    "Carter": 16,
-    "Lorenz": 14
+    "Felter": 15,
+    "Carter": 13,
+    "Lorenz": 13
   },
 
   "handicap_indices": {
-    "Farnia": 17.1,
-    "Owens":  10.2,
-    "Felter": 16.4,
-    "Carter": 14.2,
-    "Lorenz": 14.0
-  },
-
-  "repo_remote": "origin",
-  "repo_branch": "main"
+    "Farnia": 16.0,
+    "Owens":  12.1,
+    "Felter": 15.3,
+    "Carter": 13.1,
+    "Lorenz": 13.0
+  }
 }
