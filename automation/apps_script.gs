@@ -119,7 +119,7 @@ function processRoundData(data) {
   var hcIndex    = data.hc_index   || {};
 
   // Fallback playing HC — updated to Jul 12 2026 values
-  var FALLBACK_HC = { Farnia:16, Owens:12, Felter:15, Carter:13, Lorenz:13 };
+  var FALLBACK_HC = { Farnia:16, Owens:12, Felter:18, Carter:13, Lorenz:13 };
   function getHC(p) { return hcOverride[p] || FALLBACK_HC[p] || 16; }
 
   // Calculate gross + net per player
@@ -453,6 +453,27 @@ function testJul12Data() {
       Carter: [5,5,5,5,4,4,6,5,3, 5,5,7,5,3,6,6,5,4],  // gross 88, net 73 (birdie H14)
       Felter: [5,7,6,6,4,5,6,4,3, 4,7,4,5,4,7,6,6,5]   // gross 94, net 77
       // Farnia, Lorenz: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
+
+// ── Jul 19 Test (R13) ────────────────────────────────────────
+// Run this to push Jul 19, 2026 scores directly into the sheet.
+// Select "testJul19Data" from the function dropdown, then click Run.
+// Check the Execution log below for success/error messages.
+function testJul19Data() {
+  var data = {
+    date: "Jul 19",
+    playing_hc: { Farnia:18, Carter:15 },
+    hc_index:   { Farnia:16.0, Owens:12.1, Felter:15.6, Carter:13.1, Lorenz:13.0 },
+    scores: {
+      Farnia: [6,5,6,6,6,5,8,4,4,4,5,5,6,4,4,5,3,6],  // gross 92, net 74
+      Carter: [4,5,5,6,5,3,5,5,3,4,5,6,5,5,5,6,4,4]   // gross 85, net 70
+      // Owens, Felter, Lorenz: DNS
     }
   };
   var result = processRoundData(data);
