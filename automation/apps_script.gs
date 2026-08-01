@@ -481,3 +481,25 @@ function testJul19Data() {
   console.log(result);
   return result;
 }
+
+// ── Jul 26 Test (R14) ────────────────────────────────────────
+// Run this to push Jul 26, 2026 scores directly into the sheet.
+// Select "testJul26Data" from the function dropdown, then click Run.
+// Check the Execution log below for success/error messages.
+function testJul26Data() {
+  var data = {
+    date: "Jul 26",
+    playing_hc: { Owens:14, Carter:15, Felter:18 },
+    hc_index:   { Farnia:16.0, Owens:12.2, Felter:15.6, Carter:13.1, Lorenz:13.0 },
+    scores: {
+      Owens:  [6,5,5,5,4,4,7,5,4,3,6,4,5,5,5,6,4,5],  // gross 88, net 74
+      Carter: [5,5,5,5,4,3,6,4,4,5,5,5,5,4,4,6,4,6],  // gross 85, net 70
+      Felter: [6,5,5,7,5,4,4,5,5,5,7,5,5,6,6,7,3,5]   // gross 95, net 77
+      // Farnia, Lorenz: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
