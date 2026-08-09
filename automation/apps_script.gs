@@ -503,3 +503,21 @@ function testJul26Data() {
   console.log(result);
   return result;
 }
+
+function testAug2Data() {
+  var data = {
+    date: "Aug 2",
+    playing_hc: { Owens:14, Carter:15, Felter:18 },
+    hc_index:   { Farnia:16.0, Owens:12.2, Felter:15.7, Carter:13.1, Lorenz:13.0 },
+    scores: {
+      Owens:  [4,5,6,7,6,6,6,4,4,4,4,5,4,5,4,5,3,5],  // gross 87, net 73
+      Felter: [5,8,6,4,5,4,9,4,4,4,5,7,4,5,6,7,3,7],  // gross 97, net 79
+      Carter: [4,6,6,6,5,4,6,5,4,4,7,5,5,7,5,5,4,6]   // gross 94, net 79
+      // Farnia, Lorenz: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
