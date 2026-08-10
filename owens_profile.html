@@ -239,7 +239,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
   /* Season grid — single row of 3 is too cramped at 375px, go 2+1 */
   .season-grid{grid-template-columns:1fr 1fr}
   /* 3rd card spans full width */
-  .season-grid .s-card:nth-child(3){grid-column:1/-1}
+  .season-grid .s-card:nth-child(3):last-child{grid-column:1/-1}
   .s-card-val{font-size:1.4rem}
 
   /* Heatmap cells — tighter at 375px (9 cols = ~36px each) */
@@ -335,7 +335,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
     <!-- 2025 -->
     <div class="year-panel" id="year-2025">
       <div class="season-grid">
-        <div class="s-card"><div class="s-card-val blue">69.9</div><div class="s-card-label">Top-8 Avg</div></div>
+        <div class="s-card"><div class="s-card-val blue">72.7</div><div class="s-card-label">Season Avg</div></div>
         <div class="s-card"><div class="s-card-val">12</div><div class="s-card-label">Rounds Played</div></div>
         <div class="s-card"><div class="s-card-val green">62</div><div class="s-card-label">Season Low 🏅</div></div>
       </div>
@@ -783,6 +783,58 @@ buildHeatmap('2026','gross');
     y:{min:58,max:80,ticks:{color:'#3a5a3a',font:{size:10},stepSize:3},grid:{color:'rgba(36,48,36,.4)'}}
   }}});
 })();
+
+// ═══ TOP-N SEASON AVERAGES ═══════════════════════════════════
+// Appends Top 6 / Top 8 / Top 10 average cards to every season panel.
+// Computed live from that season's net scores in allRounds, so they
+// stay correct as new rounds are added. If the player has fewer
+// rounds than N, the average uses every round they played and is
+// flagged with * — it is not padded or penalized.
+const TOP_N = [6, 8, 10];
+
+function topNAvg(nets, n){
+  if(!nets.length) return null;
+  const best = [...nets].sort((a,b)=>a-b).slice(0, n);
+  return {
+    val:   Math.round(best.reduce((a,b)=>a+b,0) / best.length * 10) / 10,
+    short: nets.length < n
+  };
+}
+
+function renderTopNCards(){
+  document.querySelectorAll('.year-panel').forEach(panel=>{
+    const yr   = (panel.id || '').replace('year-','');
+    const grid = panel.querySelector('.season-grid');
+    if(!grid || !yr) return;
+    if(grid.dataset.topn) return;            // already rendered
+    const nets = (allRounds[yr] || [])
+      .map(r=>r.net)
+      .filter(v=>typeof v === 'number' && !isNaN(v));
+    if(!nets.length) return;
+
+    let anyShort = false;
+    TOP_N.forEach(n=>{
+      const s = topNAvg(nets, n);
+      if(!s) return;
+      if(s.short) anyShort = true;
+      const card = document.createElement('div');
+      card.className = 's-card';
+      card.innerHTML =
+        `<div class="s-card-val blue">${s.val.toFixed(1)}${s.short?'*':''}</div>`+
+        `<div class="s-card-label">Top ${n} Avg</div>`;
+      grid.appendChild(card);
+    });
+
+    if(anyShort){
+      const note = document.createElement('div');
+      note.style.cssText='grid-column:1/-1;font-size:.62rem;color:var(--gray);margin-top:-.75rem';
+      note.textContent='* fewer than that many rounds played — averaged over all '+nets.length+' rounds';
+      grid.appendChild(note);
+    }
+    grid.dataset.topn = '1';
+  });
+}
+renderTopNCards();
 </script>
 </body>
 </html>
