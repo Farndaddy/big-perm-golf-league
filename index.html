@@ -62,6 +62,7 @@ nav button.active{color:var(--gold);border-bottom-color:var(--gold)}
 .pname{font-size:1rem;font-weight:700}
 .r1 .pname{color:var(--gold)}
 .pbadge{font-size:.6rem;background:var(--gold);color:#000;padding:2px 6px;border-radius:2px;margin-left:7px;font-weight:800;letter-spacing:1px;vertical-align:middle}
+.pbadge.prov{background:transparent;color:var(--gray);border:1px solid var(--border);font-weight:700}
 .stat{font-size:1rem;font-weight:600}
 .stat.gold{color:var(--gold)}.stat.good{color:#4caf50}.stat.dim{color:var(--gray)}
 
@@ -453,34 +454,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div class="sec-title">2026 Season Leaderboard</div>
   <div class="sec-sub">Round 15 of 20 · Aug 2, 2026 · Updates every Sunday</div>
   <!-- LIVE_LEADERBOARD_START -->
-  <div class="lb">
-    <div class="lb-head"><div>Rank</div><div>Player</div><div>Avg</div><div>Rounds</div><div>Best</div><div>Last</div></div>
-    <div class="lb-row r1">
-      <div class="rank">1</div>
-      <div class="pname">Farnia <span class="pbadge">DEF. CHAMP</span></div>
-      <div class="stat gold">73.4</div><div class="stat">10</div><div class="stat good">69</div><div class="stat">74</div>
-    </div>
-    <div class="lb-row r2">
-      <div class="rank">2</div>
-      <div class="pname">Felter</div>
-      <div class="stat ">73.4</div><div class="stat">10</div><div class="stat good">69</div><div class="stat">79</div>
-    </div>
-    <div class="lb-row r3">
-      <div class="rank">3</div>
-      <div class="pname">Owens</div>
-      <div class="stat ">73.6</div><div class="stat">7</div><div class="stat good">69</div><div class="stat">73</div>
-    </div>
-    <div class="lb-row ">
-      <div class="rank">4</div>
-      <div class="pname">Carter</div>
-      <div class="stat ">74.0</div><div class="stat">10</div><div class="stat good">70</div><div class="stat">79</div>
-    </div>
-    <div class="lb-row ">
-      <div class="rank">5</div>
-      <div class="pname">Lorenz</div>
-      <div class="stat ">81.3</div><div class="stat">4</div><div class="stat good">76</div><div class="stat">76</div>
-    </div>
+  <!-- Rows are auto-computed from d2026 by renderLiveLeaderboard() — do not hand-edit. -->
+  <div class="lb" id="live-lb">
+    <div class="lb-head"><div>Rank</div><div>Player</div><div>Top 6 Avg</div><div>Rounds</div><div>Best</div><div>Last</div></div>
   </div>
+  <div style="font-size:.7rem;color:var(--gray);margin-top:.5rem">Ranked by average of each player's best 6 net rounds. Players with fewer than 6 rounds are averaged on what they've played and marked provisional.</div>
   <!-- LIVE_LEADERBOARD_END -->
 
   <!-- 2026 WEEKLY SCORES TABLE -->
@@ -495,7 +473,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     <div id="wk26net">
       <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
       <tbody id="t2026home"></tbody>
-      <tfoot><tr><td>Season Avg</td><td id="avg2026-farnia">73.4</td><td id="avg2026-owens">73.6</td><td id="avg2026-felter">73.4</td><td id="avg2026-carter">74.0</td><td id="avg2026-lorenz">81.3</td></tr></tfoot>
+      <tfoot><tr><td>Top 6 Avg</td><td id="avg2026-farnia">—</td><td id="avg2026-owens">—</td><td id="avg2026-felter">—</td><td id="avg2026-carter">—</td><td id="avg2026-lorenz">—</td></tr></tfoot>
       </table>
     </div>
     <div id="wk26gross" style="display:none">
@@ -508,6 +486,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <span><b style="color:var(--red)">●</b> Worst score that round</span>
       <span><b style="color:var(--gold)">●</b> Season leader</span>
       <span><b style="color:var(--border)">—</b> Did not play</span>
+      <span><b>Top 6 Avg</b> = average of best 6 net rounds</span>
+      <span><b>*</b> Fewer than 6 rounds — provisional</span>
     </div>
   </div>
 
@@ -2211,8 +2191,71 @@ function showRecordsYear(btn,id){
   document.getElementById(id).classList.add('active');
 }
 
+// ═══ 2026 LIVE LEADERBOARD — TOP 6 MODEL ═════════════════════
+// Season standing = average of each player's BEST 6 net rounds.
+// Players with fewer than COUNT_BEST rounds are averaged on what
+// they have and flagged provisional (e.g. Lorenz, who won't reach 6).
+const COUNT_BEST = 6;
+const LB_PLAYERS = ['Farnia','Owens','Felter','Carter','Lorenz']; // d2026 column order
+const LB_BADGES  = { Farnia:'DEF. CHAMP' };
+
+function seasonStats(idx){
+  // Pull this player's net scores in chronological order, skipping DNS/no-round
+  const all = d2026
+    .filter(r=>!r.note)
+    .map(r=>r.v[idx])
+    .filter(v=>v!==null && v!==undefined);
+  if(!all.length) return null;
+  const best = [...all].sort((a,b)=>a-b).slice(0,COUNT_BEST);
+  const avg  = best.reduce((a,b)=>a+b,0)/best.length;
+  return {
+    rounds: all.length,
+    avg:    Math.round(avg*10)/10,   // 71.25 → 71.3
+    best:   Math.min(...all),
+    last:   all[all.length-1],
+    prov:   all.length < COUNT_BEST  // short of the 6-round threshold
+  };
+}
+
+function renderLiveLeaderboard(){
+  const rows = LB_PLAYERS
+    .map((name,i)=>({name, ...(seasonStats(i)||{})}))
+    .filter(r=>r.rounds)
+    .sort((a,b)=> a.avg-b.avg || a.best-b.best || a.last-b.last);
+
+  const lb = document.getElementById('live-lb');
+  if(lb){
+    // Wipe any previously rendered rows, keep the header
+    lb.querySelectorAll('.lb-row').forEach(el=>el.remove());
+    rows.forEach((r,i)=>{
+      const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const badge   = LB_BADGES[r.name] ? ` <span class="pbadge">${LB_BADGES[r.name]}</span>` : '';
+      const prov    = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
+      const div = document.createElement('div');
+      div.className = 'lb-row '+rankCls;
+      div.innerHTML =
+        `<div class="rank">${i+1}</div>`+
+        `<div class="pname">${r.name}${badge}${prov}</div>`+
+        `<div class="stat ${i===0?'gold':''}">${r.avg.toFixed(1)}</div>`+
+        `<div class="stat">${r.rounds}</div>`+
+        `<div class="stat good">${r.best}</div>`+
+        `<div class="stat">${r.last}</div>`;
+      lb.appendChild(div);
+    });
+  }
+
+  // Mirror the same numbers into the weekly-scores table footer
+  LB_PLAYERS.forEach((name,i)=>{
+    const cell = document.getElementById('avg2026-'+name.toLowerCase());
+    if(!cell) return;
+    const s = seasonStats(i);
+    cell.textContent = s ? s.avg.toFixed(1) + (s.prov?'*':'') : '—';
+  });
+}
+
 // ═══ INIT ════════════════════════════════════════════════════
 
+renderLiveLeaderboard();
 renderScoreTable(d2026.filter(r=>!r.note&&r.v.some(v=>v!==null)),'t2026home');
 renderScoreTable(d2026gross,'tg2026home');
 renderScoreTable(d2025,'t2025');
