@@ -504,6 +504,26 @@ function testJul26Data() {
   return result;
 }
 
+// ── Aug 16 Test (R17) ────────────────────────────────────────
+// Aug 9 was a No Round — nobody played, so R16 has no data.
+// Select "testAug16Data" from the function dropdown, then click Run.
+function testAug16Data() {
+  var data = {
+    date: "Aug 16",
+    playing_hc: { Farnia:18, Felter:18 },
+    hc_index:   { Farnia:16.0, Owens:12.4, Felter:15.7, Carter:13.3, Lorenz:13.0 },
+    scores: {
+      Farnia: [5,6,5,7,6,3,6,4,2,5,5,4,6,4,7,6,3,6],  // gross 90, net 72, 34 Stableford
+      Felter: [5,6,5,5,5,4,7,5,3,5,7,5,7,6,6,5,4,5]   // gross 95, net 77, 29 Stableford
+      // Owens, Carter, Lorenz: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
+
 function testAug2Data() {
   var data = {
     date: "Aug 2",

@@ -208,7 +208,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
 </section>
 <div class="hero-bottom">
   <div class="hero-bottom-inner">
-    <div class="hb-stat"><div class="hb-val">2026</div><div class="hb-label">In Progress · 73.4 avg net</div></div>
+    <div class="hb-stat"><div class="hb-val">2026</div><div class="hb-label">In Progress · 73.3 avg net</div></div>
     <div class="hb-stat"><div class="hb-val">2025</div><div class="hb-label">🏆 Champion · 71.8 avg · Low 64</div></div>
     <div class="hb-stat"><div class="hb-val">2024</div><div class="hb-label">3rd Place · 73.9 avg · Low 68</div></div>
     <div class="hb-stat"><div class="hb-val">2023</div><div class="hb-label">5th Place · 77.6 avg</div></div>
@@ -227,8 +227,8 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
     </div>
     <div class="year-panel active" id="year-2026">
       <div class="season-grid">
-        <div class="s-card"><div class="s-card-val blue">73.4</div><div class="s-card-label">Season Avg</div></div>
-        <div class="s-card"><div class="s-card-val ">10</div><div class="s-card-label">Rounds Played</div></div>
+        <div class="s-card"><div class="s-card-val blue">73.3</div><div class="s-card-label">Season Avg</div></div>
+        <div class="s-card"><div class="s-card-val ">11</div><div class="s-card-label">Rounds Played</div></div>
         <div class="s-card"><div class="s-card-val gold">TBD</div><div class="s-card-label">Season Position</div></div>
       </div>
       <div id="sc-2026"></div>
@@ -341,6 +341,7 @@ const allRounds={
   {d:'Jun 28',gross:87,hc:18,net:69,holes:[4,5,4,5,6,4,7,4,3,4,6,5,5,6,7,5,3,4],b:8,p:5,bo:3,dbl:2,t:0},
   {d:'Jul 5', gross:89,hc:18,net:71,holes:[5,4,5,6,4,4,7,4,4,4,5,5,5,5,4,7,5,6],b:5,p:7,bo:6,dbl:0,t:0},
   {d:'Jul 19',gross:92,hc:18,net:74,holes:[6,5,6,6,6,5,8,4,4,4,5,5,6,4,4,5,3,6],b:0,p:5,bo:5,dbl:7,t:1},
+  {d:'Aug 16',gross:90,hc:18,net:72,holes:[5,6,5,7,6,3,6,4,2,5,5,4,6,4,7,6,3,6],b:1,p:5,bo:5,dbl:5,t:2},
 
   ],
   2025:[
@@ -670,6 +671,61 @@ function renderTopNCards(){
   });
 }
 renderTopNCards();
+
+// ═══ STABLEFORD POINTS ═══════════════════════════════════════
+// Net Stableford: points per hole vs par after handicap strokes.
+// Albatross 5 · Eagle 4 · Birdie 3 · Par 2 · Bogey 1 · Double+ 0.
+// Matches the Stableford block (cols W:AE) in this player's sheet tab.
+const STAB_PTS = {'-3':5, '-2':4, '-1':3, '0':2, '1':1};
+
+function netHolesFor(round){
+  return round.holes.map((g,i)=>{
+    let s = HOLE_HC[i] <= Math.min(round.hc,18) ? 1 : 0;
+    if(round.hc > 18 && HOLE_HC[i] <= round.hc-18) s++;
+    return g - s;
+  });
+}
+
+function stablefordFor(round){
+  if(!round.holes || round.holes.length !== 18) return null;
+  return netHolesFor(round).reduce((sum,n,i)=>{
+    const d = n - PAR[i];
+    return sum + (STAB_PTS[String(d)] !== undefined ? STAB_PTS[String(d)] : 0);
+  }, 0);
+}
+
+function renderStablefordCards(){
+  document.querySelectorAll('.year-panel').forEach(panel=>{
+    const yr   = (panel.id || '').replace('year-','');
+    const grid = panel.querySelector('.season-grid');
+    if(!grid || !yr || grid.dataset.stab) return;
+    const pts = (allRounds[yr] || []).map(stablefordFor).filter(v=>v !== null);
+    if(!pts.length) return;
+
+    const best6 = [...pts].sort((a,b)=>b-a).slice(0,6);   // higher is better
+    const total = best6.reduce((a,b)=>a+b,0);
+    const short = pts.length < 6;
+    const avg   = Math.round(pts.reduce((a,b)=>a+b,0)/pts.length*10)/10;
+
+    [[total + (short?'*':''), 'Stableford Top 6'],
+     [Math.max(...pts),       'Best Stableford Rd'],
+     [avg.toFixed(1),         'Stableford Avg/Rd']].forEach(([v,l])=>{
+      const c = document.createElement('div');
+      c.className = 's-card';
+      c.innerHTML = `<div class="s-card-val gold">${v}</div><div class="s-card-label">${l}</div>`;
+      grid.appendChild(c);
+    });
+
+    if(short){
+      const note = document.createElement('div');
+      note.style.cssText='grid-column:1/-1;font-size:.62rem;color:var(--gray);margin-top:-.75rem';
+      note.textContent='* fewer than 6 rounds — total is every round played';
+      grid.appendChild(note);
+    }
+    grid.dataset.stab = '1';
+  });
+}
+renderStablefordCards();
 </script>
 </body>
 </html>

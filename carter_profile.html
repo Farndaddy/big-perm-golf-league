@@ -185,7 +185,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font
     <div class="hero-photo-wrap">
       <img class="hero-photo" src="Carter.png" alt="CARTER" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="hero-photo-fallback" style="display:none">C</div>
-      <div class="hero-hc-badge">HC 13.1</div>
+      <div class="hero-hc-badge">HC 13.3</div>
     </div>
     <div class="hero-info">
       <div class="hero-league-tag">Big Perm Golf League · Member Since 2023</div>
@@ -661,6 +661,61 @@ function renderTopNCards(){
   });
 }
 renderTopNCards();
+
+// ═══ STABLEFORD POINTS ═══════════════════════════════════════
+// Net Stableford: points per hole vs par after handicap strokes.
+// Albatross 5 · Eagle 4 · Birdie 3 · Par 2 · Bogey 1 · Double+ 0.
+// Matches the Stableford block (cols W:AE) in this player's sheet tab.
+const STAB_PTS = {'-3':5, '-2':4, '-1':3, '0':2, '1':1};
+
+function netHolesFor(round){
+  return round.holes.map((g,i)=>{
+    let s = HOLE_HC[i] <= Math.min(round.hc,18) ? 1 : 0;
+    if(round.hc > 18 && HOLE_HC[i] <= round.hc-18) s++;
+    return g - s;
+  });
+}
+
+function stablefordFor(round){
+  if(!round.holes || round.holes.length !== 18) return null;
+  return netHolesFor(round).reduce((sum,n,i)=>{
+    const d = n - PAR[i];
+    return sum + (STAB_PTS[String(d)] !== undefined ? STAB_PTS[String(d)] : 0);
+  }, 0);
+}
+
+function renderStablefordCards(){
+  document.querySelectorAll('.year-panel').forEach(panel=>{
+    const yr   = (panel.id || '').replace('year-','');
+    const grid = panel.querySelector('.season-grid');
+    if(!grid || !yr || grid.dataset.stab) return;
+    const pts = (allRounds[yr] || []).map(stablefordFor).filter(v=>v !== null);
+    if(!pts.length) return;
+
+    const best6 = [...pts].sort((a,b)=>b-a).slice(0,6);   // higher is better
+    const total = best6.reduce((a,b)=>a+b,0);
+    const short = pts.length < 6;
+    const avg   = Math.round(pts.reduce((a,b)=>a+b,0)/pts.length*10)/10;
+
+    [[total + (short?'*':''), 'Stableford Top 6'],
+     [Math.max(...pts),       'Best Stableford Rd'],
+     [avg.toFixed(1),         'Stableford Avg/Rd']].forEach(([v,l])=>{
+      const c = document.createElement('div');
+      c.className = 's-card';
+      c.innerHTML = `<div class="s-card-val gold">${v}</div><div class="s-card-label">${l}</div>`;
+      grid.appendChild(c);
+    });
+
+    if(short){
+      const note = document.createElement('div');
+      note.style.cssText='grid-column:1/-1;font-size:.62rem;color:var(--gray);margin-top:-.75rem';
+      note.textContent='* fewer than 6 rounds — total is every round played';
+      grid.appendChild(note);
+    }
+    grid.dataset.stab = '1';
+  });
+}
+renderStablefordCards();
 </script>
 </body>
 </html>

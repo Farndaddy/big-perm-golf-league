@@ -422,7 +422,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div class="badge">Est. 2023 · Sunday Golf</div>
   <h1>BIG <span>PERM</span><br>GOLF LEAGUE</h1>
   <div class="tagline">Every Sunday. No Excuses. Gotta Finish 7.</div>
-  <div class="live-badge"><span class="live-dot"></span>2026 Season In Progress · Round 15 Complete</div>
+  <div class="live-badge"><span class="live-dot"></span>2026 Season In Progress · Round 17 Complete</div>
 </header>
 
 <nav>
@@ -452,7 +452,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   </div>
 
   <div class="sec-title">2026 Season Leaderboard</div>
-  <div class="sec-sub">Round 15 of 20 · Aug 2, 2026 · Updates every Sunday</div>
+  <div class="sec-sub">Round 17 of 20 · Aug 16, 2026 · Updates every Sunday</div>
   <!-- LIVE_LEADERBOARD_START -->
   <!-- Rows are auto-computed from d2026 by renderLiveLeaderboard() — do not hand-edit. -->
   <div class="lb" id="live-lb">
@@ -510,8 +510,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     </div>
     <div class="lb-row r2" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
       <div class="rank">2</div><div class="pname">Farnia</div>
-      <div class="stat">4.00</div><div class="stat">4.10</div><div class="stat">4.34</div><div class="stat">4.00</div><div class="stat">4.02</div>
-      <div class="stat">20.46</div>
+      <div class="stat">4.27</div><div class="stat">4.00</div><div class="stat">4.45</div><div class="stat">4.09</div><div class="stat">4.00</div>
+      <div class="stat">20.82</div>
     </div>
     <div class="lb-row r3" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
       <div class="rank">3</div><div class="pname">Carter</div>
@@ -520,8 +520,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     </div>
     <div class="lb-row" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
       <div class="rank">4</div><div class="pname">Felter</div>
-      <div class="stat">4.90</div><div class="stat">4.00</div><div class="stat">5.20</div><div class="stat">4.80</div><div class="stat">4.20</div>
-      <div class="stat">23.10</div>
+      <div class="stat">4.91</div><div class="stat">3.73</div><div class="stat">5.27</div><div class="stat">4.73</div><div class="stat">4.27</div>
+      <div class="stat">22.91</div>
     </div>
     <div class="lb-row" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
       <div class="rank">5</div><div class="pname">Lorenz</div>
@@ -532,6 +532,36 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <div style="color:var(--gray);font-size:.65rem;letter-spacing:1px">PAR</div><div style="color:var(--gray);font-size:.75rem">Course Par</div>
       <div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div>
       <div class="stat dim">20</div>
+    </div>
+  </div>
+
+  <!-- ══ STABLEFORD POINTS CONTEST ══ -->
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0">
+  <div class="sec-title" style="font-size:1.4rem;margin-bottom:.3rem">Stableford Points Contest</div>
+  <div class="sec-sub" style="margin-bottom:1rem">Sum of each player's best 6 Stableford rounds · higher is better</div>
+  <div class="lb" id="stab-lb">
+    <div class="lb-head" style="grid-template-columns:56px 1fr 110px 90px 90px 90px 90px">
+      <div>Rank</div><div>Player</div><div>Top 6 Points</div><div>Counted</div><div>Dropped</div><div>Best Rd</div><div>Avg of 6</div>
+    </div>
+  </div>
+  <div style="font-size:.7rem;color:var(--gray);margin-top:.5rem">
+    <b style="color:var(--white)">Only each player's best 6 Stableford rounds count</b> — every other round is dropped, exactly like the stroke-play standings.
+    Net Stableford scoring per hole vs par after handicap strokes:
+    <b style="color:var(--white)">Albatross 5 · Eagle 4 · Birdie 3 · Par 2 · Bogey 1 · Double or worse 0</b>.
+    Players with fewer than 6 rounds are totalled on what they've played and marked provisional.
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:1.5rem;margin-bottom:2rem">
+    <div class="tbl-label">2026 — Stableford Points by Round <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">through R17 Aug 16</span></div>
+    <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
+    <tbody id="stab-body"></tbody>
+    <tfoot><tr><td>Top 6 Total</td><td id="sp-farnia">—</td><td id="sp-owens">—</td><td id="sp-felter">—</td><td id="sp-carter">—</td><td id="sp-lorenz">—</td></tr></tfoot>
+    </table>
+    <div class="tbl-legend">
+      <span><b style="color:#4caf50">●</b> One of that player's best 6 — counts</span>
+      <span><b style="color:var(--gray);text-decoration:line-through">00</b> Dropped — does not count</span>
+      <span><b style="color:var(--border)">—</b> Did not play</span>
+      <span><b>*</b> Fewer than 6 rounds played</span>
     </div>
   </div>
 
@@ -573,14 +603,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
           <img class="flip-front-img" src="Owens.png" alt="Owens">
           <div class="flip-front-overlay">
             <div class="flip-front-name">Owens</div>
-            <div class="flip-front-hc">HC: 12.2</div>
+            <div class="flip-front-hc">HC: 12.4</div>
             <div class="flip-front-hint">TAP TO FLIP</div>
           </div>
         </div>
         <div class="flip-back">
           <div class="flip-back-type">All-Time Stats</div>
           <div class="flip-back-name">OWENS</div>
-          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">12.2</span></div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">12.4</span></div>
           <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">62 🏆</span></div>
           <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">72.1</span></div>
           <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">81</span></div>
@@ -651,14 +681,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
           <img class="flip-front-img" src="Carter.png" alt="Carter">
           <div class="flip-front-overlay">
             <div class="flip-front-name">Carter</div>
-            <div class="flip-front-hc">HC: 13.1</div>
+            <div class="flip-front-hc">HC: 13.3</div>
             <div class="flip-front-hint">TAP TO FLIP</div>
           </div>
         </div>
         <div class="flip-back">
           <div class="flip-back-type">All-Time Stats</div>
           <div class="flip-back-name">CARTER</div>
-          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">13.1</span></div>
+          <div class="stat-row"><span class="stat-row-label">Handicap</span><span class="stat-row-val gold">13.3</span></div>
           <div class="stat-row"><span class="stat-row-label">Low Round</span><span class="stat-row-val gold">68</span></div>
           <div class="stat-row"><span class="stat-row-label">Avg Net All-Time</span><span class="stat-row-val">74.0</span></div>
           <div class="stat-row"><span class="stat-row-label">Avg Gross (2025)</span><span class="stat-row-val">87</span></div>
@@ -712,7 +742,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <div class="pcard-champ-bar">🏆 2024 Champion · 🏆 2023 Champion</div>
       <div class="pcard-body">
         <div class="pcard-name">OWENS</div>
-        <div class="pcard-hc">HC 12.2</div>
+        <div class="pcard-hc">HC 12.4</div>
         <div class="pcard-stats">
           <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">62</span></div>
           <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">70.5</span></div>
@@ -766,7 +796,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <div class="pcard-champ-bar">🎯 Career Low 68 · Consistency King</div>
       <div class="pcard-body">
         <div class="pcard-name">CARTER</div>
-        <div class="pcard-hc">HC 13.1</div>
+        <div class="pcard-hc">HC 13.3</div>
         <div class="pcard-stats">
           <div class="pcard-stat"><span class="pcard-stat-label">Career Low</span><span class="pcard-stat-val gold">68</span></div>
           <div class="pcard-stat"><span class="pcard-stat-label">Career Avg</span><span class="pcard-stat-val">74.0</span></div>
@@ -1328,7 +1358,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div id="sy2026" class="s-ycontent active">
     <div class="tbl-wrap">
       <div class="tbl-label">
-        2026 — Avg Score Per Hole <span style="font-size:.72rem;font-family:sans-serif;color:var(--gray);letter-spacing:0;font-weight:400">(through R15 · Aug 2)</span>
+        2026 — Avg Score Per Hole <span style="font-size:.72rem;font-family:sans-serif;color:var(--gray);letter-spacing:0;font-weight:400">(through R17 · Aug 16)</span>
         <div class="toggle-wrap">
           <button class="tog-btn active" onclick="showStatsMode(this,'sn2026','sg2026')">NET</button>
           <button class="tog-btn" onclick="showStatsMode(this,'sg2026','sn2026')">GROSS</button>
@@ -1356,15 +1386,15 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 
     <div class="tbl-wrap">
       <!-- FIVE_HOLE_2026_START -->
-      <div class="tbl-label">2026 — 5-Hole Draft (Holes 2, 5, 11, 12, 14) <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">NET · through R15 Aug 2</span></div>
-      <table><thead><tr><th>Player</th><th>H2 avg</th><th>H5 avg</th><th>H11 avg</th><th>H12 avg</th><th>H14 avg</th><th>Apr26</th><th>May3</th><th>May17</th><th>May31</th><th>Jun7</th><th>Jun14</th><th>Jun21</th><th>Jun28</th><th>Jul5</th><th>Jul12</th><th>Jul19</th><th>Jul26</th><th>Aug2</th><th>Avg</th></tr></thead>
+      <div class="tbl-label">2026 — 5-Hole Draft (Holes 2, 5, 11, 12, 14) <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">NET · through R17 Aug 16</span></div>
+      <table><thead><tr><th>Player</th><th>H2 avg</th><th>H5 avg</th><th>H11 avg</th><th>H12 avg</th><th>H14 avg</th><th>Apr26</th><th>May3</th><th>May17</th><th>May31</th><th>Jun7</th><th>Jun14</th><th>Jun21</th><th>Jun28</th><th>Jul5</th><th>Jul12</th><th>Jul19</th><th>Jul26</th><th>Aug2</th><th>Aug16</th><th>Avg</th></tr></thead>
       <tbody>
-        <tr><td style="font-weight:700;text-align:left">Farnia</td><td>4.00</td><td>4.10</td><td>4.34</td><td>4.00</td><td>4.02</td><td>18</td><td>21</td><td>21</td><td>26</td><td>24</td><td>21</td><td>21</td><td>23</td><td class="sc-best">18</td><td class="sc-dash">—</td><td>20</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>21.3</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Owens</td><td>4.14</td><td>4.14</td><td>4.57</td><td>3.71</td><td>3.43</td><td>20</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td>22</td><td>21</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td class="sc-best">19</td><td>20</td><td>20.0</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Felter</td><td>4.90</td><td>4.00</td><td>5.20</td><td>4.80</td><td>4.20</td><td>24</td><td class="sc-best">19</td><td>26</td><td>21</td><td class="sc-dash">—</td><td>26</td><td class="sc-dash">—</td><td>24</td><td>22</td><td>21</td><td class="sc-dash">—</td><td>23</td><td>25</td><td>23.1</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Carter</td><td>3.80</td><td>3.80</td><td>4.60</td><td>4.30</td><td>4.60</td><td class="sc-best">19</td><td>22</td><td>23</td><td class="sc-dash">—</td><td>22</td><td class="sc-dash">—</td><td class="sc-best">20</td><td>22</td><td class="sc-dash">—</td><td class="sc-best">19</td><td>21</td><td class="sc-best">18</td><td>25</td><td>21.1</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Lorenz</td><td>5.00</td><td>4.00</td><td>5.50</td><td>4.25</td><td>5.25</td><td class="sc-dash">—</td><td>25</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>25</td><td>24</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">22</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>24.0</td></tr>
-        <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Farnia</td><td>4.27</td><td>4.00</td><td>4.45</td><td>4.09</td><td>4.00</td><td class="sc-best">17</td><td>20</td><td>20</td><td>25</td><td>24</td><td>21</td><td>21</td><td>23</td><td>18</td><td class="sc-dash">—</td><td>20</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>20</td><td>20.8</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Owens</td><td>4.14</td><td>4.14</td><td>4.57</td><td>3.71</td><td>3.43</td><td>20</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td>22</td><td>21</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td class="sc-best">19</td><td>20</td><td class="sc-dash">—</td><td>20.0</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Felter</td><td>4.91</td><td>3.73</td><td>5.27</td><td>4.73</td><td>4.27</td><td>23</td><td class="sc-best">18</td><td>26</td><td>21</td><td class="sc-dash">—</td><td>25</td><td class="sc-dash">—</td><td>24</td><td>22</td><td>21</td><td class="sc-dash">—</td><td>23</td><td>25</td><td>24</td><td>22.9</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Carter</td><td>3.80</td><td>3.80</td><td>4.60</td><td>4.30</td><td>4.60</td><td>19</td><td>22</td><td>23</td><td class="sc-dash">—</td><td>22</td><td class="sc-dash">—</td><td>20</td><td>22</td><td class="sc-dash">—</td><td>19</td><td>21</td><td class="sc-best">18</td><td>25</td><td class="sc-dash">—</td><td>21.1</td></tr>
+        <tr><td style="font-weight:700;text-align:left">Lorenz</td><td>5.00</td><td>4.00</td><td>5.50</td><td>4.25</td><td>5.25</td><td class="sc-dash">—</td><td>25</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>25</td><td>24</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">22</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>24.0</td></tr>
+        <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td></tr>
       </tbody>
       </table>
       <div class="tbl-legend">
@@ -1385,14 +1415,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     </div>
   </div>
   <div id="records2026" class="b-ycontent active">
-    <div style="font-size:.72rem;color:var(--gray);margin-bottom:.85rem">Through R15 · Aug 2, 2026 — update if a record falls</div>
+    <div style="font-size:.72rem;color:var(--gray);margin-bottom:.85rem">Through R17 · Aug 16, 2026 — update if a record falls</div>
     <div class="records">
       <div class="rec-card"><div class="rec-icon">⛳</div><div class="rec-label">2026 Low Net</div><div class="rec-val">69</div><div class="rec-sub">Farnia Jun 28 / Owens Jun 14 / Felter May 3</div></div>
       <div class="rec-card"><div class="rec-icon">😬</div><div class="rec-label">2026 High Score</div><div class="rec-val">89</div><div class="rec-sub">Lorenz · Jun 7</div></div>
-      <div class="rec-card"><div class="rec-icon">🐦</div><div class="rec-label">Birdies/Round (2026)</div><div class="rec-val">0.50</div><div class="rec-sub">Farnia · 10 rounds</div></div>
-      <div class="rec-card"><div class="rec-icon">🏌️</div><div class="rec-label">Best Front 9 Avg (Net)</div><div class="rec-val">34.7</div><div class="rec-sub">Felter · 2026</div></div>
-      <div class="rec-card"><div class="rec-icon">🏁</div><div class="rec-label">Best Back 9 Avg (Net)</div><div class="rec-val">36.0</div><div class="rec-sub">Owens · 2026</div></div>
-      <div class="rec-card"><div class="rec-icon">🎯</div><div class="rec-label">Best Par 3 Avg (Net)</div><div class="rec-val">3.23</div><div class="rec-sub">Felter · 2026</div></div>
+      <div class="rec-card"><div class="rec-icon">🐦</div><div class="rec-label">Birdies/Round (2026)</div><div class="rec-val">0.50</div><div class="rec-sub">Lorenz · 4 rounds</div></div>
+      <div class="rec-card"><div class="rec-icon">🏌️</div><div class="rec-label">Best Front 9 Avg (Net)</div><div class="rec-val">35.7</div><div class="rec-sub">Felter · 2026</div></div>
+      <div class="rec-card"><div class="rec-icon">🏁</div><div class="rec-label">Best Back 9 Avg (Net)</div><div class="rec-val">35.7</div><div class="rec-sub">Owens · 2026</div></div>
+      <div class="rec-card"><div class="rec-icon">🎯</div><div class="rec-label">Best Par 3 Avg (Net)</div><div class="rec-val">3.18</div><div class="rec-sub">Farnia · 2026</div></div>
     </div>
   </div>
   <div id="records2025" class="b-ycontent">
@@ -1415,14 +1445,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   </div>
 
   <div id="birdie2026" class="b-ycontent active">
-    <div style="font-size:.75rem;color:var(--gray);margin-bottom:.75rem">Gross birdies per round · through R15 · Aug 2</div>
+    <div style="font-size:.75rem;color:var(--gray);margin-bottom:.75rem">Gross birdies per round · through R17 · Aug 16 · computed from scorecards</div>
     <div class="lb">
       <div class="lb-head" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div>Rank</div><div>Player</div><div>Birdies/Rd</div><div>Total</div><div>Rounds</div><div>Front Avg (Net)</div><div>Back Avg (Net)</div></div>
-      <div class="lb-row r1" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">1</div><div class="pname">Farnia</div><div class="stat gold">0.50</div><div class="stat good">5</div><div class="stat">10</div><div class="stat">36.8</div><div class="stat">36.5</div></div>
-      <div class="lb-row r2" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">2</div><div class="pname">Felter</div><div class="stat">0.40</div><div class="stat good">4</div><div class="stat">10</div><div class="stat">36.6</div><div class="stat">38.5</div></div>
-      <div class="lb-row r3" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">3</div><div class="pname">Carter</div><div class="stat">0.30</div><div class="stat">3</div><div class="stat">10</div><div class="stat">36.5</div><div class="stat">39.0</div></div>
-      <div class="lb-row" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">4</div><div class="pname">Lorenz</div><div class="stat">0.25</div><div class="stat">1</div><div class="stat">4</div><div class="stat">37.8</div><div class="stat">43.7</div></div>
-      <div class="lb-row" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">5</div><div class="pname">Owens</div><div class="stat dim">0.00</div><div class="stat dim">0</div><div class="stat">7</div><div class="stat">38.9</div><div class="stat">36.7</div></div>
+      <div class="lb-row r1" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">1</div><div class="pname">Lorenz <span class="pbadge prov">4 RDS</span></div><div class="stat gold">0.50</div><div class="stat good">2</div><div class="stat">4</div><div class="stat">37.8</div><div class="stat">43.5</div></div>
+      <div class="lb-row r2" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">2</div><div class="pname">Farnia</div><div class="stat">0.36</div><div class="stat good">4</div><div class="stat">11</div><div class="stat">36.8</div><div class="stat">36.5</div></div>
+      <div class="lb-row r3" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">3</div><div class="pname">Felter</div><div class="stat">0.36</div><div class="stat good">4</div><div class="stat">11</div><div class="stat">35.7</div><div class="stat">38.0</div></div>
+      <div class="lb-row" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">4</div><div class="pname">Carter</div><div class="stat">0.30</div><div class="stat">3</div><div class="stat">10</div><div class="stat">35.8</div><div class="stat">38.2</div></div>
+      <div class="lb-row" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">5</div><div class="pname">Owens</div><div class="stat dim">0.00</div><div class="stat dim">0</div><div class="stat">7</div><div class="stat">37.9</div><div class="stat">35.7</div></div>
     </div>
   </div>
 
@@ -1670,8 +1700,8 @@ const d2026=[
   {d:'Jul 19',v:[74,null,null,70,null], att:['IN','OUT','OUT','IN','OUT']},
   {d:'Jul 26',v:[null,74,77,70,null], att:['OUT','IN','IN','IN','OUT']},
   {d:'Aug 2', v:[null,73,79,79,null], att:['OUT','IN','IN','IN','OUT']},
-  {d:'Aug 9', v:[null,null,null,null,null], att:['OUT','OUT','IN','IN','IN']},
-  {d:'Aug 16',v:[null,null,null,null,null], att:['IN','IN','IN','OUT','OUT']},
+  {d:'Aug 9', v:[null,null,null,null,null], att:['OUT','OUT','OUT','OUT','OUT'], note:'No Round'},
+  {d:'Aug 16',v:[72,null,77,null,null], att:['IN','OUT','IN','OUT','OUT']},
   {d:'Aug 23',v:[null,null,null,null,null], att:['IN','OUT','IN','IN','OUT']},
   {d:'Aug 30',v:[null,null,null,null,null], att:['IN','IN','Avail','IN','IN']},
   {d:'Sep 6', v:[null,null,null,null,null], att:['IN','IN','IN','OUT','IN']},
@@ -1693,7 +1723,30 @@ const d2026gross=[
   {d:'Jul 19',v:[92,null,null,85,null]},
   {d:'Jul 26',v:[null,88,95,85,null]},
   {d:'Aug 2', v:[null,87,97,94,null]},
+  {d:'Aug 16',v:[90,null,95,null,null]},
 ];
+
+// 2026 NET Stableford points per round (player order: Farnia, Owens, Felter, Carter, Lorenz)
+// Scoring vs par after handicap strokes: albatross 5, eagle 4, birdie 3, par 2, bogey 1, double+ 0.
+// Mirrors the Stableford block in each player tab of the Google Sheet (cols W:AE).
+/* STAB_2026_START */
+const stab2026=[
+  {d:'Apr 26',v:[33,29,33,29,null]},
+  {d:'May 3', v:[30,null,37,28,28]},
+  {d:'May 17',v:[35,35,33,34,null]},
+  {d:'May 31',v:[33,null,31,null,null]},
+  {d:'Jun 7', v:[23,28,null,30,17]},
+  {d:'Jun 14',v:[28,37,36,null,25]},
+  {d:'Jun 21',v:[34,null,null,36,null]},
+  {d:'Jun 28',v:[37,null,35,32,null]},
+  {d:'Jul 5', v:[35,null,36,null,30]},
+  {d:'Jul 12',v:[null,33,30,33,null]},
+  {d:'Jul 19',v:[32,null,null,36,null]},
+  {d:'Jul 26',v:[null,32,29,36,null]},
+  {d:'Aug 2', v:[null,34,29,27,null]},
+  {d:'Aug 16',v:[34,null,29,null,null]},
+];
+/* STAB_2026_END */
 
 // Per-hole averages
 const net2025Holes=[
@@ -2263,9 +2316,90 @@ function renderLiveLeaderboard(){
   });
 }
 
+// ═══ STABLEFORD POINTS CONTEST ═══════════════════════════════
+// Ranked by the SUM of each player's best 6 Stableford rounds.
+// Unlike stroke play, higher is better — so "best 6" means the 6
+// highest point totals. Players short of 6 rounds are totalled on
+// everything they've played and flagged provisional.
+function stabStats(idx){
+  const all = stab2026.map(r=>r.v[idx]).filter(v=>v!==null && v!==undefined);
+  if(!all.length) return null;
+  const best = [...all].sort((a,b)=>b-a).slice(0, COUNT_BEST);
+  return {
+    rounds: all.length,
+    counted: best.length,                            // how many actually counted
+    dropped: all.length - best.length,               // rounds thrown out
+    total:  best.reduce((a,b)=>a+b,0),               // ONLY the best 6 are summed
+    best:   Math.max(...all),
+    avg:    Math.round(best.reduce((a,b)=>a+b,0)/best.length*10)/10,  // avg of the counted 6
+    cutoff: best.length ? best[best.length-1] : 0,   // lowest score still counting
+    prov:   all.length < COUNT_BEST
+  };
+}
+
+function renderStableford(){
+  const rows = LB_PLAYERS
+    .map((name,i)=>({name, idx:i, ...(stabStats(i)||{})}))
+    .filter(r=>r.rounds)
+    .sort((a,b)=> b.total-a.total || b.best-a.best || b.avg-a.avg);
+
+  const lb = document.getElementById('stab-lb');
+  if(lb){
+    lb.querySelectorAll('.lb-row').forEach(el=>el.remove());
+    rows.forEach((r,i)=>{
+      const cls  = i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const prov = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
+      const div = document.createElement('div');
+      div.className = 'lb-row '+cls;
+      div.style.gridTemplateColumns = '56px 1fr 110px 90px 90px 90px 90px';
+      div.innerHTML =
+        `<div class="rank">${i+1}</div>`+
+        `<div class="pname">${r.name}${prov}</div>`+
+        `<div class="stat ${i===0?'gold':''}">${r.total}</div>`+
+        `<div class="stat">${r.counted}</div>`+
+        `<div class="stat dim">${r.dropped}</div>`+
+        `<div class="stat good">${r.best}</div>`+
+        `<div class="stat">${r.avg.toFixed(1)}</div>`;
+      lb.appendChild(div);
+    });
+  }
+
+  // Per-round table — green marks the rounds counting toward each best 6
+  const tb = document.getElementById('stab-body');
+  if(tb){
+    const cut = LB_PLAYERS.map((_,i)=>{ const s=stabStats(i); return s?s.cutoff:null; });
+    const used = LB_PLAYERS.map(()=>0);
+    // walk each player's rounds highest-first to decide which cells count
+    const counting = LB_PLAYERS.map((_,i)=>{
+      const idxs = stab2026.map((r,ri)=>({ri,v:r.v[i]})).filter(x=>x.v!==null)
+                     .sort((a,b)=>b.v-a.v).slice(0,COUNT_BEST).map(x=>x.ri);
+      return new Set(idxs);
+    });
+    tb.innerHTML = stab2026.map((r,ri)=>{
+      const cells = r.v.map((v,i)=>{
+        if(v===null||v===undefined) return '<td class="sc-dash">—</td>';
+        // green = one of the best 6 and counts; struck-through grey = dropped
+        return counting[i].has(ri)
+          ? `<td class="sc-best">${v}</td>`
+          : `<td style="color:var(--gray);text-decoration:line-through;opacity:.55">${v}</td>`;
+      }).join('');
+      return `<tr><td>${r.d}</td>${cells}</tr>`;
+    }).join('');
+  }
+
+  // Footer totals
+  LB_PLAYERS.forEach((name,i)=>{
+    const cell = document.getElementById('sp-'+name.toLowerCase());
+    if(!cell) return;
+    const s = stabStats(i);
+    cell.textContent = s ? s.total + (s.prov?'*':'') : '—';
+  });
+}
+
 // ═══ INIT ════════════════════════════════════════════════════
 
 renderLiveLeaderboard();
+renderStableford();
 renderScoreTable(d2026.filter(r=>!r.note&&r.v.some(v=>v!==null)),'t2026home');
 renderScoreTable(d2026gross,'tg2026home');
 renderScoreTable(d2025,'t2025');
