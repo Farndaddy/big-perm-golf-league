@@ -125,6 +125,8 @@ tfoot td{font-weight:700;background:var(--card2)}
 tfoot td:first-child{color:var(--gray)}
 .sc-best{color:#4caf50;font-weight:700}.sc-worst{color:var(--red)}.sc-low{color:var(--gold);font-weight:800}
 .sc-dash{color:var(--border)}.sc-note{color:var(--gray);font-style:italic;font-size:.75rem}
+/* gold box = one of that player's best 6 net rounds, counting toward standings */
+.sc-counts{box-shadow:inset 0 0 0 1.5px var(--gold);border-radius:5px}
 
 /* TOGGLE */
 .toggle-wrap{display:flex;gap:.4rem}
@@ -490,6 +492,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
       <span><b style="color:var(--red)">●</b> Worst score that round</span>
       <span><b style="color:var(--gold)">●</b> Season leader</span>
       <span><b style="color:var(--border)">—</b> Did not play</span>
+      <span><b style="box-shadow:inset 0 0 0 1.5px var(--gold);border-radius:5px;padding:1px 6px">00</b> One of that player's best 6 — counts toward standings</span>
       <span><b>Top N Avg</b> = average of that player's best N net rounds</span>
       <span><b>*</b> Fewer than N rounds played — averaged over all of them</span>
       <span><b style="color:var(--gold)">Standings</b> use Top 6</span>
@@ -1974,19 +1977,35 @@ const weeklySmack2023=[
 
 // ═══ RENDER ══════════════════════════════════════════════════
 
-function renderScoreTable(data,tbodyId){
+// Returns, per player column, the set of row indexes holding that player's
+// best COUNT_BEST net rounds — the ones actually counting toward standings.
+// Ties are resolved by taking the earliest rounds first, so exactly
+// COUNT_BEST cells get boxed even when several scores are equal.
+function countingRowSets(data){
+  return (data[0] ? data[0].v : []).map((_,col)=>{
+    const played = data
+      .map((r,ri)=>({ri, v:r.note ? null : r.v[col]}))
+      .filter(x=>x.v!==null && x.v!==undefined);
+    played.sort((a,b)=> a.v-b.v || a.ri-b.ri);   // lowest net first
+    return new Set(played.slice(0,COUNT_BEST).map(x=>x.ri));
+  });
+}
+
+function renderScoreTable(data,tbodyId,markCounting){
   const tb=document.getElementById(tbodyId);if(!tb)return;
-  data.forEach(row=>{
+  const counting = markCounting ? countingRowSets(data) : null;
+  data.forEach((row,ri)=>{
     const tr=document.createElement('tr');
     if(row.note){tr.innerHTML=`<td>${row.d}</td><td colspan="5" class="sc-note">${row.note}</td>`;tb.appendChild(tr);return;}
     const scores=row.v.filter(v=>v!==null);
     const mn=scores.length?Math.min(...scores):null;
     const mx=scores.length?Math.max(...scores):null;
     let html=`<td>${row.d}</td>`;
-    row.v.forEach(s=>{
+    row.v.forEach((s,col)=>{
       if(s===null){html+=`<td class="sc-dash">—</td>`;return;}
       let cls=scores.length>1&&s===mn?'sc-best':scores.length>1&&s===mx?'sc-worst':'';
-      html+=`<td class="${cls}">${s}</td>`;
+      if(counting && counting[col] && counting[col].has(ri)) cls+=' sc-counts';
+      html+=`<td class="${cls.trim()}">${s}</td>`;
     });
     tr.innerHTML=html;tb.appendChild(tr);
   });
@@ -2400,7 +2419,7 @@ function renderStableford(){
 
 renderLiveLeaderboard();
 renderStableford();
-renderScoreTable(d2026.filter(r=>!r.note&&r.v.some(v=>v!==null)),'t2026home');
+renderScoreTable(d2026.filter(r=>!r.note&&r.v.some(v=>v!==null)),'t2026home',true);
 renderScoreTable(d2026gross,'tg2026home');
 renderScoreTable(d2025,'t2025');
 renderScoreTable(d2024,'t2024');
