@@ -504,6 +504,27 @@ function testJul26Data() {
   return result;
 }
 
+// ── Aug 30 Test (R19) ────────────────────────────────────────
+// Select "testAug30Data" from the function dropdown, then click Run.
+function testAug30Data() {
+  var data = {
+    date: "Aug 30",
+    playing_hc: { Farnia:18, Owens:14, Carter:15, Lorenz:15 },
+    hc_index:   { Farnia:15.7, Owens:12.3, Felter:15.3, Carter:13.2, Lorenz:13.0 },
+    scores: {
+      Farnia: [6,4,6,5,7,6,7,4,4,4,5,5,5,5,5,5,5,4],  // gross 92, net 74, 32 Stableford
+      Owens:  [5,6,5,6,5,4,7,5,4,4,5,5,5,5,4,5,4,5],  // gross 89, net 75, 31 Stableford
+      Carter: [5,6,5,5,4,4,6,4,4,4,5,6,4,5,5,5,5,5],  // gross 87, net 72, 34 Stableford
+      Lorenz: [4,5,6,4,6,5,6,7,5,4,6,6,4,5,6,5,3,5]   // gross 92, net 77, 29 Stableford
+      // Felter: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
+
 // ── Aug 23 Test (R18) ────────────────────────────────────────
 // Select "testAug23Data" from the function dropdown, then click Run.
 function testAug23Data() {
