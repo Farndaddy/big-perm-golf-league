@@ -503,40 +503,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 
   <!-- 5-HOLE SCORING LEADERBOARD -->
   <div class="sec-title" style="font-size:1.4rem;margin-bottom:.3rem">5-Hole Scoring Leaderboard</div>
-  <div class="sec-sub" style="margin-bottom:1rem">2026 Draft Holes: 2, 5, 11, 12, 14 · NET avg per hole · Ranked by total average</div>
+  <div class="sec-sub" style="margin-bottom:1rem">2026 Draft Holes: 2, 5, 11, 12, 14 · NET · Ranked by the average of each player's best 6 five-hole totals</div>
   <div class="lb" id="fivehole-lb">
     <div class="lb-head" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div>Rank</div><div>Player</div><div>H2</div><div>H5</div><div>H11</div><div>H12</div><div>H14</div><div>Total Avg</div>
-    </div>
-    <div class="lb-row r1" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div class="rank">1</div><div class="pname">Owens</div>
-      <div class="stat">4.25</div><div class="stat">4.12</div><div class="stat">4.50</div><div class="stat">3.75</div><div class="stat">3.50</div>
-      <div class="stat gold">20.12</div>
-    </div>
-    <div class="lb-row r2" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div class="rank">2</div><div class="pname">Carter</div>
-      <div class="stat">3.92</div><div class="stat">3.67</div><div class="stat">4.50</div><div class="stat">4.25</div><div class="stat">4.42</div>
-      <div class="stat">20.75</div>
-    </div>
-    <div class="lb-row r3" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div class="rank">3</div><div class="pname">Farnia</div>
-      <div class="stat">4.31</div><div class="stat">4.15</div><div class="stat">4.31</div><div class="stat">4.23</div><div class="stat">3.92</div>
-      <div class="stat">20.92</div>
-    </div>
-    <div class="lb-row " style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div class="rank">4</div><div class="pname">Felter</div>
-      <div class="stat">4.91</div><div class="stat">3.73</div><div class="stat">5.27</div><div class="stat">4.73</div><div class="stat">4.27</div>
-      <div class="stat">22.91</div>
-    </div>
-    <div class="lb-row " style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
-      <div class="rank">5</div><div class="pname">Lorenz</div>
-      <div class="stat">4.80</div><div class="stat">4.20</div><div class="stat">5.40</div><div class="stat">4.40</div><div class="stat">5.00</div>
-      <div class="stat dim">23.80</div>
-    </div>
-    <div class="lb-row" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px;background:var(--card2)">
-      <div style="color:var(--gray);font-size:.65rem;letter-spacing:1px">PAR</div><div style="color:var(--gray);font-size:.75rem">Course Par</div>
-      <div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div>
-      <div class="stat dim">20</div>
+      <div>Rank</div><div>Player</div><div>H2</div><div>H5</div><div>H11</div><div>H12</div><div>H14</div><div>Best 6 Avg</div>
     </div>
   </div>
 
@@ -1392,19 +1362,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     <div class="tbl-wrap">
       <!-- FIVE_HOLE_2026_START -->
       <div class="tbl-label">2026 — 5-Hole Draft (Holes 2, 5, 11, 12, 14) <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">NET · through R19 Aug 30</span></div>
-      <table><thead><tr><th>Player</th><th>H2 avg</th><th>H5 avg</th><th>H11 avg</th><th>H12 avg</th><th>H14 avg</th><th>Apr26</th><th>May3</th><th>May17</th><th>May31</th><th>Jun7</th><th>Jun14</th><th>Jun21</th><th>Jun28</th><th>Jul5</th><th>Jul12</th><th>Jul19</th><th>Jul26</th><th>Aug2</th><th>Aug16</th><th>Aug23</th><th>Aug30</th><th>Avg</th></tr></thead>
-      <tbody>
-        <tr><td style="font-weight:700;text-align:left">Farnia</td><td>4.31</td><td>4.15</td><td>4.31</td><td>4.23</td><td>3.92</td><td class="sc-best">17</td><td>20</td><td>20</td><td>25</td><td>24</td><td>21</td><td>21</td><td>23</td><td>18</td><td class="sc-dash">—</td><td>20</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>20</td><td>22</td><td>21</td><td>20.9</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Owens</td><td>4.25</td><td>4.12</td><td>4.50</td><td>3.75</td><td>3.50</td><td>20</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td>22</td><td>21</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">19</td><td class="sc-dash">—</td><td class="sc-best">19</td><td>20</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>21</td><td>20.1</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Felter</td><td>4.91</td><td>3.73</td><td>5.27</td><td>4.73</td><td>4.27</td><td>23</td><td class="sc-best">18</td><td>26</td><td>21</td><td class="sc-dash">—</td><td>25</td><td class="sc-dash">—</td><td>24</td><td>22</td><td>21</td><td class="sc-dash">—</td><td>23</td><td>25</td><td>24</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>22.9</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Carter</td><td>3.92</td><td>3.67</td><td>4.50</td><td>4.25</td><td>4.42</td><td>19</td><td>22</td><td>23</td><td class="sc-dash">—</td><td>22</td><td class="sc-dash">—</td><td>20</td><td>22</td><td class="sc-dash">—</td><td>19</td><td>21</td><td>18</td><td>25</td><td class="sc-dash">—</td><td class="sc-best">17</td><td>21</td><td>20.8</td></tr>
-        <tr><td style="font-weight:700;text-align:left">Lorenz</td><td>4.80</td><td>4.20</td><td>5.40</td><td>4.40</td><td>5.00</td><td class="sc-dash">—</td><td>25</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>25</td><td>24</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-best">22</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td class="sc-dash">—</td><td>23</td><td>23.8</td></tr>
-        <tr style="background:var(--card2)"><td>Par</td><td>4</td><td>4</td><td>4</td><td>4</td><td>4</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td><td style="color:var(--gray)">20</td></tr>
-      </tbody>
+      <table><thead><tr id="five-hdr"></tr></thead>
+      <tbody id="five-body"></tbody>
       </table>
       <div class="tbl-legend">
-        <span><b style="color:#4caf50">●</b> Best round score (that player)</span>
+        <span><b style="background:rgba(240,192,64,.16);border-radius:5px;padding:1px 6px">00</b> One of that player's best 6 — counts</span>
+        <span><b style="color:#4caf50">●</b> Best five-hole round (that player)</span>
         <span><b style="color:var(--border)">—</b> Did not play that round</span>
+        <span><b>*</b> Fewer than 6 rounds played</span>
       </div>
       <!-- FIVE_HOLE_2026_END -->
     </div>
@@ -1736,6 +1701,29 @@ const d2026gross=[
 // 2026 NET Stableford points per round (player order: Farnia, Owens, Felter, Carter, Lorenz)
 // Scoring vs par after handicap strokes: albatross 5, eagle 4, birdie 3, par 2, bogey 1, double+ 0.
 // Mirrors the Stableford block in each player tab of the Google Sheet (cols W:AE).
+// 2026 five-hole draft NET scores per round — holes 2, 5, 11, 12, 14 in that order.
+// Player order: Farnia, Owens, Felter, Carter, Lorenz. null = did not play.
+/* FIVE_2026_START */
+const five2026=[
+  {d:'Apr 26',v:[[3,2,4,4,4],[4,4,4,4,4],[5,2,6,6,4],[3,4,4,3,5],null]},
+  {d:'May 3', v:[[3,3,5,4,5],null,[3,3,4,4,4],[4,3,5,5,5],[4,4,6,5,6]]},
+  {d:'May 17',v:[[6,4,4,3,3],[3,5,4,4,3],[5,3,6,6,6],[4,5,6,3,5],null]},
+  {d:'May 31',v:[[4,5,6,6,4],null,[3,4,5,5,4],null,null]},
+  {d:'Jun 7', v:[[6,6,4,4,4],[5,5,6,3,3],null,[4,4,4,5,5],[5,3,6,5,6]]},
+  {d:'Jun 14',v:[[5,2,4,6,4],[5,4,5,4,3],[5,5,5,5,5],null,[5,4,6,4,5]]},
+  {d:'Jun 21',v:[[4,4,5,3,5],null,null,[3,3,5,4,5],null]},
+  {d:'Jun 28',v:[[4,5,5,4,5],null,[6,4,6,5,3],[3,5,4,4,6],null]},
+  {d:'Jul 5', v:[[3,3,4,4,4],null,[5,5,4,4,4],null,[6,5,4,3,4]]},
+  {d:'Jul 12',v:[null,[4,3,5,4,3],[6,3,6,3,3],[4,3,4,6,2],null]},
+  {d:'Jul 19',v:[[4,5,4,4,3],null,null,[4,4,4,5,4],null]},
+  {d:'Jul 26',v:[null,[4,3,5,3,4],[4,4,6,4,5],[4,3,4,4,3],null]},
+  {d:'Aug 2', v:[null,[4,5,3,4,4],[7,4,4,6,4],[5,4,6,4,6],null]},
+  {d:'Aug 16',v:[[5,5,4,3,3],null,[5,4,6,4,5],null,null]},
+  {d:'Aug 23',v:[[6,4,3,6,3],null,null,[4,3,4,3,3],null]},
+  {d:'Aug 30',v:[[3,6,4,4,4],[5,4,4,4,4],null,[5,3,4,5,4],[4,5,5,5,4]]},
+];
+/* FIVE_2026_END */
+
 /* STAB_2026_START */
 const stab2026=[
   {d:'Apr 26',v:[33,29,33,29,null]},
@@ -2341,6 +2329,115 @@ function renderLiveLeaderboard(){
   });
 }
 
+// ═══ 5-HOLE DRAFT CONTEST — TOP 6 MODEL ══════════════════════
+// Ranked by the average of each player's best 6 five-hole totals
+// (lowest 6, since this is stroke play). The per-hole columns are
+// averaged over those SAME 6 rounds, so the five hole averages
+// always add up to the headline number.
+const DRAFT_HOLES = ['H2','H5','H11','H12','H14'];
+
+function fiveStats(idx){
+  const rounds = five2026
+    .map((r,ri)=>({ri, v:r.v[idx]}))
+    .filter(x=>x.v && x.v.length===5);
+  if(!rounds.length) return null;
+  const scored = rounds.map(x=>({...x, tot:x.v.reduce((a,b)=>a+b,0)}));
+  const best = [...scored].sort((a,b)=> a.tot-b.tot || a.ri-b.ri).slice(0, COUNT_BEST);
+  const n = best.length;
+  const perHole = DRAFT_HOLES.map((_,h)=> best.reduce((s,x)=>s+x.v[h],0)/n);
+  return {
+    rounds: rounds.length,
+    counted: n,
+    perHole,
+    total:  perHole.reduce((a,b)=>a+b,0),
+    best:   Math.min(...scored.map(x=>x.tot)),
+    prov:   rounds.length < COUNT_BEST,
+    countingRows: new Set(best.map(x=>x.ri))
+  };
+}
+
+function renderFiveHole(){
+  const rows = LB_PLAYERS
+    .map((name,i)=>({name, idx:i, ...(fiveStats(i)||{})}))
+    .filter(r=>r.rounds)
+    .sort((a,b)=> a.total-b.total || a.best-b.best);
+
+  const lb = document.getElementById('fivehole-lb');
+  if(!lb) return;
+  lb.querySelectorAll('.lb-row').forEach(el=>el.remove());
+  const GRID='56px 1fr 70px 70px 70px 70px 70px 90px';
+
+  rows.forEach((r,i)=>{
+    const cls  = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const prov = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
+    const tcls = i===0 ? 'stat gold' : (i===rows.length-1 ? 'stat dim' : 'stat');
+    const div = document.createElement('div');
+    div.className = 'lb-row '+cls;
+    div.style.gridTemplateColumns = GRID;
+    div.innerHTML =
+      `<div class="rank">${i+1}</div>`+
+      `<div class="pname">${r.name}${prov}</div>`+
+      r.perHole.map(x=>`<div class="stat">${x.toFixed(2)}</div>`).join('')+
+      `<div class="${tcls}">${r.total.toFixed(2)}</div>`;
+    lb.appendChild(div);
+  });
+
+  renderFiveHoleTable(rows);
+
+  // Course par reference row
+  const par = document.createElement('div');
+  par.className = 'lb-row';
+  par.style.cssText = 'grid-template-columns:'+GRID+';background:var(--card2)';
+  par.innerHTML =
+    '<div style="color:var(--gray);font-size:.65rem;letter-spacing:1px">PAR</div>'+
+    '<div style="color:var(--gray);font-size:.75rem">Course Par</div>'+
+    '<div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">4</div>'+
+    '<div class="stat dim">4</div><div class="stat dim">4</div><div class="stat dim">20</div>';
+  lb.appendChild(par);
+}
+
+// Per-round breakdown table under the Stats tab. Gold chip marks the
+// six rounds counting toward that player's best-6 average — same
+// treatment as the weekly scores table.
+function renderFiveHoleTable(rows){
+  const hdr = document.getElementById('five-hdr');
+  const tb  = document.getElementById('five-body');
+  if(!hdr || !tb) return;
+
+  hdr.innerHTML = '<th>Player</th>'
+    + DRAFT_HOLES.map(h=>`<th>${h} avg</th>`).join('')
+    + five2026.map(r=>`<th>${r.d.replace(' ','')}</th>`).join('')
+    + '<th>Best 6</th>';
+
+  const byName = {};
+  rows.forEach(r=>byName[r.name]=r);
+
+  tb.innerHTML = LB_PLAYERS.map((name,i)=>{
+    const st = byName[name];
+    if(!st) return '';
+    const totals = five2026.map(r=>{
+      const v=r.v[i];
+      return (v && v.length===5) ? v.reduce((a,b)=>a+b,0) : null;
+    });
+    const played = totals.filter(t=>t!==null);
+    const bestRd = played.length ? Math.min(...played) : null;
+    const cells = totals.map((t,ri)=>{
+      if(t===null) return '<td class="sc-dash">—</td>';
+      const counts = st.countingRows.has(ri);
+      const cls = [counts?'sc-counts':'', t===bestRd?'sc-best':''].filter(Boolean).join(' ');
+      return `<td class="${cls}">${t}</td>`;
+    }).join('');
+    return `<tr><td style="font-weight:700;text-align:left">${name}</td>`
+      + st.perHole.map(x=>`<td>${x.toFixed(2)}</td>`).join('')
+      + cells
+      + `<td>${st.total.toFixed(1)}${st.prov?'*':''}</td></tr>`;
+  }).join('')
+  + '<tr style="background:var(--card2)"><td>Par</td>'
+    + '<td>4</td>'.repeat(5)
+    + five2026.map(()=>'<td style="color:var(--gray)">20</td>').join('')
+    + '<td style="color:var(--gray)">20</td></tr>';
+}
+
 // ═══ STABLEFORD POINTS CONTEST ═══════════════════════════════
 // Ranked by the SUM of each player's best 6 Stableford rounds.
 // Unlike stroke play, higher is better — so "best 6" means the 6
@@ -2424,6 +2521,7 @@ function renderStableford(){
 // ═══ INIT ════════════════════════════════════════════════════
 
 renderLiveLeaderboard();
+renderFiveHole();
 renderStableford();
 renderScoreTable(d2026.filter(r=>!r.note&&r.v.some(v=>v!==null)),'t2026home',true);
 renderScoreTable(d2026gross,'tg2026home');
