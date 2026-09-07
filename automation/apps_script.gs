@@ -504,6 +504,28 @@ function testJul26Data() {
   return result;
 }
 
+// ── Sep 6 Test (R20 — FINAL ROUND OF 2026) ───────────────────
+// Note: Felter's playing HC dropped to 17 for this round.
+// Select "testSep6Data" from the function dropdown, then click Run.
+function testSep6Data() {
+  var data = {
+    date: "Sep 6",
+    playing_hc: { Farnia:18, Owens:14, Felter:17, Lorenz:15 },
+    hc_index:   { Farnia:15.7, Owens:12.4, Felter:15.3, Carter:13.2, Lorenz:13.0 },
+    scores: {
+      Farnia: [7,6,7,7,4,3,6,4,4,4,4,5,5,5,5,5,4,4],  // gross  89, net 71, 35 Stableford
+      Owens:  [6,4,6,5,6,4,6,5,5,4,4,5,5,5,4,5,5,5],  // gross  89, net 75, 31 Stableford
+      Felter: [6,7,6,5,6,5,6,3,4,5,5,7,6,7,7,8,3,6],  // gross 102, net 85, 21 Stableford
+      Lorenz: [5,6,5,5,6,3,6,5,4,4,7,6,3,4,6,5,4,5]   // gross  89, net 74, 32 Stableford
+      // Carter: DNS
+    }
+  };
+  var result = processRoundData(data);
+  Logger.log(result);
+  console.log(result);
+  return result;
+}
+
 // ── Aug 30 Test (R19) ────────────────────────────────────────
 // Select "testAug30Data" from the function dropdown, then click Run.
 function testAug30Data() {

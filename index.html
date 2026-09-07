@@ -426,7 +426,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div class="badge">Est. 2023 · Sunday Golf</div>
   <h1>BIG <span>PERM</span><br>GOLF LEAGUE</h1>
   <div class="tagline">Every Sunday. No Excuses. Gotta Finish 7.</div>
-  <div class="live-badge"><span class="live-dot"></span>2026 Season In Progress · Round 19 Complete</div>
+  <div class="live-badge"><span class="live-dot"></span>2026 SEASON COMPLETE · All 20 Rounds Played</div>
 </header>
 
 <nav>
@@ -455,8 +455,38 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     </div>
   </div>
 
+  <!-- ══ 2026 SEASON WRAP ══ -->
+  <div style="background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:1.4rem 1.6rem;margin-bottom:2rem">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;color:var(--gold);margin-bottom:.2rem">2026 Season Complete</div>
+    <div style="font-size:.72rem;color:var(--gray);margin-bottom:1.1rem">20 rounds played · Apr 26 – Sep 6, 2026</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem">
+      <div style="background:var(--card2);border-radius:10px;padding:.9rem 1rem">
+        <div style="font-size:.6rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase;margin-bottom:.35rem">League Title</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:1px;color:var(--white)">Farnia &amp; Carter — 70.8</div>
+        <div style="font-size:.68rem;color:var(--gold);margin-top:.3rem">Tied · awaiting a tiebreak ruling</div>
+      </div>
+      <div style="background:var(--card2);border-radius:10px;padding:.9rem 1rem">
+        <div style="font-size:.6rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase;margin-bottom:.35rem">Stableford Points</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:1px;color:var(--gold)">Carter 🏆</div>
+        <div style="font-size:.68rem;color:var(--gray);margin-top:.3rem">212 pts · by 1 over Farnia</div>
+      </div>
+      <div style="background:var(--card2);border-radius:10px;padding:.9rem 1rem">
+        <div style="font-size:.6rem;letter-spacing:1.5px;color:var(--gray);text-transform:uppercase;margin-bottom:.35rem">5-Hole Draft</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:1px;color:var(--gold)">Farnia 🏆</div>
+        <div style="font-size:.68rem;color:var(--gray);margin-top:.3rem">16.67 · by 0.83 over Carter</div>
+      </div>
+    </div>
+
+    <div style="font-size:.7rem;color:var(--gray);margin-top:1.1rem;line-height:1.6">
+      <b style="color:var(--white)">The league title is unresolved.</b> Farnia and Carter finished level at 70.8 across their best 6 net rounds,
+      and no tiebreaker was agreed for the 2026 season. The standings below show both at T1 rather than separating them.
+      A champion will be posted once the group rules on it.
+    </div>
+  </div>
+
   <div class="sec-title">2026 Season Leaderboard</div>
-  <div class="sec-sub">Round 19 of 20 · Aug 30, 2026 · Updates every Sunday</div>
+  <div class="sec-sub">Final standings · Round 20 of 20 · Sep 6, 2026</div>
   <!-- LIVE_LEADERBOARD_START -->
   <!-- Rows are auto-computed from d2026 by renderLiveLeaderboard() — do not hand-edit. -->
   <div class="lb" id="live-lb">
@@ -503,7 +533,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 
   <!-- 5-HOLE SCORING LEADERBOARD -->
   <div class="sec-title" style="font-size:1.4rem;margin-bottom:.3rem">5-Hole Scoring Leaderboard</div>
-  <div class="sec-sub" style="margin-bottom:1rem">2026 Draft Holes: 2, 5, 11, 12, 14 · NET · Ranked by the average of each player's best 6 five-hole totals</div>
+  <div class="sec-sub" style="margin-bottom:1rem">2026 Draft Holes: 2, 5, 11, 12, 14 · NET · Best 6 scores on <b>each hole separately</b>, then added together</div>
   <div class="lb" id="fivehole-lb">
     <div class="lb-head" style="grid-template-columns:56px 1fr 70px 70px 70px 70px 70px 90px">
       <div>Rank</div><div>Player</div><div>H2</div><div>H5</div><div>H11</div><div>H12</div><div>H14</div><div>Best 6 Avg</div>
@@ -527,7 +557,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   </div>
 
   <div class="tbl-wrap" style="margin-top:1.5rem;margin-bottom:2rem">
-    <div class="tbl-label">2026 — Stableford Points by Round <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">through R19 Aug 30</span></div>
+    <div class="tbl-label">2026 — Stableford Points by Round <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">FINAL · through R20 Sep 6</span></div>
     <table><thead><tr><th>Date</th><th>Farnia</th><th>Owens</th><th>Felter</th><th>Carter</th><th>Lorenz</th></tr></thead>
     <tbody id="stab-body"></tbody>
     <tfoot><tr><td>Top 6 Total</td><td id="sp-farnia">—</td><td id="sp-owens">—</td><td id="sp-felter">—</td><td id="sp-carter">—</td><td id="sp-lorenz">—</td></tr></tfoot>
@@ -1333,7 +1363,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   <div id="sy2026" class="s-ycontent active">
     <div class="tbl-wrap">
       <div class="tbl-label">
-        2026 — Avg Score Per Hole <span style="font-size:.72rem;font-family:sans-serif;color:var(--gray);letter-spacing:0;font-weight:400">(through R19 · Aug 30)</span>
+        2026 — Avg Score Per Hole <span style="font-size:.72rem;font-family:sans-serif;color:var(--gray);letter-spacing:0;font-weight:400">(final · through R20 · Sep 6)</span>
         <div class="toggle-wrap">
           <button class="tog-btn active" onclick="showStatsMode(this,'sn2026','sg2026')">NET</button>
           <button class="tog-btn" onclick="showStatsMode(this,'sg2026','sn2026')">GROSS</button>
@@ -1361,13 +1391,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 
     <div class="tbl-wrap">
       <!-- FIVE_HOLE_2026_START -->
-      <div class="tbl-label">2026 — 5-Hole Draft (Holes 2, 5, 11, 12, 14) <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">NET · through R19 Aug 30</span></div>
+      <div class="tbl-label">2026 — 5-Hole Draft (Holes 2, 5, 11, 12, 14) <span style="font-size:.75rem;font-family:sans-serif;color:var(--gray);letter-spacing:0">NET · best 6 per hole · FINAL</span></div>
       <table><thead><tr id="five-hdr"></tr></thead>
       <tbody id="five-body"></tbody>
       </table>
       <div class="tbl-legend">
-        <span><b style="background:rgba(240,192,64,.16);border-radius:5px;padding:1px 6px">00</b> One of that player's best 6 — counts</span>
-        <span><b style="color:#4caf50">●</b> Best five-hole round (that player)</span>
+        <span><b style="background:rgba(240,192,64,.16);border-radius:5px;padding:1px 6px">0</b> One of that player's best 6 <b>on that hole</b> — counts</span>
         <span><b style="color:var(--border)">—</b> Did not play that round</span>
         <span><b>*</b> Fewer than 6 rounds played</span>
       </div>
@@ -1385,14 +1414,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
     </div>
   </div>
   <div id="records2026" class="b-ycontent active">
-    <div style="font-size:.72rem;color:var(--gray);margin-bottom:.85rem">Through R19 · Aug 30, 2026 — update if a record falls</div>
+    <div style="font-size:.72rem;color:var(--gray);margin-bottom:.85rem">FINAL — 2026 season complete, Sep 6</div>
     <div class="records">
       <div class="rec-card"><div class="rec-icon">⛳</div><div class="rec-label">2026 Low Net</div><div class="rec-val">69</div><div class="rec-sub">Farnia Jun 28 / Owens Jun 14 / Felter May 3</div></div>
       <div class="rec-card"><div class="rec-icon">😬</div><div class="rec-label">2026 High Score</div><div class="rec-val">89</div><div class="rec-sub">Lorenz · Jun 7</div></div>
-      <div class="rec-card"><div class="rec-icon">🐦</div><div class="rec-label">Birdies/Round (2026)</div><div class="rec-val">0.40</div><div class="rec-sub">Lorenz · 5 rounds</div></div>
-      <div class="rec-card"><div class="rec-icon">🏌️</div><div class="rec-label">Best Front 9 Avg (Net)</div><div class="rec-val">35.7</div><div class="rec-sub">Felter · 2026</div></div>
+      <div class="rec-card"><div class="rec-icon">🐦</div><div class="rec-label">Birdies/Round (2026)</div><div class="rec-val">0.50</div><div class="rec-sub">Lorenz · 6 rounds</div></div>
+      <div class="rec-card"><div class="rec-icon">🏌️</div><div class="rec-label">Best Front 9 Avg (Net)</div><div class="rec-val">35.8</div><div class="rec-sub">Carter · 2026</div></div>
       <div class="rec-card"><div class="rec-icon">🏁</div><div class="rec-label">Best Back 9 Avg (Net)</div><div class="rec-val">35.6</div><div class="rec-sub">Owens · 2026</div></div>
-      <div class="rec-card"><div class="rec-icon">🎯</div><div class="rec-label">Best Par 3 Avg (Net)</div><div class="rec-val">3.17</div><div class="rec-sub">Farnia · 2026</div></div>
+      <div class="rec-card"><div class="rec-icon">🎯</div><div class="rec-label">Best Par 3 Avg (Net)</div><div class="rec-val">3.14</div><div class="rec-sub">Farnia · 2026</div></div>
     </div>
   </div>
   <div id="records2025" class="b-ycontent">
@@ -1415,14 +1444,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
   </div>
 
   <div id="birdie2026" class="b-ycontent active">
-    <div style="font-size:.75rem;color:var(--gray);margin-bottom:.75rem">Gross birdies per round · through R19 · Aug 30 · computed from scorecards</div>
+    <div style="font-size:.75rem;color:var(--gray);margin-bottom:.75rem">Gross birdies per round · FINAL 2026 · computed from scorecards</div>
     <div class="lb">
       <div class="lb-head" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div>Rank</div><div>Player</div><div>Birdies/Rd</div><div>Total</div><div>Rounds</div><div>Front Avg (Net)</div><div>Back Avg (Net)</div></div>
-      <div class="lb-row r1" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">1</div><div class="pname">Lorenz <span class="pbadge prov">5 RDS</span></div><div class="stat gold">0.40</div><div class="stat good">2</div><div class="stat">5</div><div class="stat">38.2</div><div class="stat">42.2</div></div>
-      <div class="lb-row r2" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">2</div><div class="pname">Farnia</div><div class="stat">0.38</div><div class="stat good">5</div><div class="stat">13</div><div class="stat">37.0</div><div class="stat">36.2</div></div>
-      <div class="lb-row r3" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">3</div><div class="pname">Felter</div><div class="stat">0.36</div><div class="stat good">4</div><div class="stat">11</div><div class="stat">35.7</div><div class="stat">38.0</div></div>
+      <div class="lb-row r1" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">1</div><div class="pname">Lorenz</div><div class="stat gold">0.50</div><div class="stat good">3</div><div class="stat">6</div><div class="stat">38.0</div><div class="stat">41.3</div></div>
+      <div class="lb-row r2" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">2</div><div class="pname">Felter</div><div class="stat">0.42</div><div class="stat good">5</div><div class="stat">12</div><div class="stat">36.0</div><div class="stat">38.7</div></div>
+      <div class="lb-row r3" style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">3</div><div class="pname">Farnia</div><div class="stat">0.36</div><div class="stat good">5</div><div class="stat">14</div><div class="stat">37.1</div><div class="stat">35.9</div></div>
       <div class="lb-row " style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">4</div><div class="pname">Carter</div><div class="stat">0.25</div><div class="stat good">3</div><div class="stat">12</div><div class="stat">35.8</div><div class="stat">37.8</div></div>
-      <div class="lb-row " style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">5</div><div class="pname">Owens</div><div class="stat dim">0.00</div><div class="stat dim">0</div><div class="stat">8</div><div class="stat">38.1</div><div class="stat">35.6</div></div>
+      <div class="lb-row " style="grid-template-columns:56px 1fr 100px 90px 90px 90px 90px"><div class="rank">5</div><div class="pname">Owens</div><div class="stat dim">0.00</div><div class="stat dim">0</div><div class="stat">9</div><div class="stat">38.3</div><div class="stat">35.6</div></div>
     </div>
   </div>
 
@@ -1674,7 +1703,7 @@ const d2026=[
   {d:'Aug 16',v:[72,null,77,null,null], att:['IN','OUT','IN','OUT','OUT']},
   {d:'Aug 23',v:[71,null,null,71,null], att:['IN','OUT','OUT','IN','OUT']},
   {d:'Aug 30',v:[74,75,null,72,77], att:['IN','IN','OUT','IN','IN']},
-  {d:'Sep 6', v:[null,null,null,null,null], att:['IN','IN','IN','OUT','IN']},
+  {d:'Sep 6', v:[71,75,85,null,74], att:['IN','IN','IN','OUT','IN']},
 ];
 /* D2026_DATA_END */
 
@@ -1696,6 +1725,7 @@ const d2026gross=[
   {d:'Aug 16',v:[90,null,95,null,null]},
   {d:'Aug 23',v:[89,null,null,86,null]},
   {d:'Aug 30',v:[92,89,null,87,92]},
+  {d:'Sep 6', v:[89,89,102,null,89]},
 ];
 
 // 2026 NET Stableford points per round (player order: Farnia, Owens, Felter, Carter, Lorenz)
@@ -1721,6 +1751,7 @@ const five2026=[
   {d:'Aug 16',v:[[5,5,4,3,3],null,[5,4,6,4,5],null,null]},
   {d:'Aug 23',v:[[6,4,3,6,3],null,null,[4,3,4,3,3],null]},
   {d:'Aug 30',v:[[3,6,4,4,4],[5,4,4,4,4],null,[5,3,4,5,4],[4,5,5,5,4]]},
+  {d:'Sep 6', v:[[5,3,3,4,4],[3,5,3,4,4],[6,5,4,6,6],null,[5,5,6,5,3]]},
 ];
 /* FIVE_2026_END */
 
@@ -1742,6 +1773,7 @@ const stab2026=[
   {d:'Aug 16',v:[34,null,29,null,null]},
   {d:'Aug 23',v:[35,null,null,36,null]},
   {d:'Aug 30',v:[32,31,null,34,29]},
+  {d:'Sep 6', v:[35,31,21,null,32]},
 ];
 /* STAB_2026_END */
 
@@ -2272,6 +2304,26 @@ const LB_BADGES  = { Farnia:'DEF. CHAMP' };
 
 const SHOW_TOP_N = [6, 8, 10];   // extra reference averages shown in the table footer
 
+// ── Ranking with genuine ties ────────────────────────────────
+// The league has NOT agreed on any tiebreaker. So when players land
+// on the same number they SHARE a position and are shown as "T2" —
+// we never invent a rule to separate them. Ranks skip accordingly
+// (1, T2, T2, 4), the way standard competition scoring works.
+function assignRanks(rows, key){
+  let lastKey=null, lastRank=0;
+  rows.forEach((r,i)=>{
+    const k = key(r);
+    if(lastKey !== null && k === lastKey){ r.rank = lastRank; }
+    else { r.rank = i+1; lastRank = r.rank; lastKey = k; }
+  });
+  const counts = {};
+  rows.forEach(r => counts[r.rank] = (counts[r.rank]||0) + 1);
+  rows.forEach(r => r.tied = counts[r.rank] > 1);
+  return rows;
+}
+const rankLabel = r => (r.tied ? 'T' : '') + r.rank;
+const rankClass = r => r.rank===1?'r1':r.rank===2?'r2':r.rank===3?'r3':'';
+
 function seasonStats(idx, n){
   // Pull this player's net scores in chronological order, skipping DNS/no-round
   const take = n || COUNT_BEST;
@@ -2295,22 +2347,23 @@ function renderLiveLeaderboard(){
   const rows = LB_PLAYERS
     .map((name,i)=>({name, ...(seasonStats(i)||{})}))
     .filter(r=>r.rounds)
-    .sort((a,b)=> a.avg-b.avg || a.best-b.best || a.last-b.last);
+    .sort((a,b)=> a.avg-b.avg);       // metric only — no invented tiebreak
+  assignRanks(rows, r=>r.avg);
 
   const lb = document.getElementById('live-lb');
   if(lb){
     // Wipe any previously rendered rows, keep the header
     lb.querySelectorAll('.lb-row').forEach(el=>el.remove());
     rows.forEach((r,i)=>{
-      const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const rankCls = rankClass(r);
       const badge   = LB_BADGES[r.name] ? ` <span class="pbadge">${LB_BADGES[r.name]}</span>` : '';
       const prov    = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
       const div = document.createElement('div');
       div.className = 'lb-row '+rankCls;
       div.innerHTML =
-        `<div class="rank">${i+1}</div>`+
+        `<div class="rank">${rankLabel(r)}</div>`+
         `<div class="pname">${r.name}${badge}${prov}</div>`+
-        `<div class="stat ${i===0?'gold':''}">${r.avg.toFixed(1)}</div>`+
+        `<div class="stat ${r.rank===1?'gold':''}">${r.avg.toFixed(1)}</div>`+
         `<div class="stat">${r.rounds}</div>`+
         `<div class="stat good">${r.best}</div>`+
         `<div class="stat">${r.last}</div>`;
@@ -2336,23 +2389,37 @@ function renderLiveLeaderboard(){
 // always add up to the headline number.
 const DRAFT_HOLES = ['H2','H5','H11','H12','H14'];
 
+// Each draft hole is scored SEPARATELY: take that player's best 6
+// scores on H2, his best 6 on H5, and so on, then add the five hole
+// averages together. This is how the league scored the draft in 2025
+// (top 8 then, top 6 now) and it is deliberately NOT the same as the
+// best 6 whole rounds — a player can have a rough round overall and
+// still contribute a great score on one drafted hole.
 function fiveStats(idx){
   const rounds = five2026
     .map((r,ri)=>({ri, v:r.v[idx]}))
     .filter(x=>x.v && x.v.length===5);
   if(!rounds.length) return null;
-  const scored = rounds.map(x=>({...x, tot:x.v.reduce((a,b)=>a+b,0)}));
-  const best = [...scored].sort((a,b)=> a.tot-b.tot || a.ri-b.ri).slice(0, COUNT_BEST);
-  const n = best.length;
-  const perHole = DRAFT_HOLES.map((_,h)=> best.reduce((s,x)=>s+x.v[h],0)/n);
+
+  const perHole = [];
+  const countingCells = [];   // countingCells[hole] = Set of round indexes
+  DRAFT_HOLES.forEach((_,h)=>{
+    const scored = rounds
+      .map(x=>({ri:x.ri, s:x.v[h]}))
+      .sort((a,b)=> a.s-b.s || a.ri-b.ri)     // lowest scores on this hole
+      .slice(0, COUNT_BEST);
+    perHole.push(scored.reduce((s,x)=>s+x.s,0) / scored.length);
+    countingCells.push(new Set(scored.map(x=>x.ri)));
+  });
+
   return {
     rounds: rounds.length,
-    counted: n,
+    counted: Math.min(rounds.length, COUNT_BEST),
     perHole,
     total:  perHole.reduce((a,b)=>a+b,0),
-    best:   Math.min(...scored.map(x=>x.tot)),
+    best:   Math.min(...rounds.map(x=>x.v.reduce((a,b)=>a+b,0))),
     prov:   rounds.length < COUNT_BEST,
-    countingRows: new Set(best.map(x=>x.ri))
+    countingCells
   };
 }
 
@@ -2360,7 +2427,8 @@ function renderFiveHole(){
   const rows = LB_PLAYERS
     .map((name,i)=>({name, idx:i, ...(fiveStats(i)||{})}))
     .filter(r=>r.rounds)
-    .sort((a,b)=> a.total-b.total || a.best-b.best);
+    .sort((a,b)=> a.total-b.total);   // metric only — no invented tiebreak
+  assignRanks(rows, r=>r.total.toFixed(2));
 
   const lb = document.getElementById('fivehole-lb');
   if(!lb) return;
@@ -2368,14 +2436,14 @@ function renderFiveHole(){
   const GRID='56px 1fr 70px 70px 70px 70px 70px 90px';
 
   rows.forEach((r,i)=>{
-    const cls  = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const cls  = rankClass(r);
     const prov = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
-    const tcls = i===0 ? 'stat gold' : (i===rows.length-1 ? 'stat dim' : 'stat');
+    const tcls = r.rank===1 ? 'stat gold' : (i===rows.length-1 ? 'stat dim' : 'stat');
     const div = document.createElement('div');
     div.className = 'lb-row '+cls;
     div.style.gridTemplateColumns = GRID;
     div.innerHTML =
-      `<div class="rank">${i+1}</div>`+
+      `<div class="rank">${rankLabel(r)}</div>`+
       `<div class="pname">${r.name}${prov}</div>`+
       r.perHole.map(x=>`<div class="stat">${x.toFixed(2)}</div>`).join('')+
       `<div class="${tcls}">${r.total.toFixed(2)}</div>`;
@@ -2399,15 +2467,17 @@ function renderFiveHole(){
 // Per-round breakdown table under the Stats tab. Gold chip marks the
 // six rounds counting toward that player's best-6 average — same
 // treatment as the weekly scores table.
+// One row per player PER HOLE, because that is how the contest scores:
+// the six chipped cells on each row are that player's best 6 on that
+// specific hole. The player's Total row is the five hole averages added.
 function renderFiveHoleTable(rows){
   const hdr = document.getElementById('five-hdr');
   const tb  = document.getElementById('five-body');
   if(!hdr || !tb) return;
 
-  hdr.innerHTML = '<th>Player</th>'
-    + DRAFT_HOLES.map(h=>`<th>${h} avg</th>`).join('')
+  hdr.innerHTML = '<th>Player</th><th>Hole</th>'
     + five2026.map(r=>`<th>${r.d.replace(' ','')}</th>`).join('')
-    + '<th>Best 6</th>';
+    + '<th>Best 6 Avg</th>';
 
   const byName = {};
   rows.forEach(r=>byName[r.name]=r);
@@ -2415,27 +2485,25 @@ function renderFiveHoleTable(rows){
   tb.innerHTML = LB_PLAYERS.map((name,i)=>{
     const st = byName[name];
     if(!st) return '';
-    const totals = five2026.map(r=>{
-      const v=r.v[i];
-      return (v && v.length===5) ? v.reduce((a,b)=>a+b,0) : null;
-    });
-    const played = totals.filter(t=>t!==null);
-    const bestRd = played.length ? Math.min(...played) : null;
-    const cells = totals.map((t,ri)=>{
-      if(t===null) return '<td class="sc-dash">—</td>';
-      const counts = st.countingRows.has(ri);
-      const cls = [counts?'sc-counts':'', t===bestRd?'sc-best':''].filter(Boolean).join(' ');
-      return `<td class="${cls}">${t}</td>`;
+    const holeRows = DRAFT_HOLES.map((hLabel,h)=>{
+      const cells = five2026.map((r,ri)=>{
+        const v = r.v[i];
+        if(!v || v.length!==5) return '<td class="sc-dash">—</td>';
+        const counts = st.countingCells[h].has(ri);
+        return `<td class="${counts?'sc-counts':''}">${v[h]}</td>`;
+      }).join('');
+      return `<tr><td style="font-weight:700;text-align:left;color:var(--gray)">${h===0?name:''}</td>`
+        + `<td style="font-weight:700">${hLabel}</td>`
+        + cells
+        + `<td>${st.perHole[h].toFixed(2)}</td></tr>`;
     }).join('');
-    return `<tr><td style="font-weight:700;text-align:left">${name}</td>`
-      + st.perHole.map(x=>`<td>${x.toFixed(2)}</td>`).join('')
-      + cells
-      + `<td>${st.total.toFixed(1)}${st.prov?'*':''}</td></tr>`;
-  }).join('')
-  + '<tr style="background:var(--card2)"><td>Par</td>'
-    + '<td>4</td>'.repeat(5)
-    + five2026.map(()=>'<td style="color:var(--gray)">20</td>').join('')
-    + '<td style="color:var(--gray)">20</td></tr>';
+    const totalRow = `<tr style="background:var(--card2)">`
+      + `<td style="font-weight:700;text-align:left">${name}</td>`
+      + `<td style="color:var(--gray);font-size:.65rem;letter-spacing:1px">TOTAL</td>`
+      + five2026.map(()=>'<td class="sc-dash">·</td>').join('')
+      + `<td style="font-weight:800">${st.total.toFixed(2)}${st.prov?'*':''}</td></tr>`;
+    return holeRows + totalRow;
+  }).join('');
 }
 
 // ═══ STABLEFORD POINTS CONTEST ═══════════════════════════════
@@ -2463,21 +2531,22 @@ function renderStableford(){
   const rows = LB_PLAYERS
     .map((name,i)=>({name, idx:i, ...(stabStats(i)||{})}))
     .filter(r=>r.rounds)
-    .sort((a,b)=> b.total-a.total || b.best-a.best || b.avg-a.avg);
+    .sort((a,b)=> b.total-a.total);   // metric only — no invented tiebreak
+  assignRanks(rows, r=>r.total);
 
   const lb = document.getElementById('stab-lb');
   if(lb){
     lb.querySelectorAll('.lb-row').forEach(el=>el.remove());
     rows.forEach((r,i)=>{
-      const cls  = i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const cls  = rankClass(r);
       const prov = r.prov ? ` <span class="pbadge prov">${r.rounds} OF ${COUNT_BEST}</span>` : '';
       const div = document.createElement('div');
       div.className = 'lb-row '+cls;
       div.style.gridTemplateColumns = '56px 1fr 110px 90px 90px 90px 90px';
       div.innerHTML =
-        `<div class="rank">${i+1}</div>`+
+        `<div class="rank">${rankLabel(r)}</div>`+
         `<div class="pname">${r.name}${prov}</div>`+
-        `<div class="stat ${i===0?'gold':''}">${r.total}</div>`+
+        `<div class="stat ${r.rank===1?'gold':''}">${r.total}</div>`+
         `<div class="stat">${r.counted}</div>`+
         `<div class="stat dim">${r.dropped}</div>`+
         `<div class="stat good">${r.best}</div>`+
