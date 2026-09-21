@@ -71,6 +71,8 @@ nav button.active{color:var(--gold);border-bottom-color:var(--gold)}
 .champ-mini::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .champ-mini-inner{display:flex;align-items:center;gap:1.25rem}
 .champ-mini-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 0 0 3px rgba(240,192,64,.12),0 4px 16px rgba(0,0,0,.5)}
+.champ-mini-photos{display:flex;flex-shrink:0}
+.champ-mini-photos .champ-mini-photo+.champ-mini-photo{margin-left:-16px}
 .champ-mini-badge{font-size:.6rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:.15rem}
 .champ-mini-name{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--white);letter-spacing:4px;line-height:1}
 .champ-mini-stats{font-size:.75rem;color:var(--gray);margin-top:.25rem}
@@ -442,15 +444,18 @@ footer{background:var(--bg2);border-top:1px solid var(--border);text-align:cente
 <!-- ══════════════════════════════ LEAGUE TAB -->
 <div id="league" class="section active">
 
-  <!-- DEFENDING CHAMPION CARD — top of page -->
+  <!-- CO-CHAMPIONS CARD — top of page -->
   <div class="champ-mini">
     <div class="champ-mini-trophy">🏆</div>
     <div class="champ-mini-inner">
-      <img class="champ-mini-photo" src="Farnia.png" alt="Farnia">
-      <div>
-        <div class="champ-mini-badge">🏆 Defending Champion · 2025</div>
-        <div class="champ-mini-name">FARNIA</div>
-        <div class="champ-mini-stats">Top-8 Avg: 69.00 · Dethroned the 2-time champ · Best average in league history</div>
+      <div class="champ-mini-photos">
+        <img class="champ-mini-photo" src="Farnia.png" alt="Farnia">
+        <img class="champ-mini-photo" src="Carter.png" alt="Carter">
+      </div>
+      <div style="min-width:0">
+        <div class="champ-mini-badge">🏆 2026 Co-Champions</div>
+        <div class="champ-mini-name">FARNIA &amp; CARTER</div>
+        <div class="champ-mini-stats">Level at 70.83 across their best 6 net rounds · First shared title in league history</div>
       </div>
     </div>
   </div>
